@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">CameraLibrary</string>
+    <string name="record_video_tip">可录5分钟，建议手机横着录像</string>
+</resources>

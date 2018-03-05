@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    <FrameLayout
+        android:id="@+id/frame_main_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black"/>
+
+    <RadioGroup
+        android:id="@+id/rg_main_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:paddingTop="7dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/c_98191919"
+        android:orientation="horizontal">
+
+
+        <android.support.v7.widget.AppCompatRadioButton
+            android:id="@+id/rb_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:drawableTop="@drawable/selector_main_tab_home"
+            android:checked="true"
+            android:textColor="@drawable/selector_main_tab_text"
+            android:gravity="center_horizontal"
+            android:text="首页"
+            android:drawablePadding="4dp"
+            android:layout_weight="1"/>
+        <android.support.v7.widget.AppCompatRadioButton
+            android:id="@+id/rb_read_pavilion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:textColor="@drawable/selector_main_tab_text"
+            android:gravity="center_horizontal"
+            android:drawableTop="@drawable/selector_main_tab_read_pavilion"
+            android:text="朗读亭"
+            android:drawablePadding="4dp"
+            android:layout_weight="1"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:layout_weight="1"/>
+        <android.support.v7.widget.AppCompatRadioButton
+            android:id="@+id/rb_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:drawableTop="@drawable/selector_main_tab_message"
+            android:text="消息"
+            android:drawablePadding="4dp"
+            android:textColor="@drawable/selector_main_tab_text"
+            android:gravity="center_horizontal"
+            android:layout_weight="1"/>
+        <android.support.v7.widget.AppCompatRadioButton
+            android:id="@+id/rb_mine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:button="@null"
+            android:text="我的"
+            android:drawablePadding="4dp"
+            android:textColor="@drawable/selector_main_tab_text"
+            android:gravity="center_horizontal"
+            android:drawableTop="@drawable/selector_main_tab_mine"
+            android:layout_weight="1"/>
+    </RadioGroup>
+
+    <View
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/shape_circle_bg"/>
+
+    <TextView
+        android:id="@+id/btn_read"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:button="@null"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:drawableTop="@drawable/selector_main_tab_read"
+        android:text="朗读"
+        android:drawablePadding="4dp"
+        android:textColor="@drawable/selector_main_tab_text"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="5dp"
+        android:layout_weight="1"/>
+</RelativeLayout>

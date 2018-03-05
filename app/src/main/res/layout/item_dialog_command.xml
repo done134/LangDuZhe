@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="15dp"
+    android:paddingTop="15dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.cctv.langduzhe.view.widget.CircleImageView
+            android:id="@+id/iv_command_head"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@mipmap/ic_launcher_round"/>
+
+        <TextView
+            android:id="@+id/tv_command_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/c_8c8c8c"
+            android:layout_marginLeft="5dp"
+            android:layout_gravity="center_vertical"
+            android:text="心弦"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/tv_command_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/c_8c8c8c"
+            android:layout_marginLeft="5dp"
+            android:gravity="end"
+            android:layout_gravity="center_vertical"
+            android:text="1分钟前"
+            android:textSize="12sp"/>
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_command_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/c_191919"
+        android:layout_marginLeft="45dp"
+        android:layout_gravity="center_vertical"
+        android:text="看得出来赵文瑄很喜欢大咪"
+        android:textSize="15sp"/>
+
+</LinearLayout>

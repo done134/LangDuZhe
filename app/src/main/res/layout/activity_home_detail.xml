@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="@color/black"
+    android:layout_height="match_parent">
+
+
+    <include layout="@layout/layout_common_title"/>
+
+    <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
+        android:id="@+id/rv_home_slice_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="68dp"/>
+
+    <!--半透明蒙层-->
+    <View
+        android:id="@+id/view_gray_layer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="@color/half_transparent_70"/>
+
+    <LinearLayout
+        android:id="@+id/ll_command_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="510dp"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:visibility="gone"
+        android:background="@drawable/shape_dialog_command_bg">
+        <ImageView
+            android:id="@+id/btn_down_dialog"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:scaleType="center"
+            android:src="@mipmap/down_arrow"/>
+
+        <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
+            android:id="@+id/rv_home_dialog_command"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/btn_goto_command"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/c_98191919"
+        android:textSize="16sp"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        android:text="我要评论"
+        android:gravity="center"/>
+</RelativeLayout>

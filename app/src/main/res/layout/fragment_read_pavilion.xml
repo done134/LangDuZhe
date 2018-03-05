@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+
+    <RadioGroup
+        android:id="@+id/rg_read_pavilion_type"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:background="@color/c_191919"
+        android:paddingTop="20dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <RadioButton
+            android:id="@+id/rb_read_pavilion_newest"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="17sp"
+            android:text="最新"
+            android:textStyle="bold"
+            android:checked="true"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
+            android:textColor="@drawable/selector_main_tab_text"
+            android:button="@null"/>
+        <RadioButton
+            android:id="@+id/rb_read_pavilion_hottest"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:paddingRight="20dp"
+            android:paddingLeft="20dp"
+            android:textSize="17sp"
+            android:text="最热"
+            android:textStyle="bold"
+            android:textColor="@drawable/selector_main_tab_text"
+            android:button="@null"/>
+    </RadioGroup>
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_read_pavilion"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

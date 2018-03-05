@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+    <include layout="@layout/layout_common_title"/>
+
+    <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
+        android:id="@+id/rv_mine_collection"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_option"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:background="@color/c_191919">
+
+
+        <TextView
+            android:id="@+id/btn_delete"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="删除"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:gravity="center"
+            android:layout_weight="1"/>
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center_vertical"
+            android:background="@color/c_8c8c8c"/>
+
+        <TextView
+            android:id="@+id/btn_select_all"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="全选"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:gravity="center"
+            android:layout_weight="1"/>
+    </LinearLayout>
+</RelativeLayout>

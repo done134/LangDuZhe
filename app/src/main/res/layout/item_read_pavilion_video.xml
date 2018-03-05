@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="end|center_vertical"
+    android:background="@color/black">
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <com.cctv.langduzhe.view.widget.CircleImageView
+            android:id="@+id/iv_service_people_icon"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginBottom="10dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/message_service_head_icon"
+            android:layout_marginLeft="10dp"/>
+
+
+        <TextView
+            android:id="@+id/tv_uploader_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="45dp"
+            android:textColor="@color/c_4c4c4c"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:text="心弦"/>
+
+        <TextView
+            android:id="@+id/tv_upload_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_centerVertical="true"
+            android:text="1分钟前"
+            android:textColor="@color/c_4c4c4c"/>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:gravity="center_vertical"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/shape_round_rectangle_c19">
+
+        <ImageView
+            android:id="@+id/iv_cover"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/tv_video_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:gravity="center_horizontal"
+            android:layout_marginLeft="10dp"
+            android:textStyle="bold"
+            android:layout_marginBottom="10dp"
+            android:layout_alignParentBottom="true"
+            android:text="摘自《牧羊少年奇幻之旅》"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:gravity="center_horizontal"
+            android:layout_marginRight="10dp"
+            android:drawablePadding="5dp"
+            android:includeFontPadding="false"
+            android:layout_alignTop="@+id/tv_video_title"
+            android:paddingTop="3dp"
+            android:layout_alignParentRight="true"
+            android:text="03:04"/>
+
+
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:id="@+id/tv_video_play_count"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:text="286"
+            android:textSize="12sp"
+            android:drawablePadding="4dp"
+            android:textColor="@color/c_4c4c4c"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:gravity="center"
+            android:drawableLeft="@mipmap/play_count_icon"/>
+
+        <TextView
+            android:id="@+id/tv_comment_count"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="286"
+            android:textSize="12sp"
+            android:drawablePadding="4dp"
+            android:textColor="@color/c_4c4c4c"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:maxLines="1"
+            android:includeFontPadding="false"
+            android:layout_marginRight="100dp"
+            android:drawableLeft="@mipmap/comment_icon"/>
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/tv_thumbs_count"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="20dp"
+            android:text="286"
+            android:textSize="12sp"
+            android:includeFontPadding="false"
+            android:drawablePadding="4dp"
+            android:textColor="@color/c_4c4c4c"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:checked="true"
+            android:maxLines="1"
+            android:button="@drawable/selector_thumb"/>
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/c_191919"/>
+
+
+</LinearLayout>
+
+    <android.support.v7.widget.AppCompatCheckBox
+        android:id="@+id/cb_select_this_read"
+        android:layout_width="30dp"
+        android:checked="true"
+        android:paddingTop="25dp"
+        android:layout_marginLeft="5dp"
+        android:button="@drawable/selector_cb_edit_collection"
+        android:visibility="gone"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

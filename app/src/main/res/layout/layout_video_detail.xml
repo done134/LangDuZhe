@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/black">
+    <LinearLayout
+        android:id="@+id/ll_uploader_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone">
+
+        <com.cctv.langduzhe.view.widget.CircleImageView
+            android:id="@+id/iv_command_head"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+
+        <TextView
+            android:id="@+id/tv_command_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/c_4c4c4c"
+            android:layout_marginLeft="5dp"
+            android:layout_gravity="center_vertical"
+            android:text="心弦"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/tv_command_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/c_4c4c4c"
+            android:layout_marginLeft="5dp"
+            android:gravity="end"
+            android:layout_gravity="center_vertical"
+            android:text="1分钟前"
+            android:textSize="12sp"/>
+    </LinearLayout>
+    <cn.jzvd.JZVideoPlayerStandard
+        android:id="@+id/video_view"
+        android:layout_width="match_parent"
+        android:layout_height="180dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+        <TextView
+            android:id="@+id/tv_video_play_count"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:text="286"
+            android:textSize="12sp"
+            android:drawablePadding="4dp"
+            android:textColor="@color/c_4c4c4c"
+            android:includeFontPadding="false"
+            android:maxLines="1"
+            android:gravity="center"
+            android:drawableLeft="@mipmap/play_count_icon"/>
+
+        <TextView
+            android:id="@+id/tv_comment_count"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="286"
+            android:textSize="12sp"
+            android:drawablePadding="4dp"
+            android:textColor="@color/c_4c4c4c"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:maxLines="1"
+            android:includeFontPadding="false"
+            android:layout_marginRight="100dp"
+            android:drawableLeft="@mipmap/comment_icon"/>
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/tv_thumbs_count"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginRight="20dp"
+            android:text="286"
+            android:textSize="12sp"
+            android:includeFontPadding="false"
+            android:drawablePadding="4dp"
+            android:textColor="@color/c_4c4c4c"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:checked="true"
+            android:maxLines="1"
+            android:button="@drawable/selector_thumb"/>
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/c_191919"/>
+</LinearLayout>

@@ -1,0 +1,60 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 27
+    defaultConfig {
+        applicationId "com.cctv.langduzhe"
+        minSdkVersion 19
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    testImplementation 'junit:junit:4.12'
+    implementation rootProject.ext.dependencies["butterknife"]
+    annotationProcessor rootProject.ext.dependencies["butterknife-compiler"]
+    implementation rootProject.ext.dependencies["retrofit2-fastjson-converter"]
+    api rootProject.ext.dependencies["design"]
+    api rootProject.ext.dependencies["cardview"]
+    api rootProject.ext.dependencies["rxandroid"]
+    api rootProject.ext.dependencies["rxbinding"]
+    api rootProject.ext.dependencies["rxbinding-support-v4"]
+    api rootProject.ext.dependencies["rxbinding-appcompat-v7"]
+    api rootProject.ext.dependencies["rxbinding-design"]
+    api rootProject.ext.dependencies["rxbinding-recyclerview-v7"]
+    api rootProject.ext.dependencies["ormlite-android"]
+    api rootProject.ext.dependencies["stream"]
+    api rootProject.ext.dependencies["retrofit"]
+    api rootProject.ext.dependencies["adapter-rxjava"]
+    api rootProject.ext.dependencies["fastjson"]
+    api rootProject.ext.dependencies["okhttp3-logging-interceptor"]
+    debugApi rootProject.ext.dependencies["stetho"]
+    debugApi rootProject.ext.dependencies["stetho-okhttp3"]
+    api rootProject.ext.dependencies["rxPermission"]
+    api rootProject.ext.dependencies["picasso"]
+    api rootProject.ext.dependencies["eventBus"]
+    api rootProject.ext.dependencies["rxjava2"]
+    compile project(':camera')
+    compile project(':matisse')
+    compile project(':pullLoadMoreLibrary')
+    compile 'cn.jzvd:jiaozivideoplayer:6.2.7'
+    compile 'com.qiniu:qiniu-android-sdk:7.3.10'
+}

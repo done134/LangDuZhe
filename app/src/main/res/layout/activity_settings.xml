@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+
+    <include layout="@layout/layout_common_title"/>
+
+
+    <!--非WiFi网络播放提醒-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="@color/c_8c8c8c"
+            android:text="非WiFi网络播放提醒"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"/>
+
+        <com.cctv.langduzhe.view.widget.SwitchView
+            android:id="@+id/switch_not_wifi_notice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="15dp"
+            android:layout_centerVertical="true"
+            app:primaryColor="@color/ff2b2b"
+            app:isOpened="true"
+            app:hasShadow="false"
+            android:layout_alignParentRight="true"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5px"
+            android:layout_alignParentBottom="true"
+            android:background="@color/c_191919"/>
+    </RelativeLayout>
+
+
+    <!--意见反馈-->
+    <RelativeLayout
+        android:id="@+id/rl_goto_feedback"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="@color/c_8c8c8c"
+            android:text="意见反馈"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"/>
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:src="@mipmap/gray_right_arrow"
+            android:layout_centerVertical="true"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5px"
+            android:layout_alignParentBottom="true"
+            android:background="@color/c_191919"/>
+    </RelativeLayout>
+
+
+    <!--清理缓存-->
+    <RelativeLayout
+        android:id="@+id/rl_clear_cache"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="@color/c_8c8c8c"
+            android:text="清理缓存"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:id="@+id/tv_cache_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:drawablePadding="5dp"
+            android:textSize="15sp"
+            android:textColor="@color/c_8c8c8c"
+            android:text="12MB"
+            android:drawableRight="@mipmap/gray_right_arrow"
+            android:layout_centerVertical="true" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5px"
+            android:layout_alignParentBottom="true"
+            android:background="@color/c_191919"/>
+    </RelativeLayout>
+
+
+    <!--版本信息-->
+    <RelativeLayout
+        android:id="@+id/rl_version_info"
+        android:layout_width="match_parent"
+        android:layout_height="60dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="@color/c_8c8c8c"
+            android:text="版本信息"
+            android:layout_marginLeft="10dp"
+            android:layout_centerVertical="true"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="15dp"
+            android:drawablePadding="5dp"
+            android:textSize="15sp"
+            android:textColor="@color/c_8c8c8c"
+            android:text="V 1.0.0"
+            android:layout_centerVertical="true" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5px"
+            android:layout_alignParentBottom="true"
+            android:background="@color/c_191919"/>
+    </RelativeLayout>
+
+
+
+    <Button
+        android:id="@+id/btn_logout"
+        android:layout_width="200dp"
+        android:layout_height="44dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/shape_round_tangle_ff2b2b"
+        android:text="@string/logout"
+        android:textColor="@color/white"
+        android:textSize="17sp"
+        android:textStyle="bold" />
+</LinearLayout>

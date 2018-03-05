@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/black">
+
+    <!--顶部布局-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@mipmap/mine_top_bg"
+        android:gravity="center">
+
+
+        <!--圆形头像-->
+        <com.cctv.langduzhe.view.widget.CircleImageView
+            android:id="@+id/iv_user_picture"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@mipmap/ic_launcher"
+            app:civ_border_width="4dp"
+            app:civ_border_color="@color/head_border_color"/>
+
+        <!--用户昵称-->
+        <TextView
+            android:id="@+id/tv_user_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp"
+            android:text="昵称"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="14dp"/>
+    </LinearLayout>
+
+    <!--我的收藏和我的朗读-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:gravity="center_vertical">
+        <TextView
+            android:id="@+id/btn_my_collection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="30dp"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/mine_collection_icon"
+            android:textColor="@color/c_8c8c8c"
+            android:drawablePadding="10dp"
+            android:text="我的收藏"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/c_191919"/>
+        <TextView
+            android:id="@+id/btn_my_read"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="30dp"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/mine_read_icon"
+            android:textColor="@color/c_8c8c8c"
+            android:drawablePadding="10dp"
+            android:text="我的朗读"
+            android:gravity="center"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/c_191919"/>
+
+    <!--关于我们和设置-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:gravity="center_vertical">
+        <TextView
+            android:id="@+id/btn_about_us"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="30dp"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/mine_info_icon"
+            android:textColor="@color/c_8c8c8c"
+            android:drawablePadding="10dp"
+            android:text="关于我们"
+            android:gravity="center"/>
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/c_191919"/>
+        <TextView
+            android:id="@+id/btn_app_set"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="30dp"
+            android:layout_weight="1"
+            android:drawableTop="@mipmap/mine_set_icon"
+            android:textColor="@color/c_8c8c8c"
+            android:drawablePadding="10dp"
+            android:text="设置"
+            android:gravity="center"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/c_191919"/>
+
+</LinearLayout>

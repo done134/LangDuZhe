@@ -1,0 +1,74 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="BaseAppTheme" />
+
+    <style name="BaseAppTheme" parent="BaseAppTheme.NoActionBar" />
+
+    <style name="BaseAppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="ios_bottom_dialog" parent="android:style/Theme.Dialog">
+        <!--背景颜色及和透明程度-->
+        <item name="android:windowBackground">@color/transparent</item>
+        <!--是否去除标题 -->
+        <item name="android:windowNoTitle">true</item>
+        <!--是否去除边框-->
+        <item name="android:windowFrame">@null</item>
+        <!--是否浮现在activity之上-->
+        <item name="android:windowIsFloating">true</item>
+        <!--是否模糊-->
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <style name="ios_bottom_dialog_anim" parent="@android:style/Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/ios_dialog_enter</item>
+        <!-- 进入时的动画 -->
+        <item name="android:windowExitAnimation">@anim/ios_dialog_exit</item>
+        <!-- 退出时的动画 -->
+    </style>
+
+
+
+    <!--半透明背景-->
+    <style name="translucent" parent="AppTheme">
+        <item name="android:windowBackground">@color/half_transparent_70</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowAnimationStyle">@null</item>
+    </style>
+
+
+    <item type="id" name="statusbarutil_fake_status_bar_view" />
+    <item type="id" name="statusbarutil_translucent_view" />
+
+    <style name="loading_dialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <style name="NoTitleDialogTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowCloseOnTouchOutside">false</item>
+        <item name="android:windowAnimationStyle">@style/view_component_bottom_animation</item>
+    </style>
+
+    <style name="view_component_bottom_animation">
+        <item name="android:activityOpenEnterAnimation">@anim/bottom_push_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/fade</item>
+        <item name="android:activityCloseEnterAnimation">@anim/fade</item>
+        <item name="android:activityCloseExitAnimation">@anim/bottom_push_out</item>
+    </style>
+</resources>

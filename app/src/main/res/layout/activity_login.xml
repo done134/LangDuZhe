@@ -1,0 +1,159 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="0dp"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    tools:context="com.cctv.langduzhe.feature.LoginActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/login_bg" />
+
+
+    <ScrollView
+        android:id="@+id/login_form"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <RelativeLayout
+            android:id="@+id/phone_login_form"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="@dimen/title_bar_height"
+                android:layout_height="@dimen/title_bar_height"
+                android:layout_marginTop="20dp"
+                android:background="@android:color/transparent"
+                android:src="@mipmap/back_arrow" />
+
+            <LinearLayout
+                android:layout_width="280dp"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="vertical">
+
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="23dp"
+                        android:background="@android:color/transparent"
+                        android:text="手机号："
+                        android:textColor="@color/c_8c8c8c"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/phone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent"
+                        android:inputType="number"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:textColor="@android:color/white"
+                        android:paddingBottom="10dp"
+                        android:textSize="17sp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/c_191919" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp">
+
+                    <RelativeLayout
+                        android:layout_width="160dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="10dp">
+
+                        <TextView
+                            android:id="@+id/tv_code_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:text="验证码："
+                            android:textColor="@color/c_8c8c8c"
+                            android:textSize="15sp" />
+
+                        <EditText
+                            android:id="@+id/auth_code"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_toRightOf="@+id/tv_code_text"
+                            android:background="@android:color/transparent"
+                            android:imeActionId="6"
+                            android:imeOptions="actionUnspecified"
+                            android:inputType="number"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            android:textColor="@android:color/white"
+                            android:textSize="17sp" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_alignParentBottom="true"
+                            android:background="@color/c_191919" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="-2dp">
+
+                        <TextView
+                            android:id="@+id/btn_get_auth_code"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
+                            android:includeFontPadding="false"
+                            android:maxLines="1"
+                            android:text="获取验证码"
+                            android:textColor="@color/ff2b2b"
+                            android:textSize="17sp"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_alignParentBottom="true"
+                            android:background="@color/c_191919" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+
+
+                <TextView
+                    android:id="@+id/btn_sign_in"
+                    android:layout_width="120dp"
+                    android:layout_height="44dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="50dp"
+                    android:background="@drawable/shape_round_tangle_ff2b2b"
+                    android:text="@string/action_sign_in"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </RelativeLayout>
+    </ScrollView>
+</RelativeLayout>

@@ -175,6 +175,6 @@ public class ReadPavilionListFragment extends BaseFragment implements PullLoadMo
     @Override
     public void likeResult(boolean isLike) {
         readPavilionAdapter.getList().get(optPosition).setIsCollect(isLike ? 1 : 0);
-//        readPavilionAdapter.notifyDataSetChanged();
+        readPavilionAdapter.notifyDataSetChanged();
     }
 }

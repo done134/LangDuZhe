@@ -98,7 +98,7 @@ public class ReadPavilionPresenter implements BasePresenter {
         RequestBody requestBody =
                 RequestBody.create(MediaType.parse("application/json; charset=utf-8"),
                        jsonObject.toJSONString());
-        Observable<String> observable = ApiClient.apiService.getMediaList(requestBody);
+        Observable<String> observable = ApiClient.apiService.getMineReadList(requestBody);
         Subscription subscription = observable
                 .compose(RxSchedulerUtils.normalSchedulersTransformer())
                 .subscribe(this::handleCode, throwable -> {

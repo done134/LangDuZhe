@@ -35,7 +35,7 @@ public class LikePresenter implements BasePresenter {
      * 方法说明：获取验证码
      */
     public void likeRead(String mediaId) {
-        Observable<String> observable = ApiClient.apiService.collectionRead(mediaId);
+        Observable<String> observable = ApiClient.apiService.likeRead(mediaId);
         Subscription subscription = observable
                 .compose(RxSchedulerUtils.normalSchedulersTransformer())
                 .subscribe(this::handleResult, throwable -> {

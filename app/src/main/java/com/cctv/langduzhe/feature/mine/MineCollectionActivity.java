@@ -229,6 +229,6 @@ public class MineCollectionActivity extends BaseActivity implements BaseRecycler
         } else {
             myCollectionAdapter.getItemInPosition(optPosition).setLikeSum(thumbSum-1);
         }
-//        myCollectionAdapter.notifyDataSetChanged();
+        myCollectionAdapter.notifyDataSetChanged();
     }
 }

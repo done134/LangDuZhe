@@ -86,7 +86,7 @@ public class HomeFragment extends BaseFragment implements
     public void onEvent(CollectEvent collectEvent) {
         if (collectEvent.type.equals("home")) {
             homeVideoAdapter.getList().set(optPostion, collectEvent.collected);
-//            homeVideoAdapter.notifyDataSetChanged();
+            homeVideoAdapter.notifyDataSetChanged();
         }
     }
 
@@ -151,8 +151,14 @@ public class HomeFragment extends BaseFragment implements
 
     @Override
     public void likeResult(boolean isLike) {
+        int lilkeSum = homeVideoAdapter.getItemInPosition(optPostion).getLikeSum();
+        if (isLike) {
+            homeVideoAdapter.getItemInPosition(optPostion).setLikeSum(lilkeSum+1);
+        } else {
+            homeVideoAdapter.getItemInPosition(optPostion).setLikeSum(lilkeSum-1);
+        }
         homeVideoAdapter.getItemInPosition(optPostion).setIsLike(isLike ? 1 : 0);
-//        homeVideoAdapter.notifyDataSetChanged();
+        homeVideoAdapter.notifyDataSetChanged();
     }
 
 }

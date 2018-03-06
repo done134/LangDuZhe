@@ -78,6 +78,7 @@ public class MyCollectionAdapter extends ReadPavilionAdapter {
             }
             ((VoiceHolder) holder).tvCommentCount.setText(String.valueOf(dataBean.getCommentSum()));
             ((VoiceHolder) holder).tvThumbsCount.setText(String.valueOf(dataBean.getCollectSum()));
+            ((VoiceHolder) holder).tvThumbsCount.setChecked(dataBean.getIsLike()==1);
             ((VoiceHolder) holder).tvVideoPlayCount.setText(String.valueOf(dataBean.getWatchSum()));
             ((VoiceHolder) holder).tvUploaderName.setText(dataBean.getReaderName());
             ((VoiceHolder) holder).tvUploadTime.setText(dataBean.getCreateDate());
@@ -101,6 +102,7 @@ public class MyCollectionAdapter extends ReadPavilionAdapter {
             ((VideoHolder) holder).tvUploaderName.setText(dataBean.getReaderName());
             ((VideoHolder) holder).tvUploadTime.setText(dataBean.getCreateDate());
             ((VideoHolder) holder).tvVideoTitle.setText(dataBean.getTitle());
+            ((VideoHolder) holder).tvThumbsCount.setChecked(dataBean.getIsLike()==1);
         }
     }
 
@@ -184,10 +186,10 @@ public class MyCollectionAdapter extends ReadPavilionAdapter {
                     onItemHolderClick(0,getLayoutPosition(),false);
                 }
             });
-            tvThumbsCount.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            tvThumbsCount.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    onItemHolderClick(1, getLayoutPosition(),false);
+                public void onClick(View v) {
+                    onItemHolderClick(1, getLayoutPosition(),tvThumbsCount.isChecked());
                 }
             });
         }
@@ -229,10 +231,10 @@ public class MyCollectionAdapter extends ReadPavilionAdapter {
                     onItemHolderClick(0,getLayoutPosition(),false);
                 }
             });
-            tvThumbsCount.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            tvThumbsCount.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    onItemHolderClick(1, getLayoutPosition(),false);
+                public void onClick(View v) {
+                    onItemHolderClick(1, getLayoutPosition(),tvThumbsCount.isChecked());
                 }
             });
         }

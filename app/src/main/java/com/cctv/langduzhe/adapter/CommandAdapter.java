@@ -212,11 +212,10 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
         VoiceHolder(View itemView, CommandAdapter messageAdapter) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-//            itemView.setOnClickListener(v -> messageAdapter.onItemHolderClick(this));
-            tvThumbsCount.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            tvThumbsCount.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    onItemHolderClick(1, getLayoutPosition(),false);
+                public void onClick(View v) {
+                    onItemHolderClick(1, getLayoutPosition(),tvThumbsCount.isChecked());
                 }
             });
         }
@@ -253,11 +252,10 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
         VideoHolder(View itemView, CommandAdapter messageAdapter) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-//            itemView.setOnClickListener(v -> messageAdapter.onItemHolderClick(this));
-            tvThumbsCount.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            tvThumbsCount.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    onItemHolderClick(1, getLayoutPosition(),false);
+                public void onClick(View v) {
+                    onItemHolderClick(1, getLayoutPosition(),tvThumbsCount.isChecked());
                 }
             });
         }

@@ -87,7 +87,7 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
             ((VoiceHolder) holder).tvCommandName.setText(videoInfoEntity.getReaderName());
             ((VoiceHolder) holder).tvCommandTime.setText(videoInfoEntity.getCreateDate());
             ((VoiceHolder) holder).tvThumbsCount.setChecked(videoInfoEntity.getIsLike() == 1);
-
+            playVoice(videoInfoEntity.getPath(),((VoiceHolder) holder).audioWave);
 //            ((VoiceHolder) holder).setText(videoInfoEntity.getTitle());
         } else if (holder instanceof VideoHolder){
             //普通视频类型展示上传者信息，首页节目片段视频隐藏这块儿布局
@@ -138,7 +138,8 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
 
 
 
-    private void playVoice(MP3RadioStreamPlayer player,String voiceUrl,AudioWaveView audioWaveView) {
+    private MP3RadioStreamPlayer player;
+    private void playVoice(String voiceUrl,AudioWaveView audioWaveView) {
         if (player != null) {
             player.stop();
             player.release();

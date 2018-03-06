@@ -147,7 +147,8 @@ public class LoginPresenter implements BasePresenter{
     private void handleUserInfo(String userInfo) {
         LogUtil.i(userInfo);
         JSONObject jsonObject = JSONObject.parseObject(userInfo);
-        if (!TextUtils.isEmpty(jsonObject.getString("img"))) {
+        JSONObject dataObj = jsonObject.getJSONObject("data");
+        if (!TextUtils.isEmpty(dataObj.getString("img"))) {
 
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra("new_login", true);

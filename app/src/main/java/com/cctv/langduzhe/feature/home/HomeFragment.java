@@ -16,8 +16,12 @@ import com.cctv.langduzhe.contract.home.HomePresenter;
 import com.cctv.langduzhe.contract.home.HomeView;
 import com.cctv.langduzhe.data.entites.HomeVideoEntity;
 import com.cctv.langduzhe.adapter.HomeVideoAdapter;
+import com.cctv.langduzhe.eventMsg.CollectEvent;
 import com.cctv.langduzhe.util.ToastUtils;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +36,7 @@ import butterknife.Unbinder;
  * 说明：首页fragment
  */
 public class HomeFragment extends BaseFragment implements
-        PullLoadMoreRecyclerView.PullLoadMoreListener,BaseRecyclerViewAdapter.OnItemClickListener,HomeView,LikeView {
+        PullLoadMoreRecyclerView.PullLoadMoreListener, BaseRecyclerViewAdapter.OnItemClickListener, HomeView, LikeView {
     @BindView(R.id.rv_home_list)
     PullLoadMoreRecyclerView rvHomeList;
     Unbinder unbinder;
@@ -55,6 +59,7 @@ public class HomeFragment extends BaseFragment implements
         }
 
         unbinder = ButterKnife.bind(this, mView);
+        EventBus.getDefault().register(this);
         return mView;
     }
 
@@ -74,6 +79,15 @@ public class HomeFragment extends BaseFragment implements
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe
+    public void onEvent(CollectEvent collectEvent) {
+        if (collectEvent.type.equals("home")) {
+            homeVideoAdapter.getList().set(optPostion, collectEvent.collected);
+//            homeVideoAdapter.notifyDataSetChanged();
+        }
     }
 
     @Override
@@ -103,13 +117,13 @@ public class HomeFragment extends BaseFragment implements
             } else {
                 likePresenter.unlikeRead(mediasId);
             }
-        }else {
+        } else {
             Bundle bundle = new Bundle();
-            bundle.putSerializable("home_video",homeVideoAdapter.getItemInPosition(position));
+            bundle.putSerializable("home_video", homeVideoAdapter.getItemInPosition(position));
             if (optType == 0) {
                 bundle.putBoolean("showComment", true);
             }
-            toActivity(HomeVideoDetailActivity.class,bundle);
+            toActivity(HomeVideoDetailActivity.class, bundle);
         }
 
     }
@@ -125,10 +139,10 @@ public class HomeFragment extends BaseFragment implements
         if (list != null && list.size() > 0) {
             if (pageNum == 0) {
                 homeVideoAdapter.setData(list);
-            }else {
+            } else {
                 homeVideoAdapter.addData(list);
             }
-        }else {
+        } else {
             ToastUtils.showLong(getActivity(), "数据已全部加载");
             rvHomeList.setPullLoadMoreCompleted();
         }
@@ -137,8 +151,8 @@ public class HomeFragment extends BaseFragment implements
 
     @Override
     public void likeResult(boolean isLike) {
-        homeVideoAdapter.getItemInPosition(optPostion).setIsCollect(isLike ? 1 : 0);
-        homeVideoAdapter.notifyDataSetChanged();
+        homeVideoAdapter.getItemInPosition(optPostion).setIsLike(isLike ? 1 : 0);
+//        homeVideoAdapter.notifyDataSetChanged();
     }
 
 }

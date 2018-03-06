@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -13,6 +14,7 @@ import com.cctv.langduzhe.R;
 import com.cctv.langduzhe.base.BaseRecyclerViewAdapter;
 import com.cctv.langduzhe.data.entites.CommandEntity;
 import com.cctv.langduzhe.data.entites.HomeVideoEntity;
+import com.cctv.langduzhe.util.picasco.PicassoUtils;
 import com.cctv.langduzhe.view.widget.CircleImageView;
 import com.piterwilson.audio.MP3RadioStreamPlayer;
 import com.shuyu.waveview.AudioWaveView;
@@ -84,8 +86,9 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
             ((VoiceHolder) holder).tvVideoPlayCount.setText(String.valueOf(videoInfoEntity.getWatchSum()));
             ((VoiceHolder) holder).tvCommandName.setText(videoInfoEntity.getReaderName());
             ((VoiceHolder) holder).tvCommandTime.setText(videoInfoEntity.getCreateDate());
+            ((VoiceHolder) holder).tvThumbsCount.setChecked(videoInfoEntity.getIsLike() == 1);
 
-//            ((VoiceHolder) holder)..setText(videoInfoEntity.getTitle());
+//            ((VoiceHolder) holder).setText(videoInfoEntity.getTitle());
         } else if (holder instanceof VideoHolder){
             //普通视频类型展示上传者信息，首页节目片段视频隐藏这块儿布局
             if (getAdapterType() == CommandTypeEnum.VIDEO_COMMAND) {
@@ -95,11 +98,12 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
             }
             //视频
             ((VideoHolder) holder).tvCommentCount.setText(String.valueOf(videoInfoEntity.getCommentSum()));
-            ((VideoHolder) holder).tvThumbsCount.setText(String.valueOf(videoInfoEntity.getCollectSum()));
+            ((VideoHolder) holder).tvThumbsCount.setText(String.valueOf(videoInfoEntity.getLikeSum()));
+            ((VideoHolder) holder).tvThumbsCount.setChecked(videoInfoEntity.getIsLike()==1);
             ((VideoHolder) holder).tvVideoPlayCount.setText(String.valueOf(videoInfoEntity.getWatchSum()));
             ((VideoHolder) holder).tvCommandName.setText(videoInfoEntity.getReaderName());
             ((VideoHolder) holder).tvCommandTime.setText(videoInfoEntity.getCreateDate());
-//            PicassoUtils.loadImageByurl(context,videoInfoEntity.getImg(),((VideoHolder) holder).videoView.thumbImageView);
+            PicassoUtils.loadImageByurl(context,videoInfoEntity.getImg(),((VideoHolder) holder).videoView.thumbImageView);
             ((VideoHolder) holder).videoView.setUp(videoInfoEntity.getPath(), JZVideoPlayerStandard.SCREEN_WINDOW_LIST, "");
             if (isPause) {
                 ((VideoHolder) holder).videoView.release();
@@ -186,7 +190,7 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
     /**
      * 音频类头布局
      */
-    static class VoiceHolder extends RecyclerView.ViewHolder {
+     class VoiceHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.iv_command_head)
         CircleImageView ivCommandHead;
@@ -209,6 +213,12 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
             super(itemView);
             ButterKnife.bind(this, itemView);
 //            itemView.setOnClickListener(v -> messageAdapter.onItemHolderClick(this));
+            tvThumbsCount.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    onItemHolderClick(1, getLayoutPosition(),false);
+                }
+            });
         }
     }
 
@@ -220,7 +230,7 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
     /**
      * 视频类头布局
      */
-    static class VideoHolder extends RecyclerView.ViewHolder {
+     class VideoHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.iv_command_head)
         CircleImageView ivCommandHead;
@@ -231,7 +241,7 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
         @BindView(R.id.ll_uploader_info)
         LinearLayout llUploaderInfo;
         @BindView(R.id.video_view)
-        JZVideoPlayer videoView;
+        JZVideoPlayerStandard videoView;
         @BindView(R.id.tv_video_play_count)
         TextView tvVideoPlayCount;
         @BindView(R.id.tv_comment_count)
@@ -244,6 +254,12 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
             super(itemView);
             ButterKnife.bind(this, itemView);
 //            itemView.setOnClickListener(v -> messageAdapter.onItemHolderClick(this));
+            tvThumbsCount.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    onItemHolderClick(1, getLayoutPosition(),false);
+                }
+            });
         }
     }
 

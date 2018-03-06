@@ -14,12 +14,16 @@ import com.cctv.langduzhe.base.BaseActivity;
 import com.cctv.langduzhe.base.BaseFragment;
 import com.cctv.langduzhe.contract.MainPresenter;
 import com.cctv.langduzhe.contract.MainView;
+import com.cctv.langduzhe.eventMsg.QuitEvent;
 import com.cctv.langduzhe.feature.home.HomeFragment;
 import com.cctv.langduzhe.feature.message.MessageFragment;
 import com.cctv.langduzhe.feature.mine.MineFragment;
 import com.cctv.langduzhe.feature.read.ReadActivity;
 import com.cctv.langduzhe.feature.readPavilion.ReadPavilionFragment;
 import com.cctv.langduzhe.util.ToastUtils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -73,6 +77,8 @@ public class MainActivity extends BaseActivity implements MainView{
         initView();
         setListener();
         switchTabSelect(0);
+
+        EventBus.getDefault().register(this);
 
     }
 
@@ -171,6 +177,16 @@ public class MainActivity extends BaseActivity implements MainView{
             this.finish();
         }
 
+    }
+
+    @Subscribe
+    public void onEvent(QuitEvent qiutEvent) {
+        finish();
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override

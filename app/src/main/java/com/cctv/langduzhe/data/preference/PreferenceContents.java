@@ -8,5 +8,7 @@ package com.cctv.langduzhe.data.preference;
 public class PreferenceContents {
     public static final String TOKEN = "token";
     public static final String USER_NAME = "userName";
+    public static final String NO_WIFI_NOTICE = "noWifiNotice";
+
 
 }

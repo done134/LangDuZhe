@@ -1,5 +1,7 @@
 package com.cctv.langduzhe.eventMsg;
 
+import com.cctv.langduzhe.data.entites.HomeVideoEntity;
+
 /**
  * Created by gentleyin
  * on 2018/3/1.
@@ -7,9 +9,11 @@ package com.cctv.langduzhe.eventMsg;
  */
 public class CollectEvent {
 
-    public boolean collected;
-    public CollectEvent(boolean collected) {
+    public HomeVideoEntity.DataBean collected;
+    public String type;
+    public CollectEvent(HomeVideoEntity.DataBean collected,String type) {
         this.collected = collected;
+        this.type = type;
     }
 
 

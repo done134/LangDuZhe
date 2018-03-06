@@ -35,12 +35,8 @@ public class HomeSliceAdapter extends BaseRecyclerViewAdapter {
 
     private List<HomeVideoEntity.DataBean> list;
     private HomeVideoEntity.DataBean videoInfo;
-    private HomeDetailClick homeDetailClick;
     private Context context;
 
-    public HomeSliceAdapter(HomeDetailClick homeDetailClick) {
-        this.homeDetailClick = homeDetailClick;
-    }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -59,22 +55,11 @@ public class HomeSliceAdapter extends BaseRecyclerViewAdapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof HeaderHolder) {
-            ((HeaderHolder) holder).tvCommentCount.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    homeDetailClick.onCommandClick();
-                }
-            });
-            ((HeaderHolder) holder).tvThumbsCount.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    homeDetailClick.onThumbChecked(isChecked);
-                }
-            });
             ((HeaderHolder) holder).videoView.setUp(videoInfo.getPath(), JZVideoPlayerStandard.SCREEN_WINDOW_LIST, "");
-            ((HeaderHolder) holder).tvCommentCount.setText(String.valueOf(videoInfo.getCollectSum()));
-            ((HeaderHolder) holder).tvThumbsCount.setText(String.valueOf(videoInfo.getCollectSum()));
+            ((HeaderHolder) holder).tvCommentCount.setText(String.valueOf(videoInfo.getCommentSum()));
+            ((HeaderHolder) holder).tvThumbsCount.setText(String.valueOf(videoInfo.getLikeSum()));
             ((HeaderHolder) holder).tvVideoPlayCount.setText(String.valueOf(videoInfo.getWatchSum()));
+            ((HeaderHolder) holder).tvThumbsCount.setChecked(videoInfo.getIsLike() == 1);
             PicassoUtils.loadImageByurl(context,videoInfo.getImg(),((HeaderHolder) holder).videoView.thumbImageView);
             if (isPause) {
                 ((HeaderHolder) holder).videoView.release();
@@ -87,7 +72,7 @@ public class HomeSliceAdapter extends BaseRecyclerViewAdapter {
         }
     }
 
-    boolean isPause;
+    private boolean isPause;
     public void pauseVideo() {
         isPause = true;
         notifyDataSetChanged();
@@ -126,7 +111,7 @@ public class HomeSliceAdapter extends BaseRecyclerViewAdapter {
 
 
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+     class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.iv_slice_cover)
         ImageView ivSliceCover;
@@ -138,7 +123,13 @@ public class HomeSliceAdapter extends BaseRecyclerViewAdapter {
         ViewHolder(View itemView, HomeSliceAdapter messageAdapter) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-//            itemView.setOnClickListener(v -> messageAdapter.onItemHolderClick(this));
+//             itemView.setOnClickListener(v -> messageAdapter.onItemHolderClick(this));
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemHolderClick(2, getLayoutPosition(), false);
+                }
+            });
         }
     }
 
@@ -151,7 +142,7 @@ public class HomeSliceAdapter extends BaseRecyclerViewAdapter {
         }
     }
 
-    static class HeaderHolder extends RecyclerView.ViewHolder {
+     class HeaderHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.video_view)
         JZVideoPlayerStandard videoView;
@@ -165,12 +156,19 @@ public class HomeSliceAdapter extends BaseRecyclerViewAdapter {
         HeaderHolder(View itemView, HomeSliceAdapter messageAdapter) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-//            itemView.setOnClickListener(v -> messageAdapter.onItemHolderClick(this));
+            tvCommentCount.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemHolderClick(0,getLayoutPosition(),false);
+                }
+            });
+            tvThumbsCount.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    onItemHolderClick(1, getLayoutPosition(),false);
+                }
+            });
         }
-    }
-    public interface HomeDetailClick{
-        void onCommandClick();
-        void onThumbChecked(boolean isChecked);
     }
 
 }

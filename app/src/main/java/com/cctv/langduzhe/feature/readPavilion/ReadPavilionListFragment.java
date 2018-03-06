@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 
 import com.cctv.langduzhe.R;
 import com.cctv.langduzhe.base.BaseFragment;
@@ -16,7 +15,6 @@ import com.cctv.langduzhe.contract.LikeView;
 import com.cctv.langduzhe.contract.readPavilion.ReadPavilionPresenter;
 import com.cctv.langduzhe.contract.readPavilion.ReadPavilionView;
 import com.cctv.langduzhe.data.entites.HomeVideoEntity;
-import com.cctv.langduzhe.data.entites.PavilionEntity;
 import com.cctv.langduzhe.eventMsg.CollectEvent;
 import com.cctv.langduzhe.util.ToastUtils;
 import com.cctv.langduzhe.adapter.ReadPavilionAdapter;
@@ -25,7 +23,6 @@ import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -37,21 +34,22 @@ import butterknife.Unbinder;
  * on 2018/1/21.
  * 说明：朗读亭展示列表Fragment
  */
-public class ReadPavilionListFragment extends BaseFragment  implements PullLoadMoreRecyclerView.PullLoadMoreListener,
-        BaseRecyclerViewAdapter.OnItemClickListener ,ReadPavilionView, LikeView{
+public class ReadPavilionListFragment extends BaseFragment implements PullLoadMoreRecyclerView.PullLoadMoreListener,
+        BaseRecyclerViewAdapter.OnItemClickListener, ReadPavilionView, LikeView {
 
     private int flag;
     private int pageNum;
 
     private ReadPavilionPresenter presenter;
     private LikePresenter likePresenter;
-    private int oprPosition;
+    private int optPosition;
+
     @Override
     public void setArguments(@Nullable Bundle args) {
         super.setArguments(args);
         if (args == null) {
             flag = 0;
-        }else {
+        } else {
             flag = args.getInt("data_type", 0);
         }
     }
@@ -93,7 +91,7 @@ public class ReadPavilionListFragment extends BaseFragment  implements PullLoadM
             order = "";
         } else if (flag == 1) {
             order = "hot";
-        }else {
+        } else {
             order = "";
         }
         onRefresh();
@@ -108,8 +106,13 @@ public class ReadPavilionListFragment extends BaseFragment  implements PullLoadM
 
     @Subscribe
     public void onEvent(CollectEvent collectEvent) {
-        onRefresh();
+        if (collectEvent.type.equals("readPavilion")) {
+
+            readPavilionAdapter.getList().set(optPosition, collectEvent.collected);
+//            readPavilionAdapter.notifyDataSetChanged();
+        }
     }
+
     @Override
     public void onRefresh() {
         pageNum = 0;
@@ -122,26 +125,26 @@ public class ReadPavilionListFragment extends BaseFragment  implements PullLoadM
 
     @Override
     public void onLoadMore() {
-        pageNum +=1;
+        pageNum += 1;
         if (flag != 2) {
             presenter.getMediaList(pageNum, order);
         } else {
             presenter.getMineReadList(pageNum);
         }
         pullRefreshList.setPullLoadMoreCompleted();
-        ToastUtils.showShort(context,"没有更多");
+        ToastUtils.showShort(context, "没有更多");
     }
 
     @Override
-    public void onItemClick(int optType, int position,boolean yesOrNo) {
-        oprPosition = position;
+    public void onItemClick(int optType, int position, boolean yesOrNo) {
+        optPosition = position;
         if (optType == 1) {
             if (yesOrNo) {
                 likePresenter.likeRead(readPavilionAdapter.getList().get(position).getId());
-            }else {
+            } else {
                 likePresenter.unlikeRead(readPavilionAdapter.getList().get(position).getId());
             }
-        }else {
+        } else {
             Bundle bundle = new Bundle();
             bundle.putSerializable("video", readPavilionAdapter.getList().get(position));
             bundle.putString("type", readPavilionAdapter.getList().get(position).getType());
@@ -171,7 +174,7 @@ public class ReadPavilionListFragment extends BaseFragment  implements PullLoadM
 
     @Override
     public void likeResult(boolean isLike) {
-        readPavilionAdapter.getList().get(oprPosition).setIsCollect(isLike ? 1 : 0);
-        readPavilionAdapter.notifyDataSetChanged();
+        readPavilionAdapter.getList().get(optPosition).setIsCollect(isLike ? 1 : 0);
+//        readPavilionAdapter.notifyDataSetChanged();
     }
 }

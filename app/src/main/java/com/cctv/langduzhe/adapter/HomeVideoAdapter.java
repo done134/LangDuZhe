@@ -49,11 +49,11 @@ public class HomeVideoAdapter extends BaseRecyclerViewAdapter<HomeVideoAdapter.V
         PicassoUtils.loadImageByurl(context,videoEntity.getImg(),holder.ivHomeVideoCover);
         holder.tvHomeVideoTag.setText("第"+videoEntity.getSeasonNum()+"季");
         holder.tvCommentCount.setText(String.valueOf(videoEntity.getCommentSum()));
-        holder.tvThumbsCount.setText(String.valueOf(videoEntity.getCollectSum()));
+        holder.tvThumbsCount.setText(String.valueOf(videoEntity.getLikeSum()));
         holder.tvVideoPlayCount.setText(String.valueOf(videoEntity.getWatchSum()));
         holder.tvVideoLength.setText(DateConvertUtils.secToTime(videoEntity.getDuration()));
         holder.tvVideoTitle.setText(videoEntity.getTitle());
-        holder.tvThumbsCount.setChecked(videoEntity.getIsCollect()==1);
+        holder.tvThumbsCount.setChecked(videoEntity.getIsLike()==1);
 
     }
 
@@ -77,6 +77,10 @@ public class HomeVideoAdapter extends BaseRecyclerViewAdapter<HomeVideoAdapter.V
     @Override
     public int getItemCount() {
         return list == null ? 0 : list.size();
+    }
+
+    public List<HomeVideoEntity.DataBean>  getList() {
+        return list;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

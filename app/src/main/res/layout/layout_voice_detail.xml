@@ -83,7 +83,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="20dp"
-            android:text="286"
+            android:text="28"
             android:textSize="12sp"
             android:includeFontPadding="false"
             android:drawablePadding="4dp"

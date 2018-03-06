@@ -190,6 +190,6 @@ public interface ApiService {
      * 方法说明：取消点赞朗读作品
      */
     @DELETE("api/like")
-    Observable<String> unlikeRead(@Query("mediaIds") String mediaId);
+    Observable<String> unlikeRead(@Query("mediaId") String mediaId);
 }
 

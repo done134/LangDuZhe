@@ -150,7 +150,7 @@ public class MyCollectionAdapter extends ReadPavilionAdapter {
         notifyDataSetChanged();
     }
 
-    static class VoiceHolder extends RecyclerView.ViewHolder {
+     class VoiceHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.iv_service_people_icon)
         CircleImageView ivServicePeopleIcon;
         @BindView(R.id.tv_uploader_name)
@@ -172,11 +172,28 @@ public class MyCollectionAdapter extends ReadPavilionAdapter {
         VoiceHolder(View itemView, MyCollectionAdapter messageAdapter) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-//            itemView.setOnClickListener(v -> messageAdapter.onItemHolderClick(this));
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemHolderClick(2, getLayoutPosition(), false);
+                }
+            });
+            tvCommentCount.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemHolderClick(0,getLayoutPosition(),false);
+                }
+            });
+            tvThumbsCount.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    onItemHolderClick(1, getLayoutPosition(),false);
+                }
+            });
         }
     }
 
-    static class VideoHolder extends RecyclerView.ViewHolder {
+     class VideoHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.iv_service_people_icon)
         CircleImageView ivServicePeopleIcon;
@@ -200,7 +217,24 @@ public class MyCollectionAdapter extends ReadPavilionAdapter {
         VideoHolder(View itemView, MyCollectionAdapter messageAdapter) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-//            itemView.setOnClickListener(v -> messageAdapter.onItemHolderClick(this));
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemHolderClick(2, getLayoutPosition(), false);
+                }
+            });
+            tvCommentCount.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemHolderClick(0,getLayoutPosition(),false);
+                }
+            });
+            tvThumbsCount.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    onItemHolderClick(1, getLayoutPosition(),false);
+                }
+            });
         }
     }
 

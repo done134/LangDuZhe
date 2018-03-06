@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -58,19 +59,21 @@ public class ReadPavilionAdapter extends BaseRecyclerViewAdapter {
         //音频
         if (holder instanceof VoiceHolder) {
             ((VoiceHolder) holder).tvCommentCount.setText(String.valueOf(dataBean.getCommentSum()));
-            ((VoiceHolder) holder).tvThumbsCount.setText(String.valueOf(dataBean.getCollectSum()));
+            ((VoiceHolder) holder).tvThumbsCount.setText(String.valueOf(dataBean.getLikeSum()));
             ((VoiceHolder) holder).tvVideoPlayCount.setText(String.valueOf(dataBean.getWatchSum()));
             ((VoiceHolder) holder).tvUploaderName.setText(dataBean.getReaderName());
             ((VoiceHolder) holder).tvUploadTime.setText(dataBean.getCreateDate());
             ((VoiceHolder) holder).tvVoiceTitle.setText(dataBean.getTitle());
+            ((VoiceHolder) holder).tvThumbsCount.setChecked(dataBean.getIsLike()==1);
         } else {
             //视频
             ((VideoHolder) holder).tvCommentCount.setText(String.valueOf(dataBean.getCommentSum()));
-            ((VideoHolder) holder).tvThumbsCount.setText(String.valueOf(dataBean.getCollectSum()));
+            ((VideoHolder) holder).tvThumbsCount.setText(String.valueOf(dataBean.getLikeSum()));
             ((VideoHolder) holder).tvVideoPlayCount.setText(String.valueOf(dataBean.getWatchSum()));
             ((VideoHolder) holder).tvUploaderName.setText(dataBean.getReaderName());
             ((VideoHolder) holder).tvUploadTime.setText(dataBean.getCreateDate());
             ((VideoHolder) holder).tvVideoTitle.setText(dataBean.getTitle());
+            ((VideoHolder) holder).tvThumbsCount.setChecked(dataBean.getIsLike() == 1);
         }
     }
 
@@ -106,7 +109,7 @@ public class ReadPavilionAdapter extends BaseRecyclerViewAdapter {
         }
     }
 
-    static class VoiceHolder extends RecyclerView.ViewHolder {
+     class VoiceHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.iv_service_people_icon)
         CircleImageView ivServicePeopleIcon;
@@ -126,11 +129,28 @@ public class ReadPavilionAdapter extends BaseRecyclerViewAdapter {
         VoiceHolder(View itemView, ReadPavilionAdapter messageAdapter) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-//            itemView.setOnClickListener(v -> messageAdapter.onItemHolderClick(this));
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemHolderClick(2, getLayoutPosition(), false);
+                }
+            });
+            tvCommentCount.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemHolderClick(0,getLayoutPosition(),false);
+                }
+            });
+            tvThumbsCount.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    onItemHolderClick(1, getLayoutPosition(),false);
+                }
+            });
         }
     }
 
-    static class VideoHolder extends RecyclerView.ViewHolder {
+     class VideoHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.iv_service_people_icon)
         CircleImageView ivServicePeopleIcon;
@@ -152,7 +172,24 @@ public class ReadPavilionAdapter extends BaseRecyclerViewAdapter {
         VideoHolder(View itemView, ReadPavilionAdapter messageAdapter) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-//            itemView.setOnClickListener(v -> messageAdapter.onItemHolderClick(this));
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemHolderClick(2, getLayoutPosition(), false);
+                }
+            });
+            tvCommentCount.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemHolderClick(0,getLayoutPosition(),false);
+                }
+            });
+            tvThumbsCount.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    onItemHolderClick(1, getLayoutPosition(),false);
+                }
+            });
         }
     }
 }

@@ -11,7 +11,13 @@ import android.widget.TextView;
 
 import com.cctv.langduzhe.R;
 import com.cctv.langduzhe.base.BaseActivity;
+import com.cctv.langduzhe.data.preference.PreferenceContents;
+import com.cctv.langduzhe.data.preference.SPUtils;
+import com.cctv.langduzhe.eventMsg.QuitEvent;
+import com.cctv.langduzhe.util.CacheUtil;
 import com.cctv.langduzhe.view.widget.SwitchView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -50,6 +56,13 @@ public class SettingsActivity extends BaseActivity {
         setContentView(R.layout.activity_settings);
         ButterKnife.bind(this);
         tvTitle.setText("设置");
+        try {
+            tvCacheSize.setText(CacheUtil.getTotalCacheSize(this));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        switchNotWifiNotice.setOpened((Boolean) SPUtils.get(this, PreferenceContents.NO_WIFI_NOTICE, false));
+
     }
 
     @OnClick({R.id.btn_back, R.id.switch_not_wifi_notice, R.id.rl_goto_feedback, R.id.tv_cache_size, R.id.rl_clear_cache, R.id.rl_version_info, R.id.btn_logout})
@@ -61,6 +74,7 @@ public class SettingsActivity extends BaseActivity {
             case R.id.switch_not_wifi_notice:
                 //开关
                 boolean isOpened = switchNotWifiNotice.isOpened();
+                SPUtils.put(this, PreferenceContents.NO_WIFI_NOTICE, isOpened);
                 break;
             case R.id.rl_goto_feedback:
                 //意见反馈
@@ -69,12 +83,13 @@ public class SettingsActivity extends BaseActivity {
             case R.id.rl_clear_cache:
                 //清理缓存
                 showProgress();
+                CacheUtil.clearAllCache(this);
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        dismissProgress();
                         showToast("缓存已清理");
                         tvCacheSize.setText("0KB");
-                        dismissProgress();
                     }
                 },1000);
                 break;
@@ -83,6 +98,8 @@ public class SettingsActivity extends BaseActivity {
                 break;
             case R.id.btn_logout:
                 //退出登录
+                EventBus.getDefault().post(new QuitEvent());
+                SPUtils.put(this, PreferenceContents.TOKEN, "");
                 toLogin();
                 break;
         }

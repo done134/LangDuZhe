@@ -14,15 +14,20 @@ import android.widget.TextView;
 import com.cctv.langduzhe.R;
 import com.cctv.langduzhe.base.BaseActivity;
 import com.cctv.langduzhe.base.BaseRecyclerViewAdapter;
+import com.cctv.langduzhe.contract.LikePresenter;
+import com.cctv.langduzhe.contract.LikeView;
 import com.cctv.langduzhe.contract.home.HomeDetailPresenter;
 import com.cctv.langduzhe.contract.home.HomeDetailView;
 import com.cctv.langduzhe.data.entites.CommandEntity;
 import com.cctv.langduzhe.data.entites.HomeVideoEntity;
 import com.cctv.langduzhe.adapter.DialogCommandAdapter;
 import com.cctv.langduzhe.adapter.HomeSliceAdapter;
+import com.cctv.langduzhe.eventMsg.CollectEvent;
 import com.cctv.langduzhe.feature.CommentActivity;
 import com.cctv.langduzhe.feature.readPavilion.ReadPavilionDetailActivity;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +41,7 @@ import butterknife.OnClick;
  * on 2018/1/21.
  * 说明：首页视频详情页
  */
-public class HomeVideoDetailActivity extends BaseActivity implements HomeSliceAdapter.HomeDetailClick ,HomeDetailView, BaseRecyclerViewAdapter.OnItemClickListener {
+public class HomeVideoDetailActivity extends BaseActivity implements HomeDetailView, BaseRecyclerViewAdapter.OnItemClickListener,LikeView {
     @BindView(R.id.btn_back)
     ImageButton btnBack;
     @BindView(R.id.tv_title)
@@ -61,10 +66,10 @@ public class HomeVideoDetailActivity extends BaseActivity implements HomeSliceAd
      * 是否弹窗评论在弹出状态
      */
     private boolean isDialogShow;
-    private List<HomeVideoEntity> list = new ArrayList<>();
     private HomeSliceAdapter homeSliceAdapter;
     private DialogCommandAdapter commandAdapter;
     private HomeDetailPresenter presenter;
+    private LikePresenter likePresenter;
 
     private HomeVideoEntity.DataBean videoEntity;
     private int commentPage,videoPage;
@@ -137,7 +142,7 @@ public class HomeVideoDetailActivity extends BaseActivity implements HomeSliceAd
             }
         });
         rvHomeSliceList.setCustomGridManager(gridLayoutManager);
-        homeSliceAdapter = new HomeSliceAdapter(this);
+        homeSliceAdapter = new HomeSliceAdapter();
         homeSliceAdapter.setVideoInfo(videoEntity);
         homeSliceAdapter.setData(null);
         homeSliceAdapter.setOnItemClickListener(this::onItemClick);
@@ -228,25 +233,11 @@ public class HomeVideoDetailActivity extends BaseActivity implements HomeSliceAd
         }
     }
 
-    /**
-     * 点击评论按钮
-     */
-    @Override
-    public void onCommandClick() {
-        showDialogCommand();
-    }
-
-    /**
-     * 点赞
-     */
-    @Override
-    public void onThumbChecked(boolean isChecked) {
-        presenter.collectVideo(videoEntity.getId());
-    }
 
     @Override
     public void setPresenter() {
         presenter = new HomeDetailPresenter(this, this);
+        likePresenter = new LikePresenter(this, this);
     }
 
     @Override
@@ -293,15 +284,39 @@ public class HomeVideoDetailActivity extends BaseActivity implements HomeSliceAd
 
     @Override
     public void onItemClick(int optType, int position, boolean yesOrNo) {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("video",homeSliceAdapter.getItemInPosition(position));
-        bundle.putString("type","video");
-        toActivity(ReadPavilionDetailActivity.class, bundle);
+        if (optType == 0) {
+            showDialogCommand();
+        } else if (optType == 1) {
+            if (yesOrNo) {
+                likePresenter.likeRead(videoEntity.getId());
+            } else {
+                likePresenter.unlikeRead(videoEntity.getId());
+            }
+        } else {
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("video", homeSliceAdapter.getItemInPosition(position));
+            bundle.putString("type", "video");
+            toActivity(ReadPavilionDetailActivity.class, bundle);
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         homeSliceAdapter.pauseVideo();
+    }
+
+    @Override
+    public void likeResult(boolean isLike) {
+        videoEntity.setIsLike(isLike ? 1 : 0);
+        homeSliceAdapter.setVideoInfo(videoEntity);
+        int thumbSum = videoEntity.getLikeSum();
+        if (isLike) {
+            videoEntity.setLikeSum(thumbSum+1);
+        } else {
+            videoEntity.setLikeSum(thumbSum-1);
+        }
+        homeSliceAdapter.notifyDataSetChanged();
+        EventBus.getDefault().post(new CollectEvent(videoEntity,"home"));
     }
 }

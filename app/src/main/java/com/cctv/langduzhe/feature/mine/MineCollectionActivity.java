@@ -13,11 +13,14 @@ import com.cctv.langduzhe.base.BaseActivity;
 import com.cctv.langduzhe.base.BaseRecyclerViewAdapter;
 import com.cctv.langduzhe.contract.CollectPresenter;
 import com.cctv.langduzhe.contract.CollectView;
+import com.cctv.langduzhe.contract.LikePresenter;
+import com.cctv.langduzhe.contract.LikeView;
 import com.cctv.langduzhe.contract.mine.MineCollectPresenter;
 import com.cctv.langduzhe.contract.mine.MineCollectView;
 import com.cctv.langduzhe.data.entites.HomeVideoEntity;
 import com.cctv.langduzhe.data.entites.PavilionEntity;
 import com.cctv.langduzhe.eventMsg.CollectEvent;
+import com.cctv.langduzhe.feature.home.HomeVideoDetailActivity;
 import com.cctv.langduzhe.feature.readPavilion.ReadPavilionDetailActivity;
 import com.cctv.langduzhe.util.ToastUtils;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
@@ -38,7 +41,7 @@ import butterknife.OnClick;
  * 说明：我的收藏页面
  */
 public class MineCollectionActivity extends BaseActivity implements BaseRecyclerViewAdapter.OnItemClickListener,
-        PullLoadMoreRecyclerView.PullLoadMoreListener ,MineCollectView,CollectView{
+        PullLoadMoreRecyclerView.PullLoadMoreListener ,MineCollectView,CollectView,LikeView{
 
     @BindView(R.id.btn_back)
     ImageButton btnBack;
@@ -64,6 +67,10 @@ public class MineCollectionActivity extends BaseActivity implements BaseRecycler
 
     private CollectPresenter collectPresenter;
     private MineCollectPresenter presenter;
+
+    private int optPosition;
+    private LikePresenter likePresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,10 +95,20 @@ public class MineCollectionActivity extends BaseActivity implements BaseRecycler
 
     @Override
     public void onItemClick(int optType, int position, boolean yseOrNo) {
-        Bundle bundle = new Bundle();
-        bundle.putString("type",myCollectionAdapter.getItemInPosition(position).getType());
-        bundle.putSerializable("video", myCollectionAdapter.getItemInPosition(position));
-        toActivity(ReadPavilionDetailActivity.class,bundle);
+        optPosition = position;
+        if (optType == 1) {
+            String mediasId = myCollectionAdapter.getItemInPosition(position).getId();
+            if (yseOrNo) {
+                likePresenter.likeRead(mediasId);
+            } else {
+                likePresenter.unlikeRead(mediasId);
+            }
+        } else {
+            Bundle bundle = new Bundle();
+            bundle.putString("type", myCollectionAdapter.getItemInPosition(position).getType());
+            bundle.putSerializable("video", myCollectionAdapter.getItemInPosition(position));
+            toActivity(ReadPavilionDetailActivity.class, bundle);
+        }
     }
 
     @Override
@@ -157,6 +174,7 @@ public class MineCollectionActivity extends BaseActivity implements BaseRecycler
     public void setPresenter() {
         presenter = new MineCollectPresenter(this, this);
         collectPresenter = new CollectPresenter(this, this);
+        likePresenter = new LikePresenter(this, this);
     }
 
     @Override
@@ -172,7 +190,8 @@ public class MineCollectionActivity extends BaseActivity implements BaseRecycler
 
     @Subscribe
     public void onEvent(CollectEvent collectEvent) {
-        onRefresh();
+        myCollectionAdapter.getList().set(optPosition, collectEvent.collected);
+        myCollectionAdapter.notifyDataSetChanged();
     }
     @Override
     public void collectSucceed() {
@@ -198,5 +217,18 @@ public class MineCollectionActivity extends BaseActivity implements BaseRecycler
     protected void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void likeResult(boolean isLike) {
+        myCollectionAdapter.getItemInPosition(optPosition).setIsLike(isLike ? 1 : 0);
+
+        int thumbSum = myCollectionAdapter.getItemInPosition(optPosition).getLikeSum();
+        if (isLike) {
+            myCollectionAdapter.getItemInPosition(optPosition).setLikeSum(thumbSum+1);
+        } else {
+            myCollectionAdapter.getItemInPosition(optPosition).setLikeSum(thumbSum-1);
+        }
+//        myCollectionAdapter.notifyDataSetChanged();
     }
 }

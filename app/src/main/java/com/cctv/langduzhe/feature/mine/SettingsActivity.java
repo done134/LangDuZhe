@@ -78,19 +78,17 @@ public class SettingsActivity extends BaseActivity {
                 break;
             case R.id.rl_goto_feedback:
                 //意见反馈
+                toActivity(FeedbackActivity.class);
                 break;
             case R.id.tv_cache_size:
             case R.id.rl_clear_cache:
                 //清理缓存
                 showProgress();
                 CacheUtil.clearAllCache(this);
-                new Handler().postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        dismissProgress();
-                        showToast("缓存已清理");
-                        tvCacheSize.setText("0KB");
-                    }
+                new Handler().postDelayed(() -> {
+                    dismissProgress();
+                    showToast("缓存已清理");
+                    tvCacheSize.setText("0KB");
                 },1000);
                 break;
             case R.id.rl_version_info:

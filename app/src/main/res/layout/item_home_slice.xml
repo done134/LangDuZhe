@@ -13,6 +13,12 @@
          android:id="@+id/iv_slice_cover"
          android:layout_width="match_parent"
          android:layout_height="120dp" />
+     <ImageView
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:src="@mipmap/shape_cover"
+         android:background="@color/white"
+         android:scaleType="fitEnd"/>
 
      <TextView
          android:id="@+id/tv_slice_time"

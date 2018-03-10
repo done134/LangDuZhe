@@ -16,7 +16,15 @@
         android:layout_marginTop="15dp"
         android:scaleType="centerCrop"
         android:background="@color/black"/>
-
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="15dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/shape_cover"
+            android:background="@color/black"/>
         <TextView
             android:id="@+id/tv_home_video_tag"
             android:layout_width="45dp"

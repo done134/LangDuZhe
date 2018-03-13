@@ -40,11 +40,23 @@
     </LinearLayout>
 
 
-    <com.shuyu.waveview.AudioWaveView
-        android:id="@+id/audioWave"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        waveview:waveColor="#FAFFFFFF" />
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.shuyu.waveview.AudioWaveView
+            android:id="@+id/audioWave"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            waveview:waveColor="#FAFFFFFF" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+        </LinearLayout>
+    </FrameLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -78,12 +90,13 @@
             android:layout_marginRight="100dp"
             android:drawableLeft="@mipmap/comment_icon"/>
 
+
         <android.support.v7.widget.AppCompatCheckBox
             android:id="@+id/tv_thumbs_count"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="20dp"
-            android:text="28"
+            android:text="286"
             android:textSize="12sp"
             android:includeFontPadding="false"
             android:drawablePadding="4dp"
@@ -92,7 +105,8 @@
             android:gravity="center"
             android:checked="true"
             android:maxLines="1"
-            android:button="@drawable/selector_thumb"/>
+            android:button="@null"
+            android:drawableLeft="@drawable/selector_thumb"/>
     </RelativeLayout>
     <View
         android:layout_width="match_parent"

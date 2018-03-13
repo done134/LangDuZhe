@@ -7,24 +7,27 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <ImageView
-        android:id="@+id/iv_home_video_cover"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="180dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="15dp"
-        android:scaleType="centerCrop"
-        android:background="@color/black"/>
+        android:layout_height="wrap_content">
         <ImageView
+            android:id="@+id/iv_home_video_cover"
             android:layout_width="match_parent"
             android:layout_height="180dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="15dp"
             android:scaleType="centerCrop"
-            android:src="@mipmap/shape_cover"
             android:background="@color/black"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:scaleType="centerCrop"
+            android:layout_gravity="bottom"
+            android:src="@mipmap/shape_cover"/>
+    </FrameLayout>
         <TextView
             android:id="@+id/tv_home_video_tag"
             android:layout_width="45dp"
@@ -40,7 +43,9 @@
             android:id="@+id/tv_video_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="10dp"
             android:textSize="15sp"
             android:textColor="@color/white"
             android:textStyle="bold"
@@ -49,7 +54,9 @@
             android:id="@+id/tv_video_length"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="10dp"
             android:textSize="14sp"
             android:textColor="@color/white"
             android:layout_gravity="bottom|end"/>
@@ -102,7 +109,8 @@
             android:gravity="center"
             android:checked="true"
             android:maxLines="1"
-            android:button="@drawable/selector_thumb"/>
+            android:button="@null"
+            android:drawableLeft="@drawable/selector_thumb"/>
     </RelativeLayout>
 
     <View

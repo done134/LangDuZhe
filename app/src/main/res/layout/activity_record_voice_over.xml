@@ -10,21 +10,16 @@
     <com.shuyu.waveview.AudioWaveView
         android:id="@+id/voice_view"
         android:layout_width="match_parent"
-        android:layout_height="200dp"/>
+        android:layout_height="150dp"/>
 
 
-    <SeekBar
-        android:id="@+id/seek_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/playBtn"
-        android:layout_marginTop="10dp" />
+    <include layout="@layout/layout_voice_seekbar" />
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="40dp"
         android:gravity="center_vertical"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"

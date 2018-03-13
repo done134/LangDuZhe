@@ -13,8 +13,10 @@
         android:layout_height="200dp"
         android:textColorHint="@color/c_8c8c8c"
         android:textSize="14sp"
+        android:maxLength="500"
         android:padding="10dp"
         android:hint="请输入反馈内容"
+        android:gravity="top"
         android:textColor="@color/white"
         android:background="@drawable/shape_round_rectangle_c19"
         android:layout_margin="15dp"/>

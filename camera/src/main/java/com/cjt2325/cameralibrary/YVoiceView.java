@@ -303,4 +303,9 @@ public class YVoiceView extends FrameLayout implements VoiceView{
     public void setRecordLisenter(RecordVoiceListener recordLisenter) {
         this.recordLisenter = recordLisenter;
     }
+
+
+    public void setLeftClickListener(ClickListener clickListener) {
+        this.leftClickListener = clickListener;
+    }
 }

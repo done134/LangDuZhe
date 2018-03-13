@@ -26,6 +26,9 @@ import static com.cjt2325.cameralibrary.JCameraView.BUTTON_STATE_BOTH;
  */
 public class CaptureButton extends android.support.v7.widget.AppCompatCheckBox {
 
+    public final static int VOICE = 1;
+    public final static int VIDEO = 2;
+
     private int state;              //当前按钮状态
     private int button_state;       //按钮可执行的功能状态（拍照,录制,两者）
 
@@ -41,9 +44,13 @@ public class CaptureButton extends android.support.v7.widget.AppCompatCheckBox {
     private RecordCountDownTimer timer;             //计时器
 
 
-    public CaptureButton(Context context) {
+    public CaptureButton(Context context, int type) {
         super(context);
-        setButtonDrawable(R.drawable.selector_btn_record);
+        if (type == VOICE) {
+            setButtonDrawable(R.drawable.selector_btn_record_voice);
+        } else {
+            setButtonDrawable(R.drawable.selector_btn_record);
+        }
         state = STATE_IDLE;                //初始化为空闲状态
         button_state = BUTTON_STATE_BOTH;  //初始化按钮为可录制可拍照
         LogUtil.i("CaptureButtom start");

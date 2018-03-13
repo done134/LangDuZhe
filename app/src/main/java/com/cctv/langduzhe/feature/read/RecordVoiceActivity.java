@@ -95,6 +95,7 @@ public class RecordVoiceActivity extends BaseActivity {
                 toActivity(RecordVoiceOverActivity.class, videoBundle);
             }
         });
+        voiceView.setLeftClickListener(this::finish);
 
     }
     @Override

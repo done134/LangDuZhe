@@ -32,13 +32,12 @@ public class TypeButton extends View{
     private float index;
     private RectF rectF;
 
-    public TypeButton(Context context) {
-        super(context);
-    }
+    private int captureType;
 
-    public TypeButton(Context context, int type, int size) {
+    public TypeButton(Context context, int type, int size, int captureType) {
         super(context);
         this.button_type = type;
+        this.captureType = captureType;
         button_size = size;
         button_radius = size / 2.0f;
         center_X = size / 2.0f;
@@ -66,7 +65,11 @@ public class TypeButton extends View{
         }
         //如果类型为确认，则绘制绿色勾
         if (button_type == TYPE_CONFIRM) {
-            setBackgroundResource(R.mipmap.record_finish_icon);
+            if (captureType == 1) {
+                setBackgroundResource(R.mipmap.btn_record_voice_finish);
+            } else {
+                setBackgroundResource(R.mipmap.record_finish_icon);
+            }
         }
     }
 }

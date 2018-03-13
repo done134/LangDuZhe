@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
@@ -18,6 +19,7 @@ import com.cctv.langduzhe.contract.PostView;
 import com.cctv.langduzhe.contract.read.RecordVoiceOverPresenter;
 import com.cctv.langduzhe.contract.read.RecordVoiceOverView;
 import com.cctv.langduzhe.feature.MainActivity;
+import com.cctv.langduzhe.util.DateConvertUtils;
 import com.piterwilson.audio.MP3RadioStreamDelegate;
 import com.piterwilson.audio.MP3RadioStreamPlayer;
 import com.shuyu.waveview.AudioWaveView;
@@ -39,7 +41,7 @@ import static com.cctv.langduzhe.util.CommonUtil.getScreenWidth;
  * on 2018/2/26.
  * 说明：
  */
-public class RecordVoiceOverActivity extends BaseActivity implements RecordVoiceOverView, MP3RadioStreamDelegate,PostView {
+public class RecordVoiceOverActivity extends BaseActivity implements RecordVoiceOverView, MP3RadioStreamDelegate, PostView {
 
     private final String TAG = "RecordVoiceOverActivity";
 
@@ -55,19 +57,26 @@ public class RecordVoiceOverActivity extends BaseActivity implements RecordVoice
     Button btnSaveTheLocal;
     @BindView(R.id.btn_post_video)
     Button btnPostVideo;
-    @BindView(R.id.seek_bar)
+    @BindView(R.id.tv_current_progress)
+    TextView tvCurrentProgress;
+    @BindView(R.id.seekbar_voice)
     SeekBar seekBar;
+    @BindView(R.id.tv_total_progress)
+    TextView tvTotalProgress;
+    @BindView(R.id.cb_play_pause)
+    CheckBox cbPlayPause;
 
     private MP3RadioStreamPlayer player;
 
     private Timer timer;
 
-    private boolean playeEnd;
+    private boolean playEnd;
 
     private boolean seekBarTouch;
     private String voiceUrl;
     private RecordVoiceOverPresenter presenter;
     private PostPresenter postPresenter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,18 +90,11 @@ public class RecordVoiceOverActivity extends BaseActivity implements RecordVoice
     }
 
     private void initStatus() {
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                play();
-            }
-        }, 1000);
-        seekBar.setEnabled(false);
-
+        new Handler().postDelayed(this::play, 100);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
+                tvCurrentProgress.setText(DateConvertUtils.secToTime(player.getCurPosition()));
             }
 
             @Override
@@ -103,7 +105,7 @@ public class RecordVoiceOverActivity extends BaseActivity implements RecordVoice
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 seekBarTouch = false;
-                if (!playeEnd) {
+                if (!playEnd) {
                     player.seekTo(seekBar.getProgress());
                 }
             }
@@ -113,7 +115,7 @@ public class RecordVoiceOverActivity extends BaseActivity implements RecordVoice
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                if (playeEnd || player == null || !seekBar.isEnabled()) {
+                if (playEnd || player == null || !seekBar.isEnabled()) {
                     return;
                 }
                 long position = player.getCurPosition();
@@ -126,38 +128,60 @@ public class RecordVoiceOverActivity extends BaseActivity implements RecordVoice
 
     @Override
     public void setPresenter() {
-        presenter = new RecordVoiceOverPresenter(this,this);
+        presenter = new RecordVoiceOverPresenter(this, this);
         postPresenter = new PostPresenter(this, this);
     }
 
-    @OnClick({R.id.btn_back, R.id.btn_save_the_local, R.id.btn_post_video})
+    @OnClick({R.id.btn_back, R.id.btn_save_the_local, R.id.btn_post_video,R.id.cb_play_pause})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_back:
                 onBackPressed();
                 break;
             case R.id.btn_save_the_local:
-                String name  = etVideoName.getText().toString().trim();
+                String name = etVideoName.getText().toString().trim();
                 if (TextUtils.isEmpty(name)) {
                     showToast("请输入作品名称！");
                     return;
                 }
-                presenter.saveToSDCard(voiceUrl,name);
+                presenter.saveToSDCard(voiceUrl, name);
                 toActivity(MainActivity.class);
                 showToast("已保存在本地");
                 break;
             case R.id.btn_post_video:
-                String title  = etVideoName.getText().toString().trim();
+                String title = etVideoName.getText().toString().trim();
                 if (TextUtils.isEmpty(title)) {
                     showToast("请输入作品名称！");
                     return;
                 }
-                postPresenter.postFile(PostPresenter.VOICE_TYPE,voiceUrl);
+                postPresenter.postFile(PostPresenter.VOICE_TYPE, voiceUrl);
                 showProgress();
+                break;
+            case R.id.cb_play_pause:
+                playOrPause();
                 break;
         }
     }
 
+    /**
+     * 播放暂停按钮
+     */
+    private void playOrPause() {
+        if (playEnd) {
+            stop();
+            seekBar.setEnabled(true);
+            play();
+            return;
+        }
+
+        if (player.isPause()) {
+            player.setPause(false);
+            seekBar.setEnabled(false);
+        } else {
+            player.setPause(true);
+            seekBar.setEnabled(true);
+        }
+    }
 
     private void play() {
         if (player != null) {
@@ -198,27 +222,21 @@ public class RecordVoiceOverActivity extends BaseActivity implements RecordVoice
     @Override
     public void onRadioPlayerPlaybackStarted(final MP3RadioStreamPlayer player) {
         Log.i(TAG, "onRadioPlayerPlaybackStarted");
-        this.runOnUiThread(new Runnable() {
-
-            @Override
-            public void run() {
-                playeEnd = false;
-                seekBar.setMax((int) player.getDuration());
-                seekBar.setEnabled(true);
-            }
+        this.runOnUiThread(() -> {
+            playEnd = false;
+            seekBar.setMax((int) player.getDuration());
+            seekBar.setEnabled(true);
+            tvTotalProgress.setText(DateConvertUtils.secToTime(player.getDuration()));
         });
     }
 
     @Override
     public void onRadioPlayerStopped(MP3RadioStreamPlayer player) {
         Log.i(TAG, "onRadioPlayerStopped");
-        this.runOnUiThread(new Runnable() {
-
-            @Override
-            public void run() {
-                playeEnd = true;
-                seekBar.setEnabled(false);
-            }
+        this.runOnUiThread(() -> {
+            playEnd = true;
+            seekBar.setEnabled(false);
+            cbPlayPause.setChecked(true);
         });
 
     }
@@ -226,13 +244,9 @@ public class RecordVoiceOverActivity extends BaseActivity implements RecordVoice
     @Override
     public void onRadioPlayerError(MP3RadioStreamPlayer player) {
         Log.i(TAG, "onRadioPlayerError");
-        this.runOnUiThread(new Runnable() {
-
-            @Override
-            public void run() {
-                playeEnd = false;
-                seekBar.setEnabled(false);
-            }
+        this.runOnUiThread(() -> {
+            playEnd = false;
+            seekBar.setEnabled(false);
         });
 
     }
@@ -240,25 +254,25 @@ public class RecordVoiceOverActivity extends BaseActivity implements RecordVoice
     @Override
     public void onRadioPlayerBuffering(MP3RadioStreamPlayer player) {
         Log.i(TAG, "onRadioPlayerBuffering");
-        this.runOnUiThread(new Runnable() {
-
-            @Override
-            public void run() {
-                seekBar.setEnabled(false);
-            }
-        });
+        this.runOnUiThread(() -> seekBar.setEnabled(false));
 
     }
+
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        voiceView.stopView();
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
         stop();
     }
 
     @Override
     public void postSucceed(String fileName, int duration, long fileSize) {
         dismissProgress();
-        presenter.saveVoice(fileName,etVideoName.getText().toString().trim(),duration,fileSize);
+        presenter.saveVoice(fileName, etVideoName.getText().toString().trim(), duration, fileSize);
     }
 }

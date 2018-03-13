@@ -14,4 +14,7 @@
         <attr name="iconRight"/>
         <attr name="duration_max"/>
     </declare-styleable>
+    <declare-styleable name="CaptureLayout">
+        <attr name="captureType" format="integer"/>
+    </declare-styleable>
 </resources>

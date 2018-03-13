@@ -31,15 +31,13 @@ public class FeedBackPresenter implements BasePresenter {
     /**
      * @author 尹振东
      * create at 2018/2/11 下午3:17
-     * 方法说明：获取验证码
+     * 方法说明：提交意见反馈
      */
     public void feedback(String feedbackContent) {
-        Observable<String> observable = ApiClient.apiService.collectionRead(feedbackContent);
+        Observable<String> observable = ApiClient.apiService.submitFeedBack(feedbackContent);
         Subscription subscription = observable
                 .compose(RxSchedulerUtils.normalSchedulersTransformer())
-                .subscribe(this::handleResult, throwable -> {
-                    Toast.makeText(context, throwable.getMessage(), Toast.LENGTH_LONG).show();
-                });
+                .subscribe(this::handleResult, throwable -> Toast.makeText(context, throwable.getMessage(), Toast.LENGTH_LONG).show());
         subscriptions.add(subscription);
     }
 

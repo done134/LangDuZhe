@@ -88,6 +88,10 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
             ((VoiceHolder) holder).tvCommandTime.setText(videoInfoEntity.getCreateDate());
             ((VoiceHolder) holder).tvThumbsCount.setChecked(videoInfoEntity.getIsLike() == 1);
             playVoice(videoInfoEntity.getPath(),((VoiceHolder) holder).audioWave);
+            if (isPause) {
+                ((VoiceHolder) holder).audioWave.stopView();
+                player.stop();
+            }
 //            ((VoiceHolder) holder).setText(videoInfoEntity.getTitle());
         } else if (holder instanceof VideoHolder){
             //普通视频类型展示上传者信息，首页节目片段视频隐藏这块儿布局
@@ -188,6 +192,8 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
         this.adapterType = adapterType;
     }
 
+
+
     /**
      * 音频类头布局
      */
@@ -213,12 +219,7 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
         VoiceHolder(View itemView, CommandAdapter messageAdapter) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            tvThumbsCount.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onItemHolderClick(1, getLayoutPosition(),tvThumbsCount.isChecked());
-                }
-            });
+            tvThumbsCount.setOnClickListener(v -> onItemHolderClick(1, getLayoutPosition(),tvThumbsCount.isChecked()));
         }
     }
 
@@ -227,6 +228,7 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
         isPause = true;
         notifyDataSetChanged();
     }
+
     /**
      * 视频类头布局
      */

@@ -174,6 +174,7 @@ public class ReadPavilionDetailActivity extends BaseActivity implements PullLoad
         commandAdapter.pauseVideo();
     }
 
+
     @Override
     public void likeResult(boolean isLike) {
         videoEntity.setIsLike(isLike ? 1 : 0);

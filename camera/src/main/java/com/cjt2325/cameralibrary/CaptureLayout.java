@@ -6,8 +6,10 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -65,6 +67,7 @@ public class CaptureLayout extends FrameLayout {
     private int iconRight = 0;
 
     private boolean isFirst = true;
+    private int captureType;
 
     public CaptureLayout(Context context) {
         this(context, null);
@@ -76,7 +79,9 @@ public class CaptureLayout extends FrameLayout {
 
     public CaptureLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-
+        TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.CaptureLayout, defStyleAttr, 0);
+        captureType = a.getInteger(R.styleable.CaptureLayout_captureType,CaptureButton.VIDEO);
+        a.recycle();
         WindowManager manager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         DisplayMetrics outMetrics = new DisplayMetrics();
         if (manager != null) {
@@ -142,7 +147,7 @@ public class CaptureLayout extends FrameLayout {
     private void initView() {
         setWillNotDraw(false);
         //拍照按钮
-        btn_capture = new CaptureButton(getContext());
+        btn_capture = new CaptureButton(getContext(),captureType);
         LayoutParams btn_capture_param = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         btn_capture_param.gravity = Gravity.CENTER;
 //        btn_capture_param.setMargins(100, 0, 0, 0);
@@ -196,7 +201,7 @@ public class CaptureLayout extends FrameLayout {
         });
 
         //取消按钮
-        btn_cancel = new TypeButton(getContext(), TypeButton.TYPE_CANCEL, button_size);
+        btn_cancel = new TypeButton(getContext(), TypeButton.TYPE_CANCEL, button_size,0);
         final LayoutParams btn_cancel_param = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         btn_cancel_param.gravity = Gravity.CENTER_VERTICAL;
         btn_cancel_param.setMargins((layout_width / 4) - button_size / 2, 0, 0, 0);
@@ -213,7 +218,7 @@ public class CaptureLayout extends FrameLayout {
         });
 
         //确认按钮
-        btn_confirm = new TypeButton(getContext(), TypeButton.TYPE_CONFIRM, button_size);
+        btn_confirm = new TypeButton(getContext(), TypeButton.TYPE_CONFIRM, button_size,captureType);
         LayoutParams btn_confirm_param = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         btn_confirm_param.gravity = Gravity.CENTER_VERTICAL | Gravity.RIGHT;
         btn_confirm_param.setMargins(0, 0, (layout_width / 4) - button_size / 2, 0);

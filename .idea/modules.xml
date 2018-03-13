@@ -7,7 +7,6 @@
       <module fileurl="file://$PROJECT_DIR$/camera/camera.iml" filepath="$PROJECT_DIR$/camera/camera.iml" />
       <module fileurl="file://$PROJECT_DIR$/matisse/matisse.iml" filepath="$PROJECT_DIR$/matisse/matisse.iml" />
       <module fileurl="file://$PROJECT_DIR$/pullLoadMoreLibrary/pullLoadMoreLibrary.iml" filepath="$PROJECT_DIR$/pullLoadMoreLibrary/pullLoadMoreLibrary.iml" />
-      <module fileurl="file://$PROJECT_DIR$/pullLoadMoreLibrary/pullRefreshLoadMoreLibrary.iml" filepath="$PROJECT_DIR$/pullLoadMoreLibrary/pullRefreshLoadMoreLibrary.iml" />
     </modules>
   </component>
 </project>

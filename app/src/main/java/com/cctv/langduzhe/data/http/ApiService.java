@@ -191,5 +191,16 @@ public interface ApiService {
      */
     @DELETE("api/like")
     Observable<String> unlikeRead(@Query("mediaId") String mediaId);
+
+
+
+    /**
+     * @author 尹振东
+     * create at 2018/2/14 下午9:23
+     * 方法说明：提交意见反馈
+     */
+    @FormUrlEncoded
+    @POST("api/feedback")
+    Observable<String> submitFeedBack(@Field("feedbackContent") String feedbackContent);
 }
 

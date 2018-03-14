@@ -41,7 +41,7 @@ import butterknife.OnClick;
  * 说明：我的收藏页面
  */
 public class MineCollectionActivity extends BaseActivity implements BaseRecyclerViewAdapter.OnItemClickListener,
-        PullLoadMoreRecyclerView.PullLoadMoreListener ,MineCollectView,CollectView,LikeView{
+        PullLoadMoreRecyclerView.PullLoadMoreListener, MineCollectView, CollectView, LikeView {
 
     @BindView(R.id.btn_back)
     ImageButton btnBack;
@@ -119,11 +119,11 @@ public class MineCollectionActivity extends BaseActivity implements BaseRecycler
 
     @Override
     public void onLoadMore() {
-        pageNum+=1;
+        pageNum += 1;
         presenter.loadReadInfo(pageNum);
     }
 
-    @OnClick({R.id.btn_back, R.id.tv_right,R.id.btn_delete,R.id.btn_select_all})
+    @OnClick({R.id.btn_back, R.id.tv_right, R.id.btn_delete, R.id.btn_select_all})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_back:
@@ -133,7 +133,7 @@ public class MineCollectionActivity extends BaseActivity implements BaseRecycler
                 if (isEditStatus) {
                     isEditStatus = false;
                     tvRight.setText("编辑");
-                }else {
+                } else {
                     isEditStatus = true;
                     tvRight.setText("完成");
                     llOption.setVisibility(View.VISIBLE);
@@ -141,7 +141,13 @@ public class MineCollectionActivity extends BaseActivity implements BaseRecycler
                 myCollectionAdapter.setEditStatus(isEditStatus);
                 break;
             case R.id.btn_select_all:
-                myCollectionAdapter.selectAll();
+                if (myCollectionAdapter.getIsSelectAll()) {
+                    myCollectionAdapter.unSelectAll();
+                    btnSelectAll.setText("全选");
+                } else {
+                    myCollectionAdapter.selectAll();
+                    btnSelectAll.setText("全不选");
+                }
                 break;
             case R.id.btn_delete:
                 deleteSelected();
@@ -150,7 +156,7 @@ public class MineCollectionActivity extends BaseActivity implements BaseRecycler
     }
 
     private void deleteSelected() {
-        List<HomeVideoEntity.DataBean> selectList =  myCollectionAdapter.getSelectList();
+        List<HomeVideoEntity.DataBean> selectList = myCollectionAdapter.getSelectList();
         StringBuilder mediaIds = new StringBuilder();
         for (int i = 0; i < selectList.size(); i++) {
             mediaIds.append(selectList.get(i).getId()).append(",");
@@ -165,7 +171,7 @@ public class MineCollectionActivity extends BaseActivity implements BaseRecycler
             tvRight.setText("编辑");
             myCollectionAdapter.setEditStatus(isEditStatus);
             llOption.setVisibility(View.GONE);
-        }else {
+        } else {
             super.onBackPressed();
         }
     }
@@ -193,6 +199,7 @@ public class MineCollectionActivity extends BaseActivity implements BaseRecycler
         myCollectionAdapter.getList().set(optPosition, collectEvent.collected);
         myCollectionAdapter.notifyDataSetChanged();
     }
+
     @Override
     public void collectSucceed() {
         onRefresh();
@@ -203,11 +210,16 @@ public class MineCollectionActivity extends BaseActivity implements BaseRecycler
         if (list != null && list.size() > 0) {
             if (pageNum == 0) {
                 myCollectionAdapter.setData(list);
-            }else {
+            } else {
                 myCollectionAdapter.addData(list);
             }
-        }else {
-            ToastUtils.showLong(this, "数据已全部加载");
+        } else {
+            if (pageNum == 0) {
+                myCollectionAdapter.setData(null);
+                ToastUtils.showLong(this, "没有数据");
+            } else {
+                ToastUtils.showLong(this, "数据已全部加载");
+            }
             rvMineCollection.setPullLoadMoreCompleted();
         }
         rvMineCollection.setPullLoadMoreCompleted();
@@ -225,9 +237,9 @@ public class MineCollectionActivity extends BaseActivity implements BaseRecycler
 
         int thumbSum = myCollectionAdapter.getItemInPosition(optPosition).getLikeSum();
         if (isLike) {
-            myCollectionAdapter.getItemInPosition(optPosition).setLikeSum(thumbSum+1);
+            myCollectionAdapter.getItemInPosition(optPosition).setLikeSum(thumbSum + 1);
         } else {
-            myCollectionAdapter.getItemInPosition(optPosition).setLikeSum(thumbSum-1);
+            myCollectionAdapter.getItemInPosition(optPosition).setLikeSum(thumbSum - 1);
         }
         myCollectionAdapter.notifyDataSetChanged();
     }

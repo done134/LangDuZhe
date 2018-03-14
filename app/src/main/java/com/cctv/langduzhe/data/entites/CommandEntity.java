@@ -1,5 +1,6 @@
 package com.cctv.langduzhe.data.entites;
 
+import java.io.StringReader;
 import java.util.List;
 
 /**
@@ -51,6 +52,8 @@ public class CommandEntity {
         private String readerId;
         private String mediaId;
         private String content;
+        private String readerImg;
+        private String readerName;
 
         public String getId() {
             return id;
@@ -82,6 +85,22 @@ public class CommandEntity {
 
         public void setContent(String content) {
             this.content = content;
+        }
+
+        public String getReaderImg() {
+            return readerImg;
+        }
+
+        public void setReaderImg(String readerImg) {
+            this.readerImg = readerImg;
+        }
+
+        public String getReaderName() {
+            return readerName;
+        }
+
+        public void setReaderName(String readerName) {
+            this.readerName = readerName;
         }
     }
 }

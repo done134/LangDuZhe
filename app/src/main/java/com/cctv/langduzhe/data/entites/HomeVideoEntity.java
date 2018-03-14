@@ -67,6 +67,7 @@ public class HomeVideoEntity {
         private String readerName;
         private String readerType;
         private String packageId;
+        private String readerImg;
         private String title;
         private String type;
         private String path;
@@ -138,6 +139,14 @@ public class HomeVideoEntity {
 
         public void setPackageId(String packageId) {
             this.packageId = packageId;
+        }
+
+        public String getReaderImg() {
+            return readerImg;
+        }
+
+        public void setReaderImg(String readerImg) {
+            this.readerImg = readerImg;
         }
 
         public String getTitle() {

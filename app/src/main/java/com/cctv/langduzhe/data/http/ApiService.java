@@ -120,7 +120,7 @@ public interface ApiService {
      * create at 2018/2/14 下午9:23
      * 方法说明：获取评论列表
      */
-    @GET("api/commons")
+    @GET("api/free/commons")
     Observable<String> getCommentList(@Query("媒体ID") String mediaId,@Query("pageNum") int pageNum, @Query("pageSize") int pageSize);
 
     /**
@@ -154,7 +154,6 @@ public interface ApiService {
      * create at 2018/2/14 下午9:23
      * 方法说明：增加观看数量
      */
-    @FormUrlEncoded
     @PUT("api/watch")
     Observable<String> watchMedia(@Query("mediaId") String mediaId);
 

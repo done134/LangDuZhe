@@ -1,12 +1,21 @@
 package com.cctv.langduzhe.feature;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.renderscript.Allocation;
+import android.renderscript.Element;
+import android.renderscript.RenderScript;
+import android.renderscript.ScriptIntrinsicBlur;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.AppCompatRadioButton;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cctv.langduzhe.R;
@@ -51,6 +60,10 @@ public class MainActivity extends BaseActivity implements MainView{
     AppCompatRadioButton rbMine;
     @BindView(R.id.rg_main_bottom)
     RadioGroup rgMainBottom;
+    @BindView(R.id.main_layout)
+    RelativeLayout mainLayout;
+    @BindView(R.id.fl_gaosi_bg)
+    FrameLayout flGaosiBg;
 
 
     private MainPresenter mainPresenter;
@@ -115,7 +128,19 @@ public class MainActivity extends BaseActivity implements MainView{
             }
         });
         //弹出录制选择页面
-        rbRead.setOnClickListener(v -> toActivity(ReadActivity.class));
+        rbRead.setOnClickListener(v -> {
+            Bitmap bitmap = getCacheBitmapFromView(mainLayout);
+            if (bitmap != null) {
+                int width = (int) Math.round(bitmap.getWidth() * 0.5);
+                int height = (int) Math.round(bitmap.getHeight() * 0.5);
+
+                Bitmap inputBmp = Bitmap.createScaledBitmap(bitmap, width, height, false);
+                flGaosiBg.setBackground(new BitmapDrawable(blur(inputBmp, 20)));
+                flGaosiBg.setVisibility(View.VISIBLE);
+            }
+                toActivity(ReadActivity.class);
+//            }
+        });
     }
 
 
@@ -128,6 +153,12 @@ public class MainActivity extends BaseActivity implements MainView{
 
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        flGaosiBg.setVisibility(View.GONE);
+    }
 
     private BaseFragment showFragment(String fragTAG, FragmentTransaction transaction) {
         BaseFragment fragment = (BaseFragment) mFragmentManager.findFragmentByTag(fragTAG);
@@ -167,12 +198,7 @@ public class MainActivity extends BaseActivity implements MainView{
         if (!isExit) {
             isExit = true;
             ToastUtils.showLong(this, "再按一次后退键退出程序");
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    isExit = false;
-                }
-            }, 2000);  // 利用handler延迟发送更改状态信息
+            new Handler().postDelayed(() -> isExit = false, 2000);  // 利用handler延迟发送更改状态信息
         } else {
             this.finish();
         }
@@ -192,5 +218,45 @@ public class MainActivity extends BaseActivity implements MainView{
     @Override
     public void setPresenter() {
         mainPresenter = new MainPresenter(this,this);
+    }
+
+    /**
+     * 获取一个 View 的缓存视图
+     *
+     * @param view
+     * @return
+     */
+    private Bitmap getCacheBitmapFromView(View view) {
+        final boolean drawingCacheEnabled = true;
+        view.setDrawingCacheEnabled(drawingCacheEnabled);
+        view.buildDrawingCache(drawingCacheEnabled);
+        final Bitmap drawingCache = view.getDrawingCache();
+        Bitmap bitmap;
+        if (drawingCache != null) {
+            bitmap = Bitmap.createBitmap(drawingCache);
+            view.setDrawingCacheEnabled(false);
+        } else {
+            bitmap = null;
+        }
+        return bitmap;
+    }
+
+
+
+    private Bitmap blur(Bitmap bitmap,float radius) {
+        Bitmap output = Bitmap.createBitmap(bitmap); // 创建输出图片
+        RenderScript rs = RenderScript.create(this); // 构建一个RenderScript对象
+        ScriptIntrinsicBlur gaussianBlue = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs)); // 创建高斯模糊脚本
+        Allocation allIn = Allocation.createFromBitmap(rs, bitmap); // 创建用于输入的脚本类型
+        Allocation allOut = Allocation.createFromBitmap(rs, output); // 创建用于输出的脚本类型
+        gaussianBlue.setRadius(radius); // 设置模糊半径，范围0f<radius<=25f
+        gaussianBlue.setInput(allIn); // 设置输入脚本类型
+        gaussianBlue.forEach(allOut); // 执行高斯模糊算法，并将结果填入输出脚本类型中
+        allOut.copyTo(output); // 将输出内存编码为Bitmap，图片大小必须注意
+        rs.destroy();
+        if (Build.VERSION.SDK_INT >= 23) {
+            RenderScript.releaseAllContexts();
+        } // 关闭RenderScript对象，API>=23则使用rs.releaseAllContexts()
+        return output;
     }
 }

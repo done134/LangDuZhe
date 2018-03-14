@@ -38,6 +38,7 @@
             android:gravity="end"
             android:layout_gravity="center_vertical"
             android:text="1分钟前"
+            android:visibility="gone"
             android:textSize="12sp"/>
     </LinearLayout>
 

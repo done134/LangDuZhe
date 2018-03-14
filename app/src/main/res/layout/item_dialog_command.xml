@@ -36,6 +36,7 @@
             android:textColor="@color/c_8c8c8c"
             android:layout_marginLeft="5dp"
             android:gravity="end"
+            android:visibility="gone"
             android:layout_gravity="center_vertical"
             android:text="1分钟前"
             android:textSize="12sp"/>

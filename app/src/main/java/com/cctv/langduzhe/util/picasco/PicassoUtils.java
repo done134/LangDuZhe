@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
+import com.cctv.langduzhe.R;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -26,7 +27,7 @@ import okhttp3.Protocol;
  */
 public class PicassoUtils {
     public static void loadImageByurl(Context ctx, String url, ImageView imageView) {
-        Picasso.with(ctx).load(url).into(imageView);
+        Picasso.with(ctx).load(url).error(R.mipmap.ic_launcher_round).into(imageView);
 
     }
     public static void loadImageByRes(int res, Context ctx, ImageView imageView) {

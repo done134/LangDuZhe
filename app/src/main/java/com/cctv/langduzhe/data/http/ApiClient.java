@@ -78,28 +78,25 @@ public final class ApiClient {
     private static Interceptor initCacheInterceptor(){
 //        File cacheFile = new File(LangDuZheApplication.getInstance().getContext().getExternalCacheDir(), "LangDuzheCache");
 //        Cache cache = new Cache(cacheFile, 1024 * 1024 * 50);
-        Interceptor cacheInterceptor = new Interceptor() {
-            @Override
-            public Response intercept(Chain chain) throws IOException {
-                Request original = chain.request();
-                String token =   (String) SPUtils.get(LangDuZheApplication.getInstance().getContext(), PreferenceContents.TOKEN,"");
+        Interceptor cacheInterceptor = chain -> {
+            Request original = chain.request();
+            String token =   (String) SPUtils.get(LangDuZheApplication.getInstance().getContext(), PreferenceContents.TOKEN,"");
 
-                Request request = original.newBuilder()
-                        .header("Authorization", token)
-                        .method(original.method(), original.body())
-                        .build();
+            Request request = original.newBuilder()
+                    .header("Authorization", token)
+                    .method(original.method(), original.body())
+                    .build();
 
-                if (CommonUtil.isNetworkConnected(LangDuZheApplication.getInstance().getContext())) {
-                    int maxAge = 0;
-                    // 有网络时 设置缓存超时时间0个小时
+            if (CommonUtil.isNetworkConnected(LangDuZheApplication.getInstance().getContext())) {
+                int maxAge = 0;
+                // 有网络时 设置缓存超时时间0个小时
 
-                } else {
-                    // 无网络时，设置超时为4周
-                    int maxStale = 60 * 60 * 24 * 28;
+            } else {
+                // 无网络时，设置超时为4周
+                int maxStale = 60 * 60 * 24 * 28;
 
-                }
-                return chain.proceed(request);
             }
+            return chain.proceed(request);
         };
         return cacheInterceptor;
     }

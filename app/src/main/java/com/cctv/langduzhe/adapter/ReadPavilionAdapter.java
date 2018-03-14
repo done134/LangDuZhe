@@ -1,6 +1,7 @@
 package com.cctv.langduzhe.adapter;
 
 
+import android.content.Context;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.cctv.langduzhe.R;
 import com.cctv.langduzhe.base.BaseRecyclerViewAdapter;
 import com.cctv.langduzhe.data.entites.HomeVideoEntity;
+import com.cctv.langduzhe.util.picasco.PicassoUtils;
 import com.cctv.langduzhe.view.widget.CircleImageView;
 
 import java.util.ArrayList;
@@ -39,9 +41,13 @@ public class ReadPavilionAdapter extends BaseRecyclerViewAdapter {
 
 
     private List<HomeVideoEntity.DataBean> list;
+    private Context context;
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (context == null) {
+            context = parent.getContext();
+        }
         if (viewType == VOICE_TYPE) {
             View itemView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_read_pavilion_voice, parent, false);
@@ -65,6 +71,7 @@ public class ReadPavilionAdapter extends BaseRecyclerViewAdapter {
             ((VoiceHolder) holder).tvUploadTime.setText(dataBean.getCreateDate());
             ((VoiceHolder) holder).tvVoiceTitle.setText(dataBean.getTitle());
             ((VoiceHolder) holder).tvThumbsCount.setChecked(dataBean.getIsLike()==1);
+            PicassoUtils.loadImageByurl(context,dataBean.getReaderImg(),((VoiceHolder) holder).ivServicePeopleIcon);
         } else {
             //视频
             ((VideoHolder) holder).tvCommentCount.setText(String.valueOf(dataBean.getCommentSum()));
@@ -74,6 +81,8 @@ public class ReadPavilionAdapter extends BaseRecyclerViewAdapter {
             ((VideoHolder) holder).tvUploadTime.setText(dataBean.getCreateDate());
             ((VideoHolder) holder).tvVideoTitle.setText(dataBean.getTitle());
             ((VideoHolder) holder).tvThumbsCount.setChecked(dataBean.getIsLike() == 1);
+            PicassoUtils.loadImageByurl(context,dataBean.getReaderImg(),((VideoHolder) holder).ivServicePeopleIcon);
+            PicassoUtils.loadImageByurl(context,dataBean.getImg(),((VideoHolder) holder).ivCover);
         }
     }
 

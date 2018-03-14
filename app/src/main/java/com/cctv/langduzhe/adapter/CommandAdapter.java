@@ -6,22 +6,28 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.cctv.langduzhe.R;
 import com.cctv.langduzhe.base.BaseRecyclerViewAdapter;
 import com.cctv.langduzhe.data.entites.CommandEntity;
 import com.cctv.langduzhe.data.entites.HomeVideoEntity;
+import com.cctv.langduzhe.util.DateConvertUtils;
 import com.cctv.langduzhe.util.picasco.PicassoUtils;
 import com.cctv.langduzhe.view.widget.CircleImageView;
+import com.piterwilson.audio.MP3RadioStreamDelegate;
 import com.piterwilson.audio.MP3RadioStreamPlayer;
 import com.shuyu.waveview.AudioWaveView;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -87,6 +93,7 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
             ((VoiceHolder) holder).tvCommandName.setText(videoInfoEntity.getReaderName());
             ((VoiceHolder) holder).tvCommandTime.setText(videoInfoEntity.getCreateDate());
             ((VoiceHolder) holder).tvThumbsCount.setChecked(videoInfoEntity.getIsLike() == 1);
+            PicassoUtils.loadImageByurl(context,videoInfoEntity.getReaderImg(),((VoiceHolder) holder).ivCommandHead);
             playVoice(videoInfoEntity.getPath(),((VoiceHolder) holder).audioWave);
             if (isPause) {
                 ((VoiceHolder) holder).audioWave.stopView();
@@ -101,6 +108,7 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
                 ((VideoHolder) holder).llUploaderInfo.setVisibility(View.GONE);
             }
             //视频
+            PicassoUtils.loadImageByurl(context,videoInfoEntity.getReaderImg(),((VideoHolder) holder).ivCommandHead);
             ((VideoHolder) holder).tvCommentCount.setText(String.valueOf(videoInfoEntity.getCommentSum()));
             ((VideoHolder) holder).tvThumbsCount.setText(String.valueOf(videoInfoEntity.getLikeSum()));
             ((VideoHolder) holder).tvThumbsCount.setChecked(videoInfoEntity.getIsLike()==1);
@@ -116,8 +124,9 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
         } else if (holder instanceof CommandHolder) {
             CommandEntity.DataBean dataBean = list.get(position);
             ((CommandHolder) holder).tvCommandContent.setText(dataBean.getContent());
-            ((CommandHolder) holder).tvCommandName.setText(dataBean.getReaderId());
-//            ((CommandHolder) holder).tvCommandTime.setText(dataBean.);
+            ((CommandHolder) holder).tvCommandName.setText(dataBean.getReaderName());
+//            ((CommandHolder) holder).tvCommandTime.setText(dataBean.get);
+            PicassoUtils.loadImageByurl(context,dataBean.getReaderImg(),((CommandHolder) holder).ivCommandHead);
         }
     }
 
@@ -143,6 +152,9 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
 
 
     private MP3RadioStreamPlayer player;
+
+    private Timer timer;
+
     private void playVoice(String voiceUrl,AudioWaveView audioWaveView) {
         if (player != null) {
             player.stop();
@@ -193,6 +205,9 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
     }
 
 
+    private boolean playEnd;
+
+    private boolean seekBarTouch;
 
     /**
      * 音频类头布局
@@ -215,11 +230,51 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
         TextView tvCommentCount;
         @BindView(R.id.tv_thumbs_count)
         AppCompatCheckBox tvThumbsCount;
+        @BindView(R.id.tv_current_progress)
+        TextView tvCurrentProgress;
+        @BindView(R.id.seekbar_voice)
+        SeekBar seekBar;
+        @BindView(R.id.tv_total_progress)
+        TextView tvTotalProgress;
+        @BindView(R.id.cb_play_pause)
+        CheckBox cbPlayPause;
 
         VoiceHolder(View itemView, CommandAdapter messageAdapter) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             tvThumbsCount.setOnClickListener(v -> onItemHolderClick(1, getLayoutPosition(),tvThumbsCount.isChecked()));
+            seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    tvCurrentProgress.setText(DateConvertUtils.secToTime(player.getCurPosition()));
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+                    seekBarTouch = true;
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+                    seekBarTouch = false;
+                    if (!playEnd) {
+                        player.seekTo(seekBar.getProgress());
+                    }
+                }
+            });
+            timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    if (playEnd || player == null || !seekBar.isEnabled()) {
+                        return;
+                    }
+                    long position = player.getCurPosition();
+                    if (position > 0 && !seekBarTouch) {
+                        seekBar.setProgress((int) position);
+                    }
+                }
+            }, 1000, 1000);
         }
     }
 

@@ -1,5 +1,6 @@
 package com.cctv.langduzhe.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 import com.cctv.langduzhe.R;
 import com.cctv.langduzhe.data.entites.HomeVideoEntity;
 import com.cctv.langduzhe.data.entites.PavilionEntity;
+import com.cctv.langduzhe.util.picasco.PicassoUtils;
 import com.cctv.langduzhe.view.widget.CircleImageView;
 
 import java.util.ArrayList;
@@ -46,9 +48,13 @@ public class MyCollectionAdapter extends ReadPavilionAdapter {
     private List<HomeVideoEntity.DataBean> selectList = new ArrayList<>();
 
     private SetCheckListener setCheckListener = new SetCheckListener();
+    private Context context;
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (context == null) {
+            context = parent.getContext();
+        }
         if (viewType == VOICE_TYPE) {
             View itemView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_read_pavilion_voice, parent, false);
@@ -83,6 +89,7 @@ public class MyCollectionAdapter extends ReadPavilionAdapter {
             ((VoiceHolder) holder).tvUploaderName.setText(dataBean.getReaderName());
             ((VoiceHolder) holder).tvUploadTime.setText(dataBean.getCreateDate());
             ((VoiceHolder) holder).tvVoiceTitle.setText(dataBean.getTitle());
+            PicassoUtils.loadImageByurl(context,dataBean.getReaderImg(),((VoiceHolder) holder).ivServicePeopleIcon);
         } else if(holder instanceof VideoHolder){
             //视频
             if (isEditStatus) {
@@ -96,6 +103,8 @@ public class MyCollectionAdapter extends ReadPavilionAdapter {
             } else {
                 ((VideoHolder) holder).cbSelectThisRead.setVisibility(View.GONE);
             }
+            PicassoUtils.loadImageByurl(context,dataBean.getReaderImg(),((VideoHolder) holder).ivServicePeopleIcon);
+            PicassoUtils.loadImageByurl(context,dataBean.getImg(),((VideoHolder) holder).ivCover);
             ((VideoHolder) holder).tvCommentCount.setText(String.valueOf(dataBean.getCommentSum()));
             ((VideoHolder) holder).tvThumbsCount.setText(String.valueOf(dataBean.getCollectSum()));
             ((VideoHolder) holder).tvVideoPlayCount.setText(String.valueOf(dataBean.getWatchSum()));
@@ -152,7 +161,20 @@ public class MyCollectionAdapter extends ReadPavilionAdapter {
         notifyDataSetChanged();
     }
 
-     class VoiceHolder extends RecyclerView.ViewHolder {
+    public boolean getIsSelectAll() {
+        if (selectList.size() == list.size()) {
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    public void unSelectAll() {
+        selectList = new ArrayList<>();
+        notifyDataSetChanged();
+    }
+
+    class VoiceHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.iv_service_people_icon)
         CircleImageView ivServicePeopleIcon;
         @BindView(R.id.tv_uploader_name)

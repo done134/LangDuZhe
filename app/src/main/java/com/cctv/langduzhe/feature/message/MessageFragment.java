@@ -82,6 +82,7 @@ public class MessageFragment extends BaseFragment implements BaseRecyclerViewAda
     @Override
     public void onRefresh() {
         pageNum = 0;
+        rvMessageList.setPullLoadMoreCompleted();
 //        presenter.getMessageList(pageNum);
     }
 

@@ -81,6 +81,7 @@ public class HomeVideoDetailActivity extends BaseActivity implements HomeDetailV
         getIntentData();
         initData();
         setListener();
+        presenter.addWatchSum(videoEntity.getId());
         rvHomeDialogCommand.setLinearLayout();
     }
 

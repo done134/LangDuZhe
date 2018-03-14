@@ -64,36 +64,17 @@ public class NotPostAdapter extends BaseRecyclerViewAdapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         NotPostEntity notPostEntity = list.get(position);
         if (holder instanceof VideoHolder) {
-            ((VideoHolder) holder).btnDelete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onButtonClickListener.onDeleteClick(list.get(position));
-                }
-            });
-            ((VideoHolder) holder).btnUpload.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onButtonClickListener.onPostClick(list.get(position));
-                }
-            });
+//            /storage/emulated/0/JCamera/picture_1521053459903.jpg
+            ((VideoHolder) holder).btnDelete.setOnClickListener(v -> onButtonClickListener.onDeleteClick(list.get(position)));
+            ((VideoHolder) holder).btnUpload.setOnClickListener(v -> onButtonClickListener.onPostClick(list.get(position)));
             ((VideoHolder) holder).tvVideoTitle.setText(notPostEntity.readName);
             ((VideoHolder) holder).tvVideoLength.setText(getVoiceDuring(notPostEntity.readFilepath));
             PicassoUtils.loadImageByFile(context,((VideoHolder) holder).ivCover,notPostEntity.coverPath);
         } else if (holder instanceof VoiceHolder) {
             ((VoiceHolder) holder).tvVoiceTitle.setText(notPostEntity.readName);
             ((VoiceHolder) holder).tvVoiceLength.setText(getVoiceDuring(notPostEntity.readFilepath));
-            ((VoiceHolder) holder).btnDelete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onButtonClickListener.onDeleteClick(list.get(position));
-                }
-            });
-            ((VoiceHolder) holder).btnUpload.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onButtonClickListener.onPostClick(list.get(position));
-                }
-            });
+            ((VoiceHolder) holder).btnDelete.setOnClickListener(v -> onButtonClickListener.onDeleteClick(list.get(position)));
+            ((VoiceHolder) holder).btnUpload.setOnClickListener(v -> onButtonClickListener.onPostClick(list.get(position)));
         }
     }
 

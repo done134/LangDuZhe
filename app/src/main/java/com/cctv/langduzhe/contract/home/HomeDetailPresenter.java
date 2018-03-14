@@ -124,45 +124,18 @@ public class HomeDetailPresenter implements BasePresenter {
         }
     }
 
-    public void submitComment(String content) {
-        RequestBody requestBody =
-                RequestBody.create(MediaType.parse("application/json; charset=utf-8"),
-                        handleRequestParams(content));
-        Observable<String> observable = ApiClient.apiService.submitComment(requestBody);
+    /**
+     * @author 尹振东
+     * create at 2018/2/16 上午11:26
+     * 方法说明：增加观看次数
+     */
+    public void addWatchSum(String mediaId) {
+        Observable<String> observable = ApiClient.apiService.watchMedia(mediaId);
         Subscription subscription = observable
                 .compose(RxSchedulerUtils.normalSchedulersTransformer())
                 .subscribe(this::handleComments, throwable -> {
                     Toast.makeText(context, throwable.getMessage(), Toast.LENGTH_LONG).show();
                 });
         subscriptions.add(subscription);
-    }
-
-    /**
-     * @author 尹振东
-     * create at 2018/2/14 下午9:06
-     * 方法说明：组装参数
-     */
-    private String handleRequestParams(String content) {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("content", content);
-        jsonObject.put("pageSize", 10);
-        return jsonObject.toJSONString();
-    }
-
-    public void collectVideo(String mediaId) {
-        Observable<String> observable = ApiClient.apiService.collectionRead(mediaId);
-        Subscription subscription = observable
-                .compose(RxSchedulerUtils.normalSchedulersTransformer())
-                .subscribe(this::handleCollect, throwable -> {
-                    Toast.makeText(context, throwable.getMessage(), Toast.LENGTH_LONG).show();
-                });
-        subscriptions.add(subscription);
-    }
-
-    private void handleCollect(String s) {
-        JSONObject jsonObject = JSONObject.parseObject(s);
-        if (RESULT_OK.equals(jsonObject.getString("code"))) {
-            homeView.setCollectResult();
-        }
     }
 }

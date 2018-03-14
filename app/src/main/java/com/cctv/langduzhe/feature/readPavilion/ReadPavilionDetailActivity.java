@@ -74,16 +74,14 @@ public class ReadPavilionDetailActivity extends BaseActivity implements PullLoad
         tvTitle.setText(videoEntity.getTitle());
         cbCollection.setChecked(videoEntity.getIsCollect()==1);
         initData();
-        cbCollection.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    collectPresenter.collect(videoEntity.getId());
-                } else {
-                    collectPresenter.deleteCollect(videoEntity.getId());
-                }
+        cbCollection.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                collectPresenter.collect(videoEntity.getId());
+            } else {
+                collectPresenter.deleteCollect(videoEntity.getId());
             }
         });
+        presenter.addWatchSum(videoEntity.getId());
     }
 
     private void initData() {

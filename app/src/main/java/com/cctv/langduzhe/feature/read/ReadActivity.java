@@ -1,7 +1,17 @@
 package com.cctv.langduzhe.feature.read;
 
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
+import android.renderscript.Allocation;
+import android.renderscript.Element;
+import android.renderscript.RenderScript;
+import android.renderscript.ScriptIntrinsicBlur;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cctv.langduzhe.R;
@@ -23,6 +33,8 @@ public class ReadActivity extends BaseActivity {
     TextView ivRecordVoice;
     @BindView(R.id.btn_cancel)
     TextView btnCancel;
+    @BindView(R.id.read_bg)
+    LinearLayout readBg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,4 +71,5 @@ public class ReadActivity extends BaseActivity {
     public void setPresenter() {
 
     }
+
 }

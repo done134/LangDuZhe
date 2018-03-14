@@ -17,6 +17,7 @@ import com.cctv.langduzhe.contract.read.RecordVideoOverView;
 import com.cctv.langduzhe.feature.MainActivity;
 import com.cctv.langduzhe.util.picasco.PicassoUtils;
 import com.shuyu.waveview.FileUtils;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,7 +30,7 @@ import cn.jzvd.JZVideoPlayerStandard;
  * on 2018/1/22.
  * 说明：视频录制完成，保存或者上传页面
  */
-public class ReadOverActivity extends BaseActivity implements RecordVideoOverView,PostView{
+public class ReadOverActivity extends BaseActivity implements RecordVideoOverView, PostView {
     @BindView(R.id.btn_back)
     ImageButton btnBack;
     @BindView(R.id.tv_title)
@@ -47,7 +48,7 @@ public class ReadOverActivity extends BaseActivity implements RecordVideoOverVie
 
     private RecordVideoOverPresenter presenter;
     private PostPresenter postPresenter;
-    private    String videoPath;
+    private String videoPath;
     private String thumbImage;
 
     @Override
@@ -61,9 +62,9 @@ public class ReadOverActivity extends BaseActivity implements RecordVideoOverVie
 
     private void initVideo() {
         videoPath = getIntent().getExtras().getString("video_path");
-        thumbImage = getIntent().getExtras().getString("thumb_image");
+        thumbImage = "file://" +getIntent().getExtras().getString("thumb_image");
         videoView.setUp(videoPath, JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "");
-        PicassoUtils.loadImageByurl(this,thumbImage,videoView.thumbImageView);
+        Picasso.with(this).load(thumbImage).into(videoView.thumbImageView);
     }
 
     @OnClick({R.id.btn_back, R.id.btn_save_the_local, R.id.btn_post_video})
@@ -72,17 +73,18 @@ public class ReadOverActivity extends BaseActivity implements RecordVideoOverVie
             case R.id.btn_back:
                 onBackPressed();
                 break;
-            case R.id.btn_save_the_local:String name  = etVideoName.getText().toString().trim();
+            case R.id.btn_save_the_local:
+                String name = etVideoName.getText().toString().trim();
                 if (TextUtils.isEmpty(name)) {
                     showToast("请输入作品名称！");
                     return;
                 }
-                presenter.saveToSDCard(videoPath,name,thumbImage);
+                presenter.saveToSDCard(videoPath, name, thumbImage);
                 toActivity(MainActivity.class);
                 showToast("已保存在本地");
                 break;
             case R.id.btn_post_video:
-                String title  = etVideoName.getText().toString().trim();
+                String title = etVideoName.getText().toString().trim();
                 if (TextUtils.isEmpty(title)) {
                     showToast("请输入作品名称！");
                     return;
@@ -92,6 +94,7 @@ public class ReadOverActivity extends BaseActivity implements RecordVideoOverVie
                 break;
         }
     }
+
     @Override
     public void onBackPressed() {
         if (JZVideoPlayer.backPress()) {
@@ -100,6 +103,7 @@ public class ReadOverActivity extends BaseActivity implements RecordVideoOverVie
         FileUtils.deleteFile(videoPath);
         super.onBackPressed();
     }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -108,13 +112,13 @@ public class ReadOverActivity extends BaseActivity implements RecordVideoOverVie
 
     @Override
     public void setPresenter() {
-        presenter = new RecordVideoOverPresenter(this,this);
+        presenter = new RecordVideoOverPresenter(this, this);
         postPresenter = new PostPresenter(this, this);
     }
 
     @Override
     public void postSucceed(String fileName, int duration, long fileSize) {
-        presenter.saveVideo(fileName,etVideoName.getText().toString().trim(),duration,fileSize);
+        presenter.saveVideo(fileName, etVideoName.getText().toString().trim(), duration, fileSize);
         dismissProgress();
     }
 

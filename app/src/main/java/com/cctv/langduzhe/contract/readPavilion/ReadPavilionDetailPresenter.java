@@ -47,6 +47,7 @@ public class ReadPavilionDetailPresenter implements BasePresenter {
                 .compose(RxSchedulerUtils.normalSchedulersTransformer())
                 .subscribe(this::handleComments, throwable -> {
                     Toast.makeText(context, "暂无评论", Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, throwable.getMessage(), Toast.LENGTH_LONG).show();
                 });
         subscriptions.add(subscription);
     }
@@ -63,5 +64,21 @@ public class ReadPavilionDetailPresenter implements BasePresenter {
         }else {
             readView.showToast("没有数据");
         }
+    }
+
+
+    /**
+     * @author 尹振东
+     * create at 2018/2/16 上午11:26
+     * 方法说明：增加观看次数
+     */
+    public void addWatchSum(String mediaId) {
+        Observable<String> observable = ApiClient.apiService.watchMedia(mediaId);
+        Subscription subscription = observable
+                .compose(RxSchedulerUtils.normalSchedulersTransformer())
+                .subscribe(this::handleComments, throwable -> {
+                    Toast.makeText(context, throwable.getMessage(), Toast.LENGTH_LONG).show();
+                });
+        subscriptions.add(subscription);
     }
 }

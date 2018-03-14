@@ -1,5 +1,6 @@
 package com.cctv.langduzhe.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import com.cctv.langduzhe.R;
 import com.cctv.langduzhe.base.BaseRecyclerViewAdapter;
 import com.cctv.langduzhe.data.entites.CommandEntity;
+import com.cctv.langduzhe.util.picasco.PicassoUtils;
 import com.cctv.langduzhe.view.widget.CircleImageView;
 
 import java.util.ArrayList;
@@ -26,8 +28,12 @@ public class DialogCommandAdapter extends BaseRecyclerViewAdapter<DialogCommandA
 
 
     private List<CommandEntity.DataBean> list;
+    private Context context;
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (context == null) {
+            context = parent.getContext();
+        }
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_dialog_command, parent, false);
         return new ViewHolder(itemView, this);
@@ -37,6 +43,8 @@ public class DialogCommandAdapter extends BaseRecyclerViewAdapter<DialogCommandA
     public void onBindViewHolder(ViewHolder holder, int position) {
         CommandEntity.DataBean dataBean = list.get(position);
         holder.tvCommandContent.setText(dataBean.getContent());
+        holder.tvCommandName.setText(dataBean.getReaderName());
+        PicassoUtils.loadImageByurl(context,dataBean.getReaderImg(),holder.ivCommandHead);
     }
 
     @Override

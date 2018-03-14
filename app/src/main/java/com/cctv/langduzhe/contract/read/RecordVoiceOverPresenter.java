@@ -10,6 +10,7 @@ import com.cctv.langduzhe.data.db.NotPostDao;
 import com.cctv.langduzhe.data.entites.NotPostEntity;
 import com.cctv.langduzhe.data.http.ApiClient;
 import com.cctv.langduzhe.data.http.RxSchedulerUtils;
+import com.cctv.langduzhe.feature.MainActivity;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -67,9 +68,7 @@ public class RecordVoiceOverPresenter implements BasePresenter {
         Observable<String> observable = ApiClient.apiService.submitMedia(requestBody);
         Subscription subscription = observable
                 .compose(RxSchedulerUtils.normalSchedulersTransformer())
-                .subscribe(this::handleUpResult, throwable -> {
-                    Toast.makeText(context, throwable.getMessage(), Toast.LENGTH_LONG).show();
-                });
+                .subscribe(this::handleUpResult, throwable -> Toast.makeText(context, throwable.getMessage(), Toast.LENGTH_LONG).show());
         subscriptions.add(subscription);
     }
 
@@ -86,7 +85,7 @@ public class RecordVoiceOverPresenter implements BasePresenter {
     private void handleUpResult(String s) {
         JSONObject result = JSONObject.parseObject(s);
         if (result.getString("code").equals(RESULT_OK)) {
-            ((BaseActivity)context).finish();
+            ((BaseActivity)context).toActivity(MainActivity.class);
             mineView.showToast("保存成功");
         }else {
             mineView.showToast(result.getString("message"));

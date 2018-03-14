@@ -86,11 +86,10 @@ public class AudioWaveView extends View {
 
     private int mColorChangeFlag;
 
-    private int mColor1 = Color.argb(0xfa, 0x6f, 0xff, 0x81);
-
-    private int mColor2 = Color.argb(0xfa, 0xff, 0xff, 0xff);
-
-    private int mColor3 = Color.argb(0xfa, 0x42, 0xff, 0xff);
+    //    private int mColor1 = Color.argb(0xfa, 0x6f, 0xff, 0x81);
+    private int mColor1 = Color.parseColor("#FFB11B");
+//    private int mColor1 = Color.argb(0xfa, 0xff, 0xff, 0xff);
+//    private int mColor1 = Color.argb(0xfa, 0x42, 0xff, 0xff);
 
     private int mDrawStartOffset = 0;
 
@@ -125,9 +124,9 @@ public class AudioWaveView extends View {
         if (mBitmap != null && !mBitmap.isRecycled()) {
             mBitmap.recycle();
         }
-        if (mBackgroundBitmap != null && !mBackgroundBitmap.isRecycled()) {
+        /*if (mBackgroundBitmap != null && !mBackgroundBitmap.isRecycled()) {
             mBackgroundBitmap.recycle();
-        }
+        }*/
     }
 
     public void init(Context context, AttributeSet attrs) {
@@ -410,9 +409,9 @@ public class AudioWaveView extends View {
             if (mColorPoint == 1) {
                 color = Color.argb((mAlphaByVolume) ? 50 * scale : 0xff, Color.red(mColor1), Color.green(mColor1), Color.blue(mColor1));
             } else if (mColorPoint == 2) {
-                color = Color.argb((mAlphaByVolume) ? 50 * scale : 0xff, Color.red(mColor2), Color.green(mColor2), Color.blue(mColor2));
+                color = Color.argb((mAlphaByVolume) ? 50 * scale : 0xff, Color.red(mColor1), Color.green(mColor1), Color.blue(mColor1));
             } else {
-                color = Color.argb((mAlphaByVolume) ? 50 * scale : 0xff, Color.red(mColor3), Color.green(mColor3), Color.blue(mColor3));
+                color = Color.argb((mAlphaByVolume) ? 50 * scale : 0xff, Color.red(mColor1), Color.green(mColor1), Color.blue(mColor1));
             }
             mPaint.setColor(color);
         }
@@ -438,8 +437,8 @@ public class AudioWaveView extends View {
      */
     public void setChangeColor(int color1, int color2, int color3) {
         this.mColor1 = color1;
-        this.mColor2 = color2;
-        this.mColor3 = color3;
+        this.mColor1 = color2;
+        this.mColor1 = color3;
     }
 
 

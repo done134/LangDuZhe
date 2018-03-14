@@ -1,0 +1,31 @@
+apply plugin: 'com.android.library'
+
+android {
+
+    defaultConfig {
+        compileSdkVersion 27
+        minSdkVersion 19
+        targetSdkVersion 27
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.danikula:videocache:2.6.4'
+    compile('com.android.support:appcompat-v7:27.0.2') { exclude module: 'support-v4' }
+}
+
+//apply from: '../bintray.gradle'

@@ -1,1 +1,1 @@
-include ':app', ':camera', ':pullLoadMoreLibrary', ':matisse'
+include ':app', ':camera', ':pullLoadMoreLibrary', ':matisse', ':waveview'

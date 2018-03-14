@@ -237,6 +237,9 @@ public class RecordVoiceOverActivity extends BaseActivity implements RecordVoice
             playEnd = true;
             seekBar.setEnabled(false);
             cbPlayPause.setChecked(true);
+            if (!player.isPause()) {
+                seekBar.setProgress(100);
+            }
         });
 
     }

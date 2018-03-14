@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/camera" />
             <option value="$PROJECT_DIR$/matisse" />
             <option value="$PROJECT_DIR$/pullLoadMoreLibrary" />
+            <option value="$PROJECT_DIR$/waveview" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

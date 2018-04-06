@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.cctv.langduzhe.data.entites.NotPostEntity;
-import com.facebook.stetho.common.LogUtil;
+import com.cjt2325.cameralibrary.util.LogUtil;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;

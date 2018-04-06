@@ -47,17 +47,13 @@
             android:drawablePadding="4dp"
             android:layout_weight="1"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:layout_weight="1"/>
         <android.support.v7.widget.AppCompatRadioButton
             android:id="@+id/rb_message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:button="@null"
             android:drawableTop="@drawable/selector_main_tab_message"
-            android:text="消息"
+            android:text="文字"
             android:drawablePadding="4dp"
             android:textColor="@drawable/selector_main_tab_text"
             android:gravity="center_horizontal"
@@ -75,28 +71,7 @@
             android:layout_weight="1"/>
     </RadioGroup>
 
-    <View
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
-        android:background="@drawable/shape_circle_bg"/>
 
-    <TextView
-        android:id="@+id/btn_read"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:button="@null"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:drawableTop="@drawable/selector_main_tab_read"
-        android:text="朗读"
-        android:drawablePadding="4dp"
-        android:textColor="@drawable/selector_main_tab_text"
-        android:gravity="center_horizontal"
-        android:layout_marginBottom="5dp"
-        android:layout_weight="1"/>
 
     <FrameLayout
         android:id="@+id/fl_gaosi_bg"

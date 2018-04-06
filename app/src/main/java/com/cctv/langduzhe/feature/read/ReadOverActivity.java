@@ -50,6 +50,8 @@ public class ReadOverActivity extends BaseActivity implements RecordVideoOverVie
     private PostPresenter postPresenter;
     private String videoPath;
     private String thumbImage;
+    private String authCodeStr;
+    private boolean isPortrait;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +64,8 @@ public class ReadOverActivity extends BaseActivity implements RecordVideoOverVie
 
     private void initVideo() {
         videoPath = getIntent().getExtras().getString("video_path");
+        authCodeStr = getIntent().getExtras().getString("authCode");
+        isPortrait = getIntent().getExtras().getBoolean("isPortrait");
         thumbImage = "file://" +getIntent().getExtras().getString("thumb_image");
         videoView.setUp(videoPath, JZVideoPlayerStandard.SCREEN_WINDOW_NORMAL, "");
         Picasso.with(this).load(thumbImage).into(videoView.thumbImageView);
@@ -79,7 +83,7 @@ public class ReadOverActivity extends BaseActivity implements RecordVideoOverVie
                     showToast("请输入作品名称！");
                     return;
                 }
-                presenter.saveToSDCard(videoPath, name, thumbImage);
+                presenter.saveToSDCard(videoPath, name, thumbImage,isPortrait);
                 toActivity(MainActivity.class);
                 showToast("已保存在本地");
                 break;
@@ -89,7 +93,7 @@ public class ReadOverActivity extends BaseActivity implements RecordVideoOverVie
                     showToast("请输入作品名称！");
                     return;
                 }
-                postPresenter.postFile(PostPresenter.VIDEO_TYPE, videoPath);
+                postPresenter.postFile(PostPresenter.VIDEO_TYPE, videoPath, isPortrait);
                 showProgress();
                 break;
         }
@@ -118,7 +122,7 @@ public class ReadOverActivity extends BaseActivity implements RecordVideoOverVie
 
     @Override
     public void postSucceed(String fileName, int duration, long fileSize) {
-        presenter.saveVideo(fileName, etVideoName.getText().toString().trim(), duration, fileSize);
+        presenter.saveVideo(fileName, etVideoName.getText().toString().trim(), duration, fileSize, authCodeStr);
         dismissProgress();
     }
 

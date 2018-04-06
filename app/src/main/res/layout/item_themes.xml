@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/black">
+
+    <ImageView
+        android:id="@+id/iv_theme_cover"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:scaleType="centerCrop"/>
+
+    <TextView
+        android:id="@+id/tv_theme_title"
+        android:layout_width="160dp"
+        android:layout_height="25dp"
+        android:text="第一次"
+        android:textColor="@color/white"
+        android:textSize="17sp"
+        android:gravity="center"
+        android:background="@color/half_transparent_20"
+        android:layout_alignBottom="@+id/iv_theme_cover"/>
+
+</RelativeLayout>

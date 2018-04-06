@@ -84,6 +84,7 @@ public class HomeVideoEntity {
         private int duration;
         private int isLike;
         private int likeSum;
+        private String articleId;
 
         public String getId() {
             return id;
@@ -276,6 +277,14 @@ public class HomeVideoEntity {
 
         public void setLikeSum(int likeSum) {
             this.likeSum = likeSum;
+        }
+
+        public String getArticleId() {
+            return articleId;
+        }
+
+        public void setArticleId(String articleId) {
+            this.articleId = articleId;
         }
     }
 }

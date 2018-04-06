@@ -41,7 +41,7 @@ public class RecordVideoOverPresenter implements BasePresenter {
      * create at 2018/2/27 上午10:13
      * 方法说明：保存到数据库
      */
-    public void saveToSDCard(String path,String name,String coverPath) {
+    public void saveToSDCard(String path, String name, String coverPath, boolean isPortrait) {
         NotPostEntity notPostEntity = new NotPostEntity();
         notPostEntity.type = 1;
         notPostEntity.readFilepath = path;
@@ -61,8 +61,8 @@ public class RecordVideoOverPresenter implements BasePresenter {
 
     }
 
-    public void saveVideo(String fileName,String title,int duration,long fileSize) {
-        String requestJson = handleRequestParams(fileName, title, duration, fileSize);
+    public void saveVideo(String fileName,String title,int duration,long fileSize,String authCode) {
+        String requestJson = handleRequestParams(fileName, title, duration, fileSize, authCode);
         RequestBody requestBody =
                 RequestBody.create(MediaType.parse("application/json; charset=utf-8"),
                         requestJson);
@@ -75,13 +75,14 @@ public class RecordVideoOverPresenter implements BasePresenter {
         subscriptions.add(subscription);
     }
 
-    private String handleRequestParams(String fileName, String title,int duration,long fileSize) {
+    private String handleRequestParams(String fileName, String title,int duration,long fileSize, String authCode) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("path",fileName);
         jsonObject.put("title",title);
         jsonObject.put("type", "video");
         jsonObject.put("duration",duration);
         jsonObject.put("fileSize", fileSize);
+        jsonObject.put("licenseCode",authCode);
         return jsonObject.toJSONString();
     }
 

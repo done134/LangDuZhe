@@ -81,7 +81,7 @@
         android:layout_height="130dp"
         android:gravity="center_vertical">
         <TextView
-            android:id="@+id/btn_about_us"
+            android:id="@+id/btn_mine_contribute"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="30dp"
@@ -89,7 +89,7 @@
             android:drawableTop="@mipmap/mine_info_icon"
             android:textColor="@color/c_8c8c8c"
             android:drawablePadding="10dp"
-            android:text="关于我们"
+            android:text="我的投稿"
             android:gravity="center"/>
 
         <View

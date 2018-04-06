@@ -18,6 +18,7 @@ import com.cctv.langduzhe.feature.LoginActivity;
 import com.cctv.langduzhe.util.StatusBarUtil;
 import com.cctv.langduzhe.util.ToastUtils;
 import com.cctv.langduzhe.view.widget.LoadingProgressDialog;
+import com.umeng.message.PushAgent;
 
 /**
  * Created by gentleyin on 2018/1/13.
@@ -38,7 +39,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseView
         super.onCreate(savedInstanceState);
         setPresenter();
         StatusBarUtil.immersiveStatusBar(this);
-
+        PushAgent.getInstance(this).onAppStart();
     }
 
     @Override

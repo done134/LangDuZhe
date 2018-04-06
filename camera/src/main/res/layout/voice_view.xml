@@ -6,18 +6,31 @@
     android:background="#000000"
     android:orientation="vertical">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.shuyu.waveview.AudioWaveView
-            android:id="@+id/voice_preview"
+        android:layout_height="match_parent"
+        android:layout_marginTop="70dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/tv_article_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="100dp"
-            android:layout_marginBottom="150dp"/>
+            android:layout_height="300dp"
+            android:textSize="17sp"
+            android:layout_margin="20dp"
+            android:lineSpacingExtra="20dp"
+            android:scrollbars = "vertical"
+            android:textColor="@android:color/white"/>
 
-    </FrameLayout>
+        <SeekBar
+            android:id="@+id/seekbar_voice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:indeterminateOnly="false"
+            android:thumb="@null"
+            android:maxHeight="4dp"
+            android:progressDrawable="@drawable/seekbar_drawable" />
+    </LinearLayout>
 
 
     <Chronometer
@@ -31,7 +44,7 @@
         android:format="%s"
         android:textSize="18sp"
         android:visibility="gone"
-        android:background="@drawable/shape_round_rectangle_bg"/>
+        android:background="@drawable/shape_round_rectangle_bg_19"/>
 
 
 

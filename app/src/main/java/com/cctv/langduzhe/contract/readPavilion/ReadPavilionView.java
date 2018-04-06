@@ -12,4 +12,6 @@ import java.util.List;
  */
 public interface ReadPavilionView extends BaseView {
     void setHomeMedias(List<HomeVideoEntity.DataBean> data);
+
+    void setAuthSuccess(String authCodeStr);
 }

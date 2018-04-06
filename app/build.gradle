@@ -13,8 +13,18 @@ android {
     }
     buildTypes {
         release {
+            //混淆
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            useProguard true
+            debuggable false
+        }
+        debug{
+            //混淆
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            useProguard false
+            debuggable true
         }
     }
     compileOptions {
@@ -46,15 +56,16 @@ dependencies {
     api rootProject.ext.dependencies["adapter-rxjava"]
     api rootProject.ext.dependencies["fastjson"]
     api rootProject.ext.dependencies["okhttp3-logging-interceptor"]
-    debugApi rootProject.ext.dependencies["stetho"]
-    debugApi rootProject.ext.dependencies["stetho-okhttp3"]
     api rootProject.ext.dependencies["rxPermission"]
     api rootProject.ext.dependencies["picasso"]
     api rootProject.ext.dependencies["eventBus"]
     api rootProject.ext.dependencies["rxjava2"]
     compile project(':camera')
     compile project(':matisse')
+    compile project(':push')
     compile project(':pullLoadMoreLibrary')
     compile 'cn.jzvd:jiaozivideoplayer:6.2.7'
     compile 'com.qiniu:qiniu-android-sdk:7.3.10'
+    implementation files('libs/umeng-common-1.4.4.jar')
+    implementation files('libs/utdid4all-1.1.5.3_proguard.jar')
 }

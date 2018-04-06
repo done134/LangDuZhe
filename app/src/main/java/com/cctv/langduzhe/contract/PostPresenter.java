@@ -11,9 +11,7 @@ import com.cctv.langduzhe.data.http.ApiClient;
 import com.cctv.langduzhe.data.http.RxSchedulerUtils;
 import com.cctv.langduzhe.util.Log;
 import com.qiniu.android.common.FixedZone;
-import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.Configuration;
-import com.qiniu.android.storage.UpCompletionHandler;
 import com.qiniu.android.storage.UploadManager;
 
 import rx.Observable;
@@ -51,23 +49,22 @@ public class PostPresenter implements BasePresenter {
      * create at 2018/2/11 下午3:17
      * 方法说明：获取验证码
      */
-    public void postFile(String bucket, String filePath) {
+    public void postFile(String bucket, String filePath, boolean isPortrait) {
         if (uploadManager == null) {
             initUpLoadManager();
         }
         this.filePath = filePath;
         this.bucket = bucket;
+        String screenOrient = isPortrait ? "y" : "x";
         if (TextUtils.isEmpty(filePath)) {
             collectView.showToast("文件路径为空");
             return;
         }
         fileName = filePath.substring(filePath.lastIndexOf("/") + 1, filePath.length());
-        Observable<String> observable = ApiClient.apiService.getQiNiuToken(bucket,fileName);
+        Observable<String> observable = ApiClient.apiService.getQiNiuToken(bucket,fileName,screenOrient);
         Subscription subscription = observable
                 .compose(RxSchedulerUtils.normalSchedulersTransformer())
-                .subscribe(this::handleResult, throwable -> {
-                    Toast.makeText(context, throwable.getMessage(), Toast.LENGTH_LONG).show();
-                });
+                .subscribe(this::handleResult, throwable -> Toast.makeText(context, throwable.getMessage(), Toast.LENGTH_LONG).show());
         subscriptions.add(subscription);
     }
 

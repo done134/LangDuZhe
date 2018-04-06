@@ -4,7 +4,6 @@ import android.content.Context;
 
 import com.cjt2325.cameralibrary.view.VoiceView;
 import com.czt.mp3recorder.MP3Recorder;
-import com.shuyu.waveview.AudioWaveView;
 
 import java.io.IOException;
 
@@ -59,8 +58,8 @@ public class VoiceMachine implements VoiceState {
     }
 
     @Override
-    public void start(MP3Recorder mRecorder, AudioWaveView audioWave) throws IOException {
-        state.start(mRecorder, audioWave);
+    public void start(MP3Recorder mRecorder) throws IOException {
+        state.start(mRecorder);
     }
 
     @Override

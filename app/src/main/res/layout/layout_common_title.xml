@@ -39,4 +39,19 @@
         android:layout_alignTop="@+id/btn_back"
         android:textColor="@color/white"/>
 
+    <ImageView
+        android:id="@+id/btn_image_right"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/c_191919"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_alignParentRight="true"
+        android:paddingRight="15dp"
+        android:src="@android:drawable/ic_input_add"
+        android:paddingLeft="15dp"
+        android:visibility="gone"
+        android:layout_alignTop="@+id/btn_back"
+        android:textColor="@color/white"/>
 </RelativeLayout>

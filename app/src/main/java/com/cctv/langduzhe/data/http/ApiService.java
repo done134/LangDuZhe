@@ -74,9 +74,10 @@ public interface ApiService {
      * 方法说明：获取七牛token，用来上传文件
      * @param bucket video/image
      * @param fileName
+     * @param screenOrient
      */
     @GET("api/qiniu/")
-    Observable<String> getQiNiuToken(@Query("bucket") String bucket, @Query("fileFullName") String fileName);
+    Observable<String> getQiNiuToken(@Query("bucket") String bucket, @Query("fileFullName") String fileName, @Query("display")  String screenOrient);
 
     /**
      * @author 尹振东
@@ -121,7 +122,7 @@ public interface ApiService {
      * 方法说明：获取评论列表
      */
     @GET("api/free/commons")
-    Observable<String> getCommentList(@Query("媒体ID") String mediaId,@Query("pageNum") int pageNum, @Query("pageSize") int pageSize);
+    Observable<String> getCommentList(@Query("mediaId") String mediaId,@Query("pageNum") int pageNum, @Query("pageSize") int pageSize);
 
     /**
      * @author 尹振东
@@ -201,5 +202,57 @@ public interface ApiService {
     @FormUrlEncoded
     @POST("api/feedback")
     Observable<String> submitFeedBack(@Field("feedbackContent") String feedbackContent);
+
+
+    /**
+     * @author 尹振东
+     * create at 2018/2/14 下午9:23
+     * 方法说明：我的投稿列表
+     */
+    @GET("api/articles/my")
+    Observable<String> getContributeList(@Query("pageNum") int pageNum);
+
+    /**
+     * @author 尹振东
+     * create at 2018/2/14 下午9:23
+     * 方法说明：提交投稿
+     */
+    @FormUrlEncoded
+    @POST("api/article")
+    Observable<String> submitContribute(@Field("title") String title,@Field("content") String content);
+
+    /**
+     * @author 尹振东
+     * create at 2018/2/14 下午9:23
+     * 方法说明：获取文字主题列表
+     */
+    @GET("api/free/themes")
+    Observable<String> getThemeList(@Query("pageNum") int pageNum);
+
+
+    /**
+     * @author 尹振东
+     * create at 2018/2/14 下午9:23
+     * 方法说明：获取文字列表
+     */
+    @GET("api/free/articles")
+    Observable<String> getArticleList(@Query("pageNum") int pageNum,@Query("themeId") String themeId);
+
+    /**
+     * @author 尹振东
+     * create at 2018/2/14 下午9:23
+     * 方法说明：获取文字详情
+     */
+    @GET("api/free/article")
+    Observable<String> getArticleDetail(@Query("articleId") String articleId);
+
+
+    /**
+     * @author 尹振东
+     * create at 2018/2/14 下午9:23
+     * 方法说明：校验授权码
+     */
+    @GET("api/license")
+    Observable<String> checkAuthCode(@Query("licenseCode") String licenseCode);
 }
 

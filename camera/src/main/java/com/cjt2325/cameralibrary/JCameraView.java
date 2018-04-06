@@ -696,4 +696,13 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
         });
         progressAnimator.start();
     }
+
+    /**
+    * @author 尹振东
+    * create at 2018/4/6 下午12:17
+    * 方法说明：获取当前屏幕方向不为0则是横屏，为零是竖屏
+    */
+    public int getRotationFlag() {
+        return rotationFlag;
+    }
 }

@@ -5,6 +5,7 @@ import android.os.CountDownTimer;
 import android.widget.CompoundButton;
 
 import com.cjt2325.cameralibrary.listener.CaptureListener;
+import com.cjt2325.cameralibrary.listener.RecordTimeListener;
 import com.cjt2325.cameralibrary.util.CheckPermission;
 import com.cjt2325.cameralibrary.util.LogUtil;
 
@@ -43,6 +44,11 @@ public class CaptureButton extends android.support.v7.widget.AppCompatCheckBox {
     private CaptureListener captureListener;        //、按钮回调接口
     private RecordCountDownTimer timer;             //计时器
 
+    private RecordTimeListener recordTimeListener;//时间进度回调
+
+    public void setRecordTimeListener(RecordTimeListener recordTimeListener) {
+        this.recordTimeListener = recordTimeListener;
+    }
 
     public CaptureButton(Context context, int type) {
         super(context);
@@ -100,6 +106,9 @@ public class CaptureButton extends android.support.v7.widget.AppCompatCheckBox {
     private void updateProgress(long millisUntilFinished) {
         recorded_time = (int) (duration - millisUntilFinished);
 //        invalidate();
+        if (recordTimeListener != null) {
+            recordTimeListener.onTick(recorded_time);
+        }
     }
 
     //录制视频计时器

@@ -36,4 +36,18 @@ public class AppConstants {
      * 七牛图片域名
      */
     public static final String QI_NIU_IMAGE_DOMAIN = "http://p4v9f6w5q.bkt.clouddn.com/";
+
+
+    /**
+     * 友盟推送App key
+     */
+    public static final String U_PUSH_APP_KEY = "5aa783c8f29d9817a800013a";
+    /**
+     * 友盟推送Message Secret
+     */
+    public static final String U_PUSH_MESSAGE_SECRET = "53a9cdc82870b2cb70eccbe51899183a";
+    /**
+     * 友盟推送Master Secret
+     */
+    public static final String U_PUSH_MASTER_SECRET = "mdovkgrkpbx9anhtae9kjo3udcekcb0d";
 }

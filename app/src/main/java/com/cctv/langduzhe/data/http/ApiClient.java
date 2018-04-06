@@ -5,7 +5,6 @@ import com.cctv.langduzhe.LangDuZheApplication;
 import com.cctv.langduzhe.data.preference.PreferenceContents;
 import com.cctv.langduzhe.data.preference.SPUtils;
 import com.cctv.langduzhe.util.CommonUtil;
-import com.facebook.stetho.okhttp3.StethoInterceptor;
 import com.cctv.langduzhe.BuildConfig;
 import com.cctv.langduzhe.data.http.configuration.ApiConfiguration;
 
@@ -54,7 +53,6 @@ public final class ApiClient {
             HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
             httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
             builder.addInterceptor(httpLoggingInterceptor);
-            builder.addNetworkInterceptor(new StethoInterceptor());
 //            BuildConfig.STETHO.addNetworkInterceptor(builder);、
         }
         builder.addInterceptor(initCacheInterceptor());

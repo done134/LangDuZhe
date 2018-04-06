@@ -38,6 +38,7 @@ public class RecordVideoActivity extends BaseActivity {
     @BindView(R.id.camera_view)
     com.cjt2325.cameralibrary.JCameraView jCameraView;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,9 +94,11 @@ public class RecordVideoActivity extends BaseActivity {
         jCameraView.setJCameraLisenter((url, firstFrame) -> {
             //获取视频路径
             String path = FileUtil.saveBitmap("JCamera", firstFrame);
-            Bundle videoBundle = new Bundle();
+            Bundle videoBundle = getIntent().getExtras();
             videoBundle.putString("video_path", url);
-            videoBundle.putString("thumb_image",path);
+            videoBundle.putString("thumb_image", path);
+            boolean isPortrait = jCameraView.getRotationFlag() == 0;
+            videoBundle.putBoolean("isPortrait", isPortrait);
             toActivity(ReadOverActivity.class, videoBundle);
         });
 

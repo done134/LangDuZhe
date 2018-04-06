@@ -1,7 +1,6 @@
 package com.cctv.langduzhe.feature;
 
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,7 +15,6 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.cctv.langduzhe.R;
 import com.cctv.langduzhe.base.BaseActivity;
@@ -24,11 +22,11 @@ import com.cctv.langduzhe.base.BaseFragment;
 import com.cctv.langduzhe.contract.MainPresenter;
 import com.cctv.langduzhe.contract.MainView;
 import com.cctv.langduzhe.eventMsg.QuitEvent;
+import com.cctv.langduzhe.feature.articles.ThemesFragment;
 import com.cctv.langduzhe.feature.home.HomeFragment;
-import com.cctv.langduzhe.feature.message.MessageFragment;
 import com.cctv.langduzhe.feature.mine.MineFragment;
-import com.cctv.langduzhe.feature.read.ReadActivity;
 import com.cctv.langduzhe.feature.readPavilion.ReadPavilionFragment;
+import com.cctv.langduzhe.feature.readPavilion.ReadPavilionListFragment;
 import com.cctv.langduzhe.util.ToastUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -52,8 +50,8 @@ public class MainActivity extends BaseActivity implements MainView{
     AppCompatRadioButton rbHome;
     @BindView(R.id.rb_read_pavilion)
     AppCompatRadioButton rbReadPavilion;
-    @BindView(R.id.btn_read)
-    TextView rbRead;
+//    @BindView(R.id.btn_read)
+//    TextView rbRead;
     @BindView(R.id.rb_message)
     AppCompatRadioButton rbMessage;
     @BindView(R.id.rb_mine)
@@ -128,7 +126,7 @@ public class MainActivity extends BaseActivity implements MainView{
             }
         });
         //弹出录制选择页面
-        rbRead.setOnClickListener(v -> {
+        /*rbRead.setOnClickListener(v -> {
             Bitmap bitmap = getCacheBitmapFromView(mainLayout);
             if (bitmap != null) {
                 int width = (int) Math.round(bitmap.getWidth() * 0.5);
@@ -140,7 +138,7 @@ public class MainActivity extends BaseActivity implements MainView{
             }
                 toActivity(ReadActivity.class);
 //            }
-        });
+        });*/
     }
 
 
@@ -166,9 +164,9 @@ public class MainActivity extends BaseActivity implements MainView{
             if (FRAG_HOME.equals(fragTAG)) {
                 fragment = new HomeFragment();
             } else if (FRAG_READ_PAVILION.equals(fragTAG)) {
-                fragment = new ReadPavilionFragment();
+                fragment = new ReadPavilionListFragment();
             } else if (FRAG_MESSAGE.equals(fragTAG)) {
-                fragment = new MessageFragment();
+                fragment = new ThemesFragment();
             } else if (FRAG_MINE.equals(fragTAG)) {
                 fragment = new MineFragment();
             }

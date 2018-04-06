@@ -10,8 +10,11 @@ import com.cctv.langduzhe.data.http.ApiConstants;
 import com.cctv.langduzhe.data.http.configuration.ApiConfiguration;
 import com.cctv.langduzhe.util.picasco.ImageDownLoader;
 import com.cctv.langduzhe.util.picasco.PicassoUtils;
+import com.cjt2325.cameralibrary.util.LogUtil;
 import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
+import com.umeng.message.IUmengRegisterCallback;
+import com.umeng.message.PushAgent;
 
 import java.security.cert.CertificateException;
 import java.util.Collections;
@@ -57,6 +60,28 @@ public class LangDuZheApplication extends Application {
             StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build());
             StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().penaltyLog().build());
         }
+
+        /**
+         * 初始化友盟推送
+         */
+        PushAgent mPushAgent = PushAgent.getInstance(this);
+            //注册推送服务，每次调用register方法都会回调该接口
+        mPushAgent.register(new IUmengRegisterCallback() {
+
+            @Override
+            public void onSuccess(String deviceToken) {
+                //注册成功会返回device token
+                LogUtil.i("deviceToken", deviceToken);
+            }
+
+            @Override
+            public void onFailure(String s, String s1) {
+                //注册成功会返回device token
+                LogUtil.i("deviceToken", s);
+                LogUtil.i("deviceToken", s1);
+
+            }
+        });
 
         //初始化Stetho
 //        BuildConfig.STETHO.init(this.getApplicationContext());

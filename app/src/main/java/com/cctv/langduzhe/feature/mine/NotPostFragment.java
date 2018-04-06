@@ -77,7 +77,7 @@ public class NotPostFragment extends BaseFragment implements NotPostAdapter.OnBu
 
     @Override
     public void onPostClick(NotPostEntity postEntity) {
-        postPresenter.postFile(postEntity.type==0?PostPresenter.VOICE_TYPE : PostPresenter.VIDEO_TYPE,postEntity.readFilepath);
+        postPresenter.postFile(postEntity.type==0?PostPresenter.VOICE_TYPE : PostPresenter.VIDEO_TYPE,postEntity.readFilepath, isPortrait);
         this.postEntity = postEntity;
         showProgress();
     }

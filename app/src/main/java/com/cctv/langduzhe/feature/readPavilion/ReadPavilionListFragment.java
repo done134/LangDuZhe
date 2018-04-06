@@ -6,6 +6,9 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.cctv.langduzhe.R;
 import com.cctv.langduzhe.base.BaseFragment;
@@ -16,6 +19,7 @@ import com.cctv.langduzhe.contract.readPavilion.ReadPavilionPresenter;
 import com.cctv.langduzhe.contract.readPavilion.ReadPavilionView;
 import com.cctv.langduzhe.data.entites.HomeVideoEntity;
 import com.cctv.langduzhe.eventMsg.CollectEvent;
+import com.cctv.langduzhe.feature.read.RecordVideoActivity;
 import com.cctv.langduzhe.util.ToastUtils;
 import com.cctv.langduzhe.adapter.ReadPavilionAdapter;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
@@ -56,6 +60,12 @@ public class ReadPavilionListFragment extends BaseFragment implements PullLoadMo
 
     @BindView(R.id.pull_refresh_list)
     PullLoadMoreRecyclerView pullRefreshList;
+    @BindView(R.id.btn_back)
+    ImageButton btnBack;
+    @BindView(R.id.tv_title)
+    TextView tvTitle;
+    @BindView(R.id.btn_image_right)
+    ImageView btnImageRight;
     Unbinder unbinder;
     private View mView;
 
@@ -82,7 +92,11 @@ public class ReadPavilionListFragment extends BaseFragment implements PullLoadMo
         pullRefreshList.setOnPullLoadMoreListener(this);
         readPavilionAdapter = new ReadPavilionAdapter();
         pullRefreshList.setAdapter(readPavilionAdapter);
-        readPavilionAdapter.setOnItemClickListener(this::onItemClick);
+        readPavilionAdapter.setOnItemClickListener(this);
+        btnBack.setVisibility(View.GONE);
+        tvTitle.setText("朗读亭");
+        btnImageRight.setVisibility(View.VISIBLE);
+        btnImageRight.setOnClickListener(v -> presenter.showAuthDialog(getActivity()));
     }
 
     @Override
@@ -109,7 +123,7 @@ public class ReadPavilionListFragment extends BaseFragment implements PullLoadMo
         if (collectEvent.type.equals("readPavilion")) {
 
             readPavilionAdapter.getList().set(optPosition, collectEvent.collected);
-//            readPavilionAdapter.notifyDataSetChanged();
+            readPavilionAdapter.notifyDataSetChanged();
         }
     }
 
@@ -170,6 +184,13 @@ public class ReadPavilionListFragment extends BaseFragment implements PullLoadMo
             showToast("没有更多数据");
         }
         pullRefreshList.setPullLoadMoreCompleted();
+    }
+
+    @Override
+    public void setAuthSuccess(String authCodeStr) {
+        Bundle bundle = new Bundle();
+        bundle.putString("authCode", authCodeStr);
+        toActivity(RecordVideoActivity.class,bundle);
     }
 
     @Override

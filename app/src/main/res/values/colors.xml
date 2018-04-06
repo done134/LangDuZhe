@@ -12,6 +12,8 @@
     <color name="transparent">#0000</color>
     <color name="c_191919">#191919</color>
     <color name="c_8c8c8c">#8c8c8c</color>
+
+    <color name="c_eaeaea">#eaeaea</color>
     <color name="c_4c4c4c">#4c4c4c</color>
     <color name="head_border_color">#10ffffff</color>
 

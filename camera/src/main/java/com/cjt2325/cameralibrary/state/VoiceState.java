@@ -12,7 +12,7 @@ import java.io.IOException;
  */
 public interface VoiceState {
 
-    void start(MP3Recorder mRecorder, AudioWaveView audioWave) throws IOException;
+    void start(MP3Recorder mRecorder) throws IOException;
 
     void stop();
 

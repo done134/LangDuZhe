@@ -154,7 +154,7 @@ public class RecordVoiceOverActivity extends BaseActivity implements RecordVoice
                     showToast("请输入作品名称！");
                     return;
                 }
-                postPresenter.postFile(PostPresenter.VOICE_TYPE, voiceUrl);
+                postPresenter.postFile(PostPresenter.VOICE_TYPE, voiceUrl, isPortrait);
                 showProgress();
                 break;
             case R.id.cb_play_pause:

@@ -12,16 +12,17 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.Manifest.permission.READ_PHONE_STATE" />
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <uses-permission android:name="android.permission.FLASHLIGHT" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
-    <uses-feature android:name="android.hardware.camera"/>
-    <uses-feature android:name="android.hardware.camera.autofocus"/>
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
 
@@ -54,20 +55,23 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".feature.mine.SettingsActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_settings" />
+            android:label="@string/title_activity_settings"
+            android:screenOrientation="portrait" />
 
         <!--消息详情页面-->
-        <activity android:name=".feature.message.MessageDetailActivity"
+        <activity
+            android:name=".feature.message.MessageDetailActivity"
             android:screenOrientation="portrait" />
         <!-- 编辑昵称和头像页面 -->
-        <activity android:name=".feature.mine.EditUserInfoActivity"
-            android:screenOrientation="portrait"  />
+        <activity
+            android:name=".feature.mine.EditUserInfoActivity"
+            android:screenOrientation="portrait" />
 
         <!--阅读选择页面，背景半透明-->
-        <activity android:name=".feature.read.ReadActivity"
+        <activity
+            android:name=".feature.read.ReadActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/translucent"/>
+            android:theme="@style/translucent" />
         <!--录制视频页面-->
         <activity android:name=".feature.read.RecordVideoActivity" />
 
@@ -75,53 +79,81 @@
         <activity android:name=".feature.read.RecordVoiceActivity" />
 
         <!-- 视频录制完成预览页面-->
-        <activity android:name=".feature.read.VideoPreviewActivity"
+        <activity
+            android:name=".feature.read.VideoPreviewActivity"
             android:screenOrientation="portrait" />
         <!-- 音频录制完成预览页面-->
-        <activity android:name=".feature.read.VoicePreviewActivity"
+        <activity
+            android:name=".feature.read.VoicePreviewActivity"
             android:screenOrientation="portrait" />
 
         <!-- 首页视频详情页面-->
-        <activity android:name=".feature.home.HomeVideoDetailActivity"
+        <activity
+            android:name=".feature.home.HomeVideoDetailActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
 
         <!-- 我的朗读页面-->
-        <activity android:name=".feature.mine.MineReadActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".feature.mine.MineReadActivity"
+            android:screenOrientation="portrait" />
 
         <!-- 视频录制完成，保存或者上传页面-->
-        <activity android:name=".feature.read.ReadOverActivity"
+        <activity
+            android:name=".feature.read.ReadOverActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
 
         <!-- 朗读亭详情页面，包含音频视频两种情况-->
-        <activity android:name=".feature.readPavilion.ReadPavilionDetailActivity"
+        <activity
+            android:name=".feature.readPavilion.ReadPavilionDetailActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
 
 
         <!-- 我的收藏页面-->
-        <activity android:name=".feature.mine.MineCollectionActivity"
-            android:screenOrientation="portrait"   />
-
+        <activity
+            android:name=".feature.mine.MineCollectionActivity"
+            android:screenOrientation="portrait" />
 
 
         <!-- 录制音频完成页面-->
-        <activity android:name=".feature.read.RecordVoiceOverActivity"
+        <activity
+            android:name=".feature.read.RecordVoiceOverActivity"
             android:screenOrientation="portrait" />
 
 
         <!-- 输入评论页面-->
-        <activity android:name=".feature.CommentActivity"
+        <activity
+            android:name=".feature.CommentActivity"
             android:configChanges="keyboard|keyboardHidden|orientation"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysVisible|adjustPan"
-            android:theme="@style/NoTitleDialogTheme"/>
+            android:theme="@style/NoTitleDialogTheme"
+            android:windowSoftInputMode="stateAlwaysVisible|adjustPan" />
 
         <!-- 意见反馈页面-->
-        <activity android:name=".feature.mine.FeedbackActivity"
+        <activity
+            android:name=".feature.mine.FeedbackActivity"
             android:screenOrientation="portrait" />
+        <!--我的投稿列表页-->
+        <activity
+            android:name=".feature.mine.MineContributeActivity"
+            android:screenOrientation="portrait" />
+        <!--提交新投稿页面-->
+        <activity
+            android:name=".feature.mine.AddContributeActivity"
+            android:screenOrientation="portrait" />
+        <!--文字详情列表页-->
+        <activity
+            android:name=".feature.articles.ArticleListActivity"
+            android:screenOrientation="portrait" />
+        <!--文字详情页-->
+        <activity
+            android:name=".feature.articles.ArticleDetailActivity"
+            android:screenOrientation="portrait" />
+        <!--朗读文字页面-->
+        <activity android:name=".feature.read.ReadArticleActivity"
+            android:screenOrientation="portrait"  />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -132,6 +164,15 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths_public" />
         </provider>
+
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5aa783c8f29d9817a800013a">
+        </meta-data>
+        <meta-data
+            android:name="UMENG_MESSAGE_SECRET"
+            android:value="53a9cdc82870b2cb70eccbe51899183a">
+        </meta-data>
     </application>
 
 </manifest>

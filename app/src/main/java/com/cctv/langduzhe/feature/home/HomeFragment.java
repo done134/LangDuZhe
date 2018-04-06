@@ -137,14 +137,13 @@ public class HomeFragment extends BaseFragment implements
     @Override
     public void setHomeMedias(List<HomeVideoEntity.DataBean> list) {
         if (list != null && list.size() > 0) {
-//            if (pageNum == 0) {
-//                homeVideoAdapter.setData(list);
-//            } else {
+            if (pageNum == 0) {
+                homeVideoAdapter.setData(list);
+            } else {
                 homeVideoAdapter.addData(list);
-//            }
+            }
         } else {
             ToastUtils.showLong(getActivity(), "数据已全部加载");
-            rvHomeList.setPullLoadMoreCompleted();
         }
         rvHomeList.setPullLoadMoreCompleted();
     }

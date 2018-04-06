@@ -91,14 +91,11 @@ public class ReadPavilionFragment extends BaseFragment{
             }
         });
 
-        rgReadPavilionType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId == R.id.rb_read_pavilion_hottest) {
-                    vpReadPavilion.setCurrentItem(1,true);
-                }else {
-                    vpReadPavilion.setCurrentItem(0,true);
-                }
+        rgReadPavilionType.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.rb_read_pavilion_hottest) {
+                vpReadPavilion.setCurrentItem(1,true);
+            }else {
+                vpReadPavilion.setCurrentItem(0,true);
             }
         });
     }

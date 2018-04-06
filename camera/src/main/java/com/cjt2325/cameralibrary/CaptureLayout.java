@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.cjt2325.cameralibrary.listener.CaptureListener;
 import com.cjt2325.cameralibrary.listener.ClickListener;
+import com.cjt2325.cameralibrary.listener.RecordTimeListener;
 import com.cjt2325.cameralibrary.listener.ReturnListener;
 import com.cjt2325.cameralibrary.listener.TypeListener;
 
@@ -68,6 +69,7 @@ public class CaptureLayout extends FrameLayout {
 
     private boolean isFirst = true;
     private int captureType;
+
 
     public CaptureLayout(Context context) {
         this(context, null);
@@ -332,6 +334,10 @@ public class CaptureLayout extends FrameLayout {
     public void setDuration(int duration) {
         btn_capture.setDuration(duration);
     }
+    public void setRecordTimeListener(RecordTimeListener recordTimeListener) {
+        btn_capture.setRecordTimeListener(recordTimeListener);
+    }
+
 
     public void setButtonFeatures(int state) {
         btn_capture.setButtonFeatures(state);

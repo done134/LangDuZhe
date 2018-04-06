@@ -9,16 +9,20 @@ import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.text.method.ScrollingMovementMethod;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Chronometer;
 import android.widget.FrameLayout;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cjt2325.cameralibrary.listener.CaptureListener;
 import com.cjt2325.cameralibrary.listener.ClickListener;
+import com.cjt2325.cameralibrary.listener.RecordTimeListener;
 import com.cjt2325.cameralibrary.listener.RecordVoiceListener;
 import com.cjt2325.cameralibrary.listener.TypeListener;
 import com.cjt2325.cameralibrary.state.VoiceMachine;
@@ -33,6 +37,8 @@ import com.shuyu.waveview.FileUtils;
 
 import java.io.File;
 import java.util.UUID;
+
+import static com.cjt2325.cameralibrary.AppConstants.AUDIO_PATH;
 
 /**
  * Created by gentleyin
@@ -53,15 +59,12 @@ public class YVoiceView extends FrameLayout implements VoiceView{
     private VoiceMachine voiceMachine;
 
     private Context mContext;
-    private AudioWaveView audioWave;
     private CaptureLayout mCaptureLayout;
+    private TextView tvContent;
+    private SeekBar seekBar;
     private Chronometer tvRecordTime;
 
 
-    //切换摄像头按钮的参数
-    private int iconSize = 0;       //图标大小
-    private int iconMargin = 0;     //右上边距
-    private int iconSrc = 0;        //图标资源
     private int iconLeft = 0;       //左图标
     private int iconRight = 0;      //右图标
     private int duration = 0;       //录制时间
@@ -94,11 +97,6 @@ public class YVoiceView extends FrameLayout implements VoiceView{
         mContext = context;
         //get AttributeSet
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.JCameraView, defStyleAttr, 0);
-        iconSize = a.getDimensionPixelSize(R.styleable.JCameraView_iconSize, (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_SP, 35, getResources().getDisplayMetrics()));
-        iconMargin = a.getDimensionPixelSize(R.styleable.JCameraView_iconMargin, (int) TypedValue.applyDimension(
-                TypedValue.COMPLEX_UNIT_SP, 15, getResources().getDisplayMetrics()));
-        iconSrc = a.getResourceId(R.styleable.JCameraView_iconSrc, R.drawable.ic_camera);
         iconLeft = a.getResourceId(R.styleable.JCameraView_iconLeft, 0);
         iconRight = a.getResourceId(R.styleable.JCameraView_iconRight, 0);
         duration = a.getInteger(R.styleable.JCameraView_duration_max, 300 * 1000);       //没设置默认为10s
@@ -109,7 +107,7 @@ public class YVoiceView extends FrameLayout implements VoiceView{
 
 
     private void initData() {
-        filePath = FileUtils.getAppPath();
+        filePath = AUDIO_PATH;
         File file = new File(filePath);
         if (!file.exists()) {
             if (!file.mkdirs()) {
@@ -119,11 +117,8 @@ public class YVoiceView extends FrameLayout implements VoiceView{
         }
         voiceMachine = new VoiceMachine(getContext(),this);
 
-        int offset = ScreenUtils.dip2px(getContext(), 1);
         filePath = FileUtils.getAppPath() + UUID.randomUUID().toString() + ".mp3";
         mRecorder = new MP3Recorder(new File(filePath));
-        int size = ScreenUtils.getScreenWidth(getContext()) / offset;//控件默认的间隔是1
-        mRecorder.setDataList(audioWave.getRecList(), size);
         audioPlayer = new AudioPlayer(getContext(), new Handler());
     }
 
@@ -131,11 +126,22 @@ public class YVoiceView extends FrameLayout implements VoiceView{
     private void initView() {
         setWillNotDraw(false);
         View view = LayoutInflater.from(mContext).inflate(R.layout.voice_view, this);
-        audioWave = (AudioWaveView) view.findViewById(R.id.voice_preview);
-        tvRecordTime = (Chronometer) view.findViewById(R.id.tv_record_time);
-        mCaptureLayout = (CaptureLayout) view.findViewById(R.id.capture_layout);
+        tvRecordTime = view.findViewById(R.id.tv_record_time);
+        mCaptureLayout = view.findViewById(R.id.capture_layout);
+        tvContent = view.findViewById(R.id.tv_article_content);
+        seekBar = view.findViewById(R.id.seekbar_voice);
         mCaptureLayout.setDuration(duration);
         mCaptureLayout.setIconSrc(iconLeft, iconRight);
+        seekBar.setMax(duration);
+        seekBar.setPressed(false);
+        seekBar.setEnabled(false);
+        //录制开始时间回调
+        mCaptureLayout.setRecordTimeListener(new RecordTimeListener() {
+            @Override
+            public void onTick(long millis) {
+                seekBar.setProgress((int) millis);
+            }
+        });
 
         //拍照 录像
         mCaptureLayout.setCaptureLisenter(new CaptureListener() {
@@ -148,7 +154,7 @@ public class YVoiceView extends FrameLayout implements VoiceView{
             public void recordStart() {
                 flagRecord = true;
                 try {
-                    voiceMachine.start(mRecorder,audioWave);
+                    voiceMachine.start(mRecorder);
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast.makeText(getContext(), "录音出现异常", Toast.LENGTH_SHORT).show();
@@ -176,7 +182,6 @@ public class YVoiceView extends FrameLayout implements VoiceView{
                 if (mRecorder != null && mRecorder.isRecording()) {
                     mRecorder.setPause(false);
                     mRecorder.stop();
-                    audioWave.stopView();
                 }
                 voiceMachine.stopRecord(false, time,filePath);
                 tvRecordTime.stop();
@@ -193,7 +198,6 @@ public class YVoiceView extends FrameLayout implements VoiceView{
 //                filePath = "";
                 if (mRecorder != null && mRecorder.isRecording()) {
                     mRecorder.stop();
-                    audioWave.stopView();
                 }
             }
         });
@@ -237,6 +241,7 @@ public class YVoiceView extends FrameLayout implements VoiceView{
         tvRecordTime.setVisibility(VISIBLE);
         tvRecordTime.setBase(SystemClock.elapsedRealtime());//计时器清零
         tvRecordTime.start();
+
     }
 
     @Override
@@ -307,5 +312,10 @@ public class YVoiceView extends FrameLayout implements VoiceView{
 
     public void setLeftClickListener(ClickListener clickListener) {
         this.leftClickListener = clickListener;
+    }
+
+    public void setTextContent(String content) {
+        tvContent.setText(content);
+        tvContent.setMovementMethod(new ScrollingMovementMethod());
     }
 }

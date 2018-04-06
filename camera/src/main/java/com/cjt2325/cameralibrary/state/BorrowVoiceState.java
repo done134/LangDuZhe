@@ -19,9 +19,8 @@ public class BorrowVoiceState implements VoiceState {
     }
 
     @Override
-    public void start(MP3Recorder mRecorder, AudioWaveView audioWave) throws IOException {
+    public void start(MP3Recorder mRecorder) throws IOException {
         mRecorder.start();
-        audioWave.startView();
 
     }
 

@@ -16,7 +16,6 @@ import com.cctv.langduzhe.contract.mine.MineView;
 import com.cctv.langduzhe.eventMsg.UpdateUserInfoEvent;
 import com.cctv.langduzhe.util.picasco.PicassoUtils;
 import com.cctv.langduzhe.view.widget.CircleImageView;
-import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -40,7 +39,7 @@ public class MineFragment extends BaseFragment implements MineView{
     TextView btnMyCollection;
     @BindView(R.id.btn_my_read)
     TextView btnMyRead;
-    @BindView(R.id.btn_about_us)
+    @BindView(R.id.btn_mine_contribute)
     TextView btnAboutUs;
     @BindView(R.id.btn_app_set)
     TextView btnAppSet;
@@ -79,7 +78,7 @@ public class MineFragment extends BaseFragment implements MineView{
         presenter.subscribe();
     }
 
-    @OnClick({R.id.iv_user_picture, R.id.tv_user_name, R.id.btn_my_collection, R.id.btn_my_read, R.id.btn_about_us, R.id.btn_app_set})
+    @OnClick({R.id.iv_user_picture, R.id.tv_user_name, R.id.btn_my_collection, R.id.btn_my_read, R.id.btn_mine_contribute, R.id.btn_app_set})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_user_picture:
@@ -87,14 +86,19 @@ public class MineFragment extends BaseFragment implements MineView{
                 toActivity(EditUserInfoActivity.class);
                 break;
             case R.id.btn_my_collection:
+                //我的收藏
                 toActivity(MineCollectionActivity.class);
                 break;
             case R.id.btn_my_read:
+                //我的朗读
                 toActivity(MineReadActivity.class);
                 break;
-            case R.id.btn_about_us:
+            case R.id.btn_mine_contribute:
+                //我的投稿
+                toActivity(MineContributeActivity.class);
                 break;
             case R.id.btn_app_set:
+                //设置
                 toActivity(SettingsActivity.class);
                 break;
         }

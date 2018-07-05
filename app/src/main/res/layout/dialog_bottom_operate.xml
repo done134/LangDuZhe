@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@color/transparent"
     android:gravity="bottom">
 
 
@@ -27,7 +27,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/c_8c8c8c"/>
+            android:background="@color/c_c8c8c8"/>
 
         <Button
             android:id="@+id/btn_gallery"

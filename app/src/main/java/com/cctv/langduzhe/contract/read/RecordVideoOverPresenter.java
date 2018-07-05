@@ -11,6 +11,9 @@ import com.cctv.langduzhe.data.entites.NotPostEntity;
 import com.cctv.langduzhe.data.http.ApiClient;
 import com.cctv.langduzhe.data.http.RxSchedulerUtils;
 import com.cctv.langduzhe.feature.MainActivity;
+import com.cctv.langduzhe.util.DateConvertUtils;
+
+import java.util.HashMap;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -47,7 +50,40 @@ public class RecordVideoOverPresenter implements BasePresenter {
         notPostEntity.readFilepath = path;
         notPostEntity.readName = name;
         notPostEntity.coverPath = coverPath;
+        notPostEntity.display = isPortrait;
+        getPlayTime(notPostEntity,path);
         postDao.add(notPostEntity);
+    }
+
+
+    private void  getPlayTime(NotPostEntity notPostEntity, String mUri)
+    {
+        android.media.MediaMetadataRetriever mmr = new android.media.MediaMetadataRetriever();
+        try {
+            if (mUri != null)
+            {
+                HashMap<String, String> headers = null;
+                if (headers == null)
+                {
+                    headers = new HashMap<String, String>();
+                    headers.put("User-Agent", "Mozilla/5.0 (Linux; U; Android 4.4.2; zh-CN; MW-KW-001 Build/JRO03C) AppleWebKit/533.1 (KHTML, like Gecko) Version/4.0 UCBrowser/1.0.0.001 U4/0.8.0 Mobile Safari/533.1");
+                }
+                mmr.setDataSource(mUri, headers);
+            } else
+            {
+                //mmr.setDataSource(mFD, mOffset, mLength);
+            }
+            String duration = mmr.extractMetadata(android.media.MediaMetadataRetriever.METADATA_KEY_DURATION);//时长(毫秒)
+            notPostEntity.mediaLength = duration;
+//            String width = mmr.extractMetadata(android.media.MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH);//宽
+//            String height = mmr.extractMetadata(android.media.MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT);//高
+
+        } catch (Exception ex)
+        {
+        } finally {
+            mmr.release();
+        }
+
     }
 
 
@@ -90,7 +126,7 @@ public class RecordVideoOverPresenter implements BasePresenter {
         JSONObject result = JSONObject.parseObject(s);
         if (result.getString("code").equals(RESULT_OK)) {
             ((BaseActivity)context).toActivity(MainActivity.class);
-            mineView.showToast("保存成功");
+            mineView.showToast("发布成功");
         }else if(result.getString("code").equals("K-000001")){
             mineView.showToast("标题已存在，请修改后重新上传");
         } else {

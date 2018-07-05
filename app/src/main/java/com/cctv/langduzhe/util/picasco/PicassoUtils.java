@@ -6,6 +6,8 @@ import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.cctv.langduzhe.R;
+import com.cctv.langduzhe.util.imageTransform.RoundTransform;
+import com.cctv.langduzhe.view.widget.CircleImageView;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
@@ -27,9 +29,28 @@ import okhttp3.Protocol;
  */
 public class PicassoUtils {
     public static void loadImageByurl(Context ctx, String url, ImageView imageView) {
-        Picasso.with(ctx).load(url).error(R.mipmap.ic_launcher_round).into(imageView);
+        if (!TextUtils.isEmpty(url)) {
+            Picasso.with(ctx).load(url).error(R.mipmap.ic_launcher).fit().into(imageView);
+        }
+    }
+    public static void loadImageByurlCenter(Context ctx, String url, ImageView imageView) {
+        if (!TextUtils.isEmpty(url)) {
+            Picasso.with(ctx).load(url).error(R.mipmap.ic_launcher).fit().centerInside().into(imageView);
+        }
+    }
+    public static void loadImageByurl(Context ctx, String url, ImageView imageView,int size) {
+        if (!TextUtils.isEmpty(url)) {
+            Picasso.with(ctx).load(url).error(R.mipmap.ic_launcher).resize(size, size).into(imageView);
+        }
 
     }
+    public static void loadImageByurlerr(Context ctx, String url, ImageView imageView, int errRes) {
+        if (!TextUtils.isEmpty(url)) {
+            Picasso.with(ctx).load(url).error(errRes).into(imageView);
+        }
+
+    }
+
     public static void loadImageByRes(int res, Context ctx, ImageView imageView) {
         Picasso.with(ctx).load(res).into(imageView);
 
@@ -115,5 +136,4 @@ public class PicassoUtils {
                 .build();
 
     }
-
 }

@@ -57,6 +57,8 @@ public class MineCollectionActivity extends BaseActivity implements BaseRecycler
     LinearLayout llOption;
     @BindView(R.id.rv_mine_collection)
     PullLoadMoreRecyclerView rvMineCollection;
+    @BindView(R.id.tv_no_data)
+    TextView tvNoData;
 
     /**
      * 是否是编辑状态
@@ -86,7 +88,7 @@ public class MineCollectionActivity extends BaseActivity implements BaseRecycler
         tvRight.setText("编辑");
         rvMineCollection.setLinearLayout();
         myCollectionAdapter = new MyCollectionAdapter();
-        myCollectionAdapter.setOnItemClickListener(this::onItemClick);
+        myCollectionAdapter.setOnItemClickListener(this);
         rvMineCollection.setAdapter(myCollectionAdapter);
         rvMineCollection.setOnPullLoadMoreListener(this);
         onRefresh();
@@ -197,7 +199,7 @@ public class MineCollectionActivity extends BaseActivity implements BaseRecycler
     @Subscribe
     public void onEvent(CollectEvent collectEvent) {
         myCollectionAdapter.getList().set(optPosition, collectEvent.collected);
-        myCollectionAdapter.notifyDataSetChanged();
+        myCollectionAdapter.notifyItemChanged(optPosition);
     }
 
     @Override
@@ -208,6 +210,7 @@ public class MineCollectionActivity extends BaseActivity implements BaseRecycler
     @Override
     public void setMediaList(List<HomeVideoEntity.DataBean> list) {
         if (list != null && list.size() > 0) {
+            showNodata(false);
             if (pageNum == 0) {
                 myCollectionAdapter.setData(list);
             } else {
@@ -216,13 +219,19 @@ public class MineCollectionActivity extends BaseActivity implements BaseRecycler
         } else {
             if (pageNum == 0) {
                 myCollectionAdapter.setData(null);
-                ToastUtils.showLong(this, "没有数据");
+                showNodata(true);
+                ToastUtils.showLong(this, "暂无数据");
             } else {
                 ToastUtils.showLong(this, "数据已全部加载");
             }
             rvMineCollection.setPullLoadMoreCompleted();
         }
         rvMineCollection.setPullLoadMoreCompleted();
+    }
+
+    private void showNodata(boolean noData) {
+        tvNoData.setVisibility(noData?View.VISIBLE:View.GONE);
+        rvMineCollection.setVisibility(noData?View.GONE:View.VISIBLE);
     }
 
     @Override
@@ -241,6 +250,6 @@ public class MineCollectionActivity extends BaseActivity implements BaseRecycler
         } else {
             myCollectionAdapter.getItemInPosition(optPosition).setLikeSum(thumbSum - 1);
         }
-        myCollectionAdapter.notifyDataSetChanged();
+        myCollectionAdapter.notifyItemChanged(optPosition);
     }
 }

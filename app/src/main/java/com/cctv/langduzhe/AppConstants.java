@@ -33,12 +33,6 @@ public class AppConstants {
     public static final String AUDIO_PATH = FILE_PARENT_PATH+"/audio";
 
     /**
-     * 七牛图片域名
-     */
-    public static final String QI_NIU_IMAGE_DOMAIN = "http://p4v9f6w5q.bkt.clouddn.com/";
-
-
-    /**
      * 友盟推送App key
      */
     public static final String U_PUSH_APP_KEY = "5aa783c8f29d9817a800013a";

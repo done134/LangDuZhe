@@ -41,10 +41,11 @@ public class MessageDetailActivity extends BaseActivity {
     }
 
     private void getIntentData() {
-        /*Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            tvMessageContent.setText(bundle.getString("msg_content"));
-        }*/
+        String title = getIntent().getStringExtra("title");
+        String msgContent = getIntent().getStringExtra("msgContent");
+        tvTitle.setText(title);
+        tvMessageContent.setText(msgContent);
+
     }
 
     @OnClick(R.id.btn_back)

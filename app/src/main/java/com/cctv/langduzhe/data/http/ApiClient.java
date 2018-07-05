@@ -1,5 +1,7 @@
 package com.cctv.langduzhe.data.http;
 
+import android.text.TextUtils;
+
 import com.baronzhang.retrofit2.converter.FastJsonConverterFactory;
 import com.cctv.langduzhe.LangDuZheApplication;
 import com.cctv.langduzhe.data.preference.PreferenceContents;
@@ -8,15 +10,9 @@ import com.cctv.langduzhe.util.CommonUtil;
 import com.cctv.langduzhe.BuildConfig;
 import com.cctv.langduzhe.data.http.configuration.ApiConfiguration;
 
-import java.io.File;
-import java.io.IOException;
-
-import okhttp3.Cache;
-import okhttp3.CacheControl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
-import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
@@ -39,7 +35,7 @@ public final class ApiClient {
                 weatherApiHost = ApiConstants.TEST_API_HOST;
                 break;
             case ApiConstants.DATA_SOURCE_TYPE_ONLINE:
-                weatherApiHost = ApiConstants.ONLINE_API_TEST;
+                weatherApiHost = ApiConstants.ONLINE_API_HOST;
                 break;
 
         }
@@ -76,14 +72,20 @@ public final class ApiClient {
     private static Interceptor initCacheInterceptor(){
 //        File cacheFile = new File(LangDuZheApplication.getInstance().getContext().getExternalCacheDir(), "LangDuzheCache");
 //        Cache cache = new Cache(cacheFile, 1024 * 1024 * 50);
-        Interceptor cacheInterceptor = chain -> {
+        return chain -> {
             Request original = chain.request();
+            Request request;
             String token =   (String) SPUtils.get(LangDuZheApplication.getInstance().getContext(), PreferenceContents.TOKEN,"");
-
-            Request request = original.newBuilder()
-                    .header("Authorization", token)
-                    .method(original.method(), original.body())
-                    .build();
+            if (TextUtils.isEmpty(token)) {
+                request = original.newBuilder()
+                        .method(original.method(), original.body())
+                        .build();
+            }else {
+                request = original.newBuilder()
+                        .header("Authorization", token)
+                        .method(original.method(), original.body())
+                        .build();
+            }
 
             if (CommonUtil.isNetworkConnected(LangDuZheApplication.getInstance().getContext())) {
                 int maxAge = 0;
@@ -96,7 +98,6 @@ public final class ApiClient {
             }
             return chain.proceed(request);
         };
-        return cacheInterceptor;
     }
 
 

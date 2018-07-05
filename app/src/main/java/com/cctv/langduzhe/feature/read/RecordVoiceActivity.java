@@ -53,12 +53,6 @@ public class RecordVoiceActivity extends BaseActivity {
     YVoiceView voiceView;
 
 
-    private MP3Recorder mRecorder;
-    private String filePath;
-    private boolean mIsRecord = false;
-
-    private int duration;
-    private int curPosition;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,14 +80,11 @@ public class RecordVoiceActivity extends BaseActivity {
 
     private void initCameraView() {
         voiceView.setTip(getString(R.string.record_voice_tip));
-        voiceView.setRecordLisenter(new RecordVoiceListener() {
-            @Override
-            public void recordSuccess(String url) {
-                //获取视频路径
-                Bundle videoBundle = new Bundle();
-                videoBundle.putString("voice_url", url);
-                toActivity(RecordVoiceOverActivity.class, videoBundle);
-            }
+        voiceView.setRecordLisenter(url -> {
+            //获取视频路径
+            Bundle videoBundle = new Bundle();
+            videoBundle.putString("voice_url", url);
+            toActivity(RecordVoiceOverActivity.class, videoBundle);
         });
         voiceView.setLeftClickListener(this::finish);
 

@@ -2,83 +2,98 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black">
+    android:background="@color/white">
 
     <include layout="@layout/layout_common_title"/>
 
-
-    <com.shuyu.waveview.AudioWaveView
-        android:id="@+id/voice_view"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"/>
-
-
-    <include layout="@layout/layout_voice_seekbar" />
-
-
+<ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="40dp"
-        android:gravity="center_vertical"
-        android:layout_marginRight="10dp"
-        android:layout_marginLeft="10dp"
-        android:background="@drawable/shape_round_rectangle_c19">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textSize="14sp"
-            android:textColor="@color/white"
-            android:gravity="center"
-            android:layout_marginLeft="10dp"
-            android:paddingTop="2dp"
-            android:textStyle="bold"
-            android:text="摘自："/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <EditText
-            android:id="@+id/et_video_name"
+        <com.shuyu.waveview.AudioWaveView
+            android:id="@+id/voice_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textColorHint="@color/c_4c4c4c"
-            android:hint="请输入标题"
-            android:paddingLeft="10dp"
-            android:background="@color/transparent"
-            android:textStyle="bold"
-            android:textColor="@color/white"/>
-
-    </LinearLayout>
+            android:layout_height="150dp"/>
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginTop="100dp"
-        android:gravity="center_horizontal">
+        <include layout="@layout/layout_voice_seekbar" />
 
-        <Button
-            android:id="@+id/btn_save_the_local"
-            android:layout_width="120dp"
-            android:layout_height="44dp"
-            android:layout_gravity="center_horizontal"
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="40dp"
+            android:gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/shape_round_rectangle_eb">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textSize="14sp"
+                android:textColor="@color/c_191919"
+                android:gravity="center"
+                android:layout_marginLeft="10dp"
+                android:fontFamily="@font/songti"
+                android:paddingTop="2dp"
+                android:text="摘自："/>
+
+            <EditText
+                android:id="@+id/et_video_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColorHint="@color/c_c8c8c8"
+                android:hint="请输入标题（30字以内）"
+                android:maxLength="30"
+                android:fontFamily="@font/songti"
+                android:paddingLeft="10dp"
+                android:background="@color/transparent"
+                android:textColor="@color/c_191919"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
             android:layout_marginTop="100dp"
-            android:background="@drawable/shape_red_border_round_corner"
-            android:text="@string/save_the_local"
-            android:textColor="@color/c_df2424"
-            android:textSize="15sp"
-            android:layout_marginRight="40dp"
-            android:textStyle="bold" />
+            android:gravity="center_horizontal">
 
-        <Button
-            android:id="@+id/btn_post_video"
-            android:layout_width="120dp"
-            android:layout_height="44dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="100dp"
-            android:background="@drawable/shape_round_tangle_ff2b2b"
-            android:text="@string/post"
-            android:textColor="@color/white"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            <Button
+                android:id="@+id/btn_save_the_local"
+                android:layout_width="120dp"
+                android:layout_height="44dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="100dp"
+                android:background="@drawable/shape_red_border_round_corner"
+                android:text="@string/save_the_local"
+                style="?android:attr/borderlessButtonStyle"
+                android:textColor="@color/c_df2424"
+                android:fontFamily="@font/songti"
+                android:textSize="15sp"
+                android:layout_marginRight="40dp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/btn_post_video"
+                android:layout_width="120dp"
+                android:layout_height="44dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="100dp"
+                android:fontFamily="@font/songti"
+                android:background="@drawable/shape_round_tangle_ff2b2b"
+                android:text="@string/post"
+                style="?android:attr/borderlessButtonStyle"
+                android:textColor="@color/white"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+        </LinearLayout>
     </LinearLayout>
+</ScrollView>
 
 </LinearLayout>

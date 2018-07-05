@@ -1,13 +1,13 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 26
     defaultConfig {
         applicationId "com.cctv.langduzhe"
         minSdkVersion 19
-        targetSdkVersion 27
-        versionCode 1
-        versionName "1.0"
+        targetSdkVersion 26
+        versionCode 7
+        versionName "1.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
     }
@@ -34,6 +34,19 @@ android {
     packagingOptions {
         exclude 'META-INF/rxjava.properties'
     }
+
+    signingConfigs {
+        debug {  //这里配置的就是debug的签名配置了
+            storeFile file('/Users/gentleyin/Desktop/langduzhe.jks')
+            storePassword 'langduzhe'
+            keyAlias 'langduzhe'
+            keyPassword 'langduzhe'
+        }
+    }
+    dexOptions {
+        jumboMode true
+    }
+
 }
 
 dependencies {
@@ -63,9 +76,12 @@ dependencies {
     compile project(':camera')
     compile project(':matisse')
     compile project(':push')
-    compile project(':pullLoadMoreLibrary')
-    compile 'cn.jzvd:jiaozivideoplayer:6.2.7'
+    compile 'com.malinskiy:superrecyclerview:1.1.4'
+    compile 'cn.jzvd:jiaozivideoplayer:6.2.9'
     compile 'com.qiniu:qiniu-android-sdk:7.3.10'
     implementation files('libs/umeng-common-1.4.4.jar')
+    compile project(':pullLoadMoreLibrary')
     implementation files('libs/utdid4all-1.1.5.3_proguard.jar')
+    compile 'com.tencent.mm.opensdk:wechat-sdk-android-without-mta:+'
+    implementation files('libs/pgyer_sdk_2.8.3.jar')
 }

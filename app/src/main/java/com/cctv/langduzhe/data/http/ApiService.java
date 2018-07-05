@@ -11,6 +11,7 @@ import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 import rx.Observable;
@@ -78,6 +79,18 @@ public interface ApiService {
      */
     @GET("api/qiniu/")
     Observable<String> getQiNiuToken(@Query("bucket") String bucket, @Query("fileFullName") String fileName, @Query("display")  String screenOrient);
+
+
+    /**
+     * @author 尹振东
+     * create at 2018/2/14 下午9:23
+     * 方法说明：获取七牛token，用来上传文件
+     * @param bucket video/image
+     * @param fileName
+     * @param screenOrient
+     */
+    @GET("api/qiniu/")
+    Observable<String> getQiNiuToken(@Query("bucket") String bucket, @Query("fileFullName") String fileName);
 
     /**
      * @author 尹振东
@@ -155,7 +168,7 @@ public interface ApiService {
      * create at 2018/2/14 下午9:23
      * 方法说明：增加观看数量
      */
-    @PUT("api/watch")
+    @PUT("api/optTok/watch")
     Observable<String> watchMedia(@Query("mediaId") String mediaId);
 
 
@@ -254,5 +267,13 @@ public interface ApiService {
      */
     @GET("api/license")
     Observable<String> checkAuthCode(@Query("licenseCode") String licenseCode);
+    
+    /**
+    * @author 尹振东
+    * create at 2018/4/25 下午7:54
+    * 方法说明：
+    */
+    @DELETE("api/media/" + "{mediaId}")
+    Observable<String> delRead(@Path("mediaId") String mediaId);
 }
 

@@ -3,10 +3,12 @@ package com.cctv.langduzhe.feature.articles;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.cctv.langduzhe.R;
 import com.cctv.langduzhe.adapter.ThemesAdapter;
@@ -36,6 +38,8 @@ import butterknife.Unbinder;
 public class ThemesFragment extends BaseFragment implements PullLoadMoreRecyclerView.PullLoadMoreListener, BaseRecyclerViewAdapter.OnItemClickListener, ThemesView {
     @BindView(R.id.rv_articles_list)
     PullLoadMoreRecyclerView rvArticleList;
+    @BindView(R.id.tv_no_data)
+    TextView tvNoData;
     Unbinder unbinder;
 
     private int pageNum;
@@ -60,7 +64,18 @@ public class ThemesFragment extends BaseFragment implements PullLoadMoreRecycler
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        rvArticleList.setGridLayout(2);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
+        gridLayoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if (position == 0) {
+                    return 2;
+                }else {
+                    return 1;
+                }
+            }
+        });
+        rvArticleList.setCustomGridManager(gridLayoutManager);
         rvArticleList.setOnPullLoadMoreListener(this);
         articlesAdapter = new ThemesAdapter(getActivity());
         articlesAdapter.setOnItemClickListener(this);
@@ -68,13 +83,14 @@ public class ThemesFragment extends BaseFragment implements PullLoadMoreRecycler
         rvArticleList.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
             public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-                outRect.left = 20;
-                outRect.right = 20;
-                outRect.bottom = 20;
-
+                outRect.right = 16;
+                outRect.bottom = 16;
+                if (parent.getChildPosition(view) / 2 == 0) {
+                    outRect.left = 16;
+                }
                 // Add top margin only for the first item to avoid double space between items
                 if (parent.getChildPosition(view) == 0)
-                    outRect.top = 20;
+                    outRect.top = 16;
             }
         });
 
@@ -121,16 +137,25 @@ public class ThemesFragment extends BaseFragment implements PullLoadMoreRecycler
     @Override
     public void setThemeList(List<ThemeEntity.DataBean> list) {
         if (list != null && list.size() > 0) {
+            showNodata(false);
             if (pageNum == 0) {
                 articlesAdapter.setList(list);
             } else {
                 articlesAdapter.addList(list);
             }
         } else {
-            ToastUtils.showLong(getActivity(), "数据已全部加载");
+            if (pageNum == 0) {
+                showNodata(true);
+                ToastUtils.showLong(getActivity(), "暂无数据");
+            } else {
+                ToastUtils.showLong(getActivity(), "数据已全部加载");
+            }
         }
         rvArticleList.setPullLoadMoreCompleted();
     }
-
+    private void showNodata(boolean noData) {
+        tvNoData.setVisibility(noData?View.VISIBLE:View.GONE);
+        rvArticleList.setVisibility(noData?View.GONE:View.VISIBLE);
+    }
 
 }

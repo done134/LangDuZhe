@@ -122,4 +122,23 @@ public class ArticleDetailPresenter implements BasePresenter {
         }
     }
 
+
+    /**
+     * @author 尹振东
+     * create at 2018/2/16 上午11:26
+     * 方法说明：增加观看次数
+     */
+    public void addWatchSum(String mediaId) {
+        Observable<String> observable = ApiClient.apiService.watchMedia(mediaId);
+        Subscription subscription = observable
+                .compose(RxSchedulerUtils.normalSchedulersTransformer())
+                .subscribe(this::handleWatch, throwable -> {
+                    Toast.makeText(context, throwable.getMessage(), Toast.LENGTH_LONG).show();
+                });
+        subscriptions.add(subscription);
+    }
+
+    private void handleWatch(String s) {
+    }
+
 }

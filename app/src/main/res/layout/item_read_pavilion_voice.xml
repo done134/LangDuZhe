@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:gravity="end|center_vertical"
     android:orientation="horizontal"
-    android:background="@color/black">
+    android:background="@color/white">
 
 <LinearLayout
     android:layout_width="match_parent"
@@ -21,7 +21,7 @@
             android:layout_height="30dp"
             android:layout_marginBottom="10dp"
             android:layout_centerVertical="true"
-            android:src="@mipmap/message_service_head_icon"
+            android:src="@mipmap/head_default_icon"
             android:layout_marginLeft="10dp"/>
 
 
@@ -33,6 +33,7 @@
             android:textColor="@color/c_4c4c4c"
             android:textSize="14sp"
             android:textStyle="bold"
+            android:fontFamily="@font/songti"
             android:layout_centerVertical="true"
             android:text="心弦"/>
 
@@ -44,8 +45,9 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
             android:layout_centerVertical="true"
+            android:fontFamily="@font/songti"
             android:text="1分钟前"
-            android:textColor="@color/c_4c4c4c"/>
+            android:textColor="@color/c_c8c8c8"/>
     </RelativeLayout>
 
 
@@ -55,34 +57,57 @@
         android:gravity="center_vertical"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
-        android:background="@drawable/shape_round_rectangle_c19">
+        android:background="@drawable/shape_round_rectangle_eb">
+
+
+        <CheckBox
+            android:id="@+id/cb_voice_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="14sp"
+            android:textColor="@color/c_191919"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="10dp"
+            android:button="@null"
+            android:checked="true"
+            android:drawableLeft="@drawable/selector_play_pause_red"/>
+
         <TextView
             android:id="@+id/tv_voice_title"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:textSize="14sp"
-            android:textColor="@color/white"
-            android:gravity="center_horizontal"
-            android:layout_marginLeft="20dp"
-            android:textStyle="bold"
-            android:paddingTop="3dp"
-            android:drawablePadding="5dp"
-            android:drawableLeft="@mipmap/btn_play"
-            android:text="摘自《牧羊少年奇幻之旅》"/>
+            android:textColor="@color/c_191919"
+            android:layout_toRightOf="@id/cb_voice_title"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="10dp"
+            android:fontFamily="@font/songti"/>
 
         <TextView
+            android:id="@+id/tv_voice_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="12sp"
-            android:textColor="@color/c_4c4c4c"
-            android:gravity="center_horizontal"
+            android:textColor="@color/c_8c8c8c"
+            android:gravity="center"
+            android:layout_toLeftOf="@+id/cb_voice_time"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:fontFamily="@font/songti"/>
+        <CheckBox
+            android:id="@+id/cb_voice_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:textStyle="bold"
             android:drawablePadding="5dp"
-            android:paddingTop="3dp"
-            android:drawableRight="@mipmap/voice_icon_3"
-            android:layout_alignParentRight="true"
-            android:text="03:04"/>
+            android:layout_centerVertical="true"
+            android:button="@null"
+            android:clickable="false"
+            android:enabled="false"
+            android:drawableRight="@drawable/selector_voice_playing"
+            android:layout_alignParentRight="true"/>
 
 
 
@@ -97,42 +122,41 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="20dp"
-            android:text="286"
             android:textSize="12sp"
             android:drawablePadding="4dp"
-            android:textColor="@color/c_4c4c4c"
+            android:textColor="@color/c_c8c8c8"
             android:includeFontPadding="false"
             android:maxLines="1"
             android:gravity="center"
-
-            android:drawableLeft="@mipmap/play_count_icon"/>
+            android:fontFamily="@font/songti"
+            android:drawableLeft="@mipmap/play_count_icon_gray"/>
 
         <TextView
             android:id="@+id/tv_comment_count"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="286"
             android:textSize="12sp"
             android:drawablePadding="4dp"
             android:textColor="@color/c_4c4c4c"
             android:layout_alignParentRight="true"
             android:gravity="center"
             android:maxLines="1"
+            android:fontFamily="@font/songti"
             android:includeFontPadding="false"
             android:layout_marginRight="100dp"
             android:drawableLeft="@mipmap/comment_icon"/>
 
 
-        <android.support.v7.widget.AppCompatCheckBox
+        <com.cctv.langduzhe.view.widget.ClickNotToggleCheckBox
             android:id="@+id/tv_thumbs_count"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginRight="20dp"
-            android:text="286"
             android:textSize="12sp"
             android:includeFontPadding="false"
             android:drawablePadding="4dp"
-            android:textColor="@color/c_4c4c4c"
+            android:textColor="@color/c_191919"
+            android:fontFamily="@font/songti"
             android:layout_alignParentRight="true"
             android:gravity="center"
             android:checked="true"
@@ -143,7 +167,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
-        android:background="@color/c_191919"/>
+        android:background="@color/c_c8c8c8"/>
 </LinearLayout>
 
     <android.support.v7.widget.AppCompatCheckBox

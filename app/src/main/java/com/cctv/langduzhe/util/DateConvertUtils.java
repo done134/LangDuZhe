@@ -1,5 +1,7 @@
 package com.cctv.langduzhe.util;
 
+import android.text.TextUtils;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -130,6 +132,42 @@ public final class DateConvertUtils {
             }
         }
         return timeStr;
+    }
+
+    // a integer to xx:xx:xx
+    public static int timeToSec(String time) {
+
+        if(TextUtils.isEmpty(time)){
+            return 0;
+        }
+        int hour = 0;
+        int minute = 0;
+        int second = 0;
+
+
+        String[] timeSplit = time.split(":");
+        if(timeSplit.length==3) {
+            if (Integer.valueOf(timeSplit[0]) > 0) {
+                hour = Integer.valueOf(timeSplit[0]) * 60 * 60;
+            }
+
+            if (Integer.valueOf(timeSplit[1]) > 0) {
+                minute = Integer.valueOf(timeSplit[1]) * 60;
+            }
+            if (Integer.valueOf(timeSplit[2]) > 0) {
+                minute = Integer.valueOf(timeSplit[2]);
+            }
+        } else if (timeSplit.length==2) {
+            if (Integer.valueOf(timeSplit[0]) > 0) {
+                minute = Integer.valueOf(timeSplit[0]) * 60;
+            }
+
+            if (Integer.valueOf(timeSplit[1]) > 0) {
+                second = Integer.valueOf(timeSplit[1]);
+            }
+        }
+
+        return hour + minute + second;
     }
 
     /**

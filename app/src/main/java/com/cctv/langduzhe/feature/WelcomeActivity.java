@@ -1,46 +1,30 @@
 package com.cctv.langduzhe.feature;
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.text.TextUtils;
+import android.view.WindowManager;
 
+import com.umeng.message.inapp.InAppMessageManager;
+import com.umeng.message.inapp.UmengSplashMessageActivity;
 
-import com.cctv.langduzhe.base.BaseActivity;
-import com.cctv.langduzhe.data.preference.PreferenceContents;
-import com.cctv.langduzhe.data.preference.SPUtils;
-import com.cctv.langduzhe.util.system.StatusBarHelper;
-
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by gentleyin on 2018/1/14.
  */
-public class WelcomeActivity extends BaseActivity {
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        StatusBarHelper.statusBarLightMode(this);
-        gotoMainPage();
-    }
-
-    private void gotoMainPage() {
-        String hasLogin = (String) SPUtils.get(this, PreferenceContents.TOKEN, "");
-        if (!TextUtils.isEmpty(hasLogin)) {
-            Intent intent = new Intent(this, MainActivity.class);
-            startActivity(intent);
-        } else {
-            Intent intent = new Intent(this, LoginActivity.class);
-            startActivity(intent);
-        }
-        finish();
-    }
+public class WelcomeActivity extends UmengSplashMessageActivity {
 
     @Override
-    public void setPresenter() {
+    public boolean onCustomPretreatment() {
 
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        InAppMessageManager mInAppMessageManager = InAppMessageManager.getInstance(this);
+        //设置应用内消息为Debug模式
+        mInAppMessageManager.setInAppMsgDebugMode(true);
+        //参数为Activity的完整包路径，下面仅是示例代码，请按实际需求填写
+//        String hasLogin = (String) SPUtils.get(this, PreferenceContents.TOKEN, "");
+//        if (!TextUtils.isEmpty(hasLogin)) {
+            mInAppMessageManager.setMainActivityPath("com.cctv.langduzhe.feature.MainActivity");
+//        } else {
+//            mInAppMessageManager.setMainActivityPath("com.cctv.langduzhe.feature.LoginActivity");
+//        }
+        return super.onCustomPretreatment();
     }
 }

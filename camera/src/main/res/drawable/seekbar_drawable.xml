@@ -6,10 +6,10 @@
         <shape>
             <gradient
                 android:angle="270"
-                android:centerColor="@color/c_8c8c8c"
+                android:centerColor="@color/c_ecebeb"
                 android:centerY="0.75"
-                android:endColor="@color/c_8c8c8c"
-                android:startColor="@color/c_8c8c8c" />
+                android:endColor="@color/c_ecebeb"
+                android:startColor="@color/c_ecebeb" />
         </shape>
     </item>
     <!--定义seekbar滑动条进度颜色-->

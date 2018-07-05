@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+    <android.support.v7.widget.AppCompatCheckBox
+        android:id="@+id/cb_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:enabled="false"
+        android:checked="true"
+        android:maxLines="1"
+        android:button="@null"
+        android:drawableLeft="@drawable/selector_thumb"/>
+    <TextView
+        android:id="@+id/tv_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="286"
+        android:textSize="12sp"
+        android:layout_marginLeft="4dp"
+        android:fontFamily="@font/songti"
+        android:textColor="@color/c_c8c8c8"
+        android:layout_alignParentRight="true"/>
+</LinearLayout>

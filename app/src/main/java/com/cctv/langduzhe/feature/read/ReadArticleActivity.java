@@ -73,6 +73,7 @@ public class ReadArticleActivity extends BaseActivity implements ReadArticleView
             //获取视频路径
             Bundle videoBundle = new Bundle();
             videoBundle.putString("voice_url", url);
+            videoBundle.putString("articleId", articleId);
             toActivity(RecordVoiceOverActivity.class, videoBundle);
         });
         voiceView.setLeftClickListener(this::finish);

@@ -23,6 +23,9 @@ public class RecyclerViewOnScroll extends RecyclerView.OnScrollListener {
     @Override
     public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
         super.onScrolled(recyclerView, dx, dy);
+        int topRowVerticalPosition =
+                (recyclerView == null || recyclerView.getChildCount() == 0) ? 0 : recyclerView.getChildAt(0).getTop();
+        mPullLoadMoreRecyclerView.getSwipeRefreshLayout().setEnabled(topRowVerticalPosition != 0);
         int lastItem = 0;
         int firstItem = 0;
         RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();

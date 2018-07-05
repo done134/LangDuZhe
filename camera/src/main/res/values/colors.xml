@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ff2b2b">#ff2b2b</color>
+
+    <color name="c_df2424">#df2424</color>
+    <color name="white">#fff</color>
+    <color name="black">#000</color>
+    <color name="transparent">#00000000</color>
+    <color name="c_191919">#191919</color>
+    <color name="c_8c8c8c">#8c8c8c</color>
+    <color name="c_c8c8c8">#c8c8c8</color>
+
+    <color name="c_e6e6e6">#e6e6e6</color>
+    <color name="c_4c4c4c">#4c4c4c</color>
+    <color name="head_border_color">#10ffffff</color>
+
+    <color name="light_blue">#3FA1FF</color>
+
+    <color name="half_transparent_20">#20000000</color>
+    <color name="half_transparent_30">#40000000</color>
+    <color name="half_transparent_40">#90000000</color>
+    <color name="half_transparent_70">#a0000000</color>
+    <color name="half_transparent_90">#e6222222</color>
+    <color name="c_98191919">#fe191919</color>
+    <color name="c_ecebeb">#ECEBEB</color>
+</resources>

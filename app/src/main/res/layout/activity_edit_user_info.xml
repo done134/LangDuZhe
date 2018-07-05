@@ -2,14 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black">
+    android:background="@color/white">
 
     <include layout="@layout/layout_common_title"/>
 
 
     <LinearLayout
         android:id="@+id/ll_user_head"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:padding="20dp"
@@ -18,8 +18,9 @@
             android:id="@+id/iv_user_head"
             android:layout_width="60dp"
             android:layout_marginTop="30dp"
+            android:layout_gravity="center_horizontal"
             android:layout_height="60dp"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@mipmap/head_default_icon"/>
 
 
         <TextView
@@ -28,6 +29,7 @@
             android:layout_height="wrap_content"
             android:textSize="12sp"
             android:textColor="@color/c_8c8c8c"
+            android:fontFamily="@font/songti"
             android:gravity="center_horizontal"
             android:text="点击修改头像"/>
     </LinearLayout>
@@ -40,15 +42,15 @@
         android:gravity="center_vertical"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
-        android:background="@drawable/shape_round_rectangle_c19">
+        android:background="@drawable/shape_round_rectangle_eb">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textSize="14sp"
-            android:textColor="@color/c_8c8c8c"
+            android:textColor="@color/black"
+            android:fontFamily="@font/songti"
             android:gravity="center"
             android:layout_marginLeft="15dp"
-            android:textStyle="bold"
             android:paddingTop="2dp"
             android:text="昵称："/>
 
@@ -59,9 +61,10 @@
             android:textColorHint="@color/c_4c4c4c"
             android:hint="请输入昵称"
             android:background="@color/transparent"
-            android:textStyle="bold"
+            android:textSize="16sp"
             android:paddingLeft="10dp"
-            android:textColor="@color/white"/>
+            android:fontFamily="@font/songti"
+            android:textColor="@color/black"/>
 
     </LinearLayout>
 
@@ -72,6 +75,8 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="100dp"
         android:background="@drawable/shape_round_tangle_ff2b2b"
+        android:fontFamily="@font/songti"
+        style="?android:attr/borderlessButtonStyle"
         android:text="@string/action_submit"
         android:textColor="@color/white"
         android:textSize="17sp"

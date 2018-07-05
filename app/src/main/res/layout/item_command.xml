@@ -17,7 +17,7 @@
             android:id="@+id/iv_command_head"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@mipmap/ic_launcher_round"/>
+            android:src="@mipmap/head_default_icon"/>
 
         <TextView
             android:id="@+id/tv_command_name"
@@ -33,7 +33,7 @@
             android:id="@+id/tv_command_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/c_4c4c4c"
+            android:textColor="@color/c_c8c8c8"
             android:layout_marginLeft="5dp"
             android:gravity="end"
             android:layout_gravity="center_vertical"
@@ -47,10 +47,11 @@
         android:id="@+id/tv_command_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/c_8c8c8c"
-        android:layout_marginLeft="45dp"
         android:layout_gravity="center_vertical"
+        android:layout_marginLeft="45dp"
+        android:fontFamily="@font/gothic"
         android:text="看得出来赵文瑄很喜欢大咪"
-        android:textSize="15sp"/>
+        android:textColor="@color/c_8c8c8c"
+        android:textSize="15sp" />
 
 </LinearLayout>

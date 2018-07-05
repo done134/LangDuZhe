@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:background="@color/black"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent">
     <RelativeLayout
+        android:id="@+id/rl_title"
         android:layout_width="match_parent"
         android:layout_height="68dp"
         android:paddingTop="20dp"
@@ -20,11 +21,15 @@
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="标题"
             android:background="@color/c_191919"
             android:textSize="18sp"
             android:textStyle="bold"
             android:gravity="center"
+            android:fontFamily="@font/songti"
+            android:maxEms="10"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:singleLine="true"
             android:layout_centerHorizontal="true"
             android:layout_alignTop="@+id/btn_back"
             android:textColor="@color/white"/>
@@ -53,5 +58,7 @@
     <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
         android:id="@+id/rv_command_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:layout_below="@+id/rl_title"
+        android:layout_above="@+id/btn_goto_command"/>
+</RelativeLayout>

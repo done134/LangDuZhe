@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="19dp"
         android:layout_marginLeft="60dp"
+        android:fontFamily="@font/songti"
         android:textColor="@color/white"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -34,6 +35,7 @@
         android:textColor="@color/c_8c8c8c"
         android:layout_below="@+id/tv_message_title"
         android:maxLines="1"
+        android:fontFamily="@font/songti"
         android:ellipsize="end"
         android:layout_marginRight="10dp"
         android:textSize="15sp"
@@ -48,9 +50,10 @@ OO至21: 30进行信息系统升级维护工作
         android:textSize="12sp"
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
+        android:fontFamily="@font/songti"
         android:text="1分钟前"
         android:layout_marginTop="19dp"
-        android:textColor="@color/c_4c4c4c"/>
+        android:textColor="@color/c_c8c8c8"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="0.5dp"

@@ -14,8 +14,10 @@ import com.cctv.langduzhe.R;
 import com.cctv.langduzhe.base.BaseRecyclerViewAdapter;
 import com.cctv.langduzhe.data.entites.HomeVideoEntity;
 import com.cctv.langduzhe.data.entites.VideoInfoEntity;
+import com.cctv.langduzhe.util.CommonUtil;
 import com.cctv.langduzhe.util.DateConvertUtils;
 import com.cctv.langduzhe.util.picasco.PicassoUtils;
+import com.cctv.langduzhe.view.widget.ClickNotToggleCheckBox;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -37,6 +39,7 @@ public class HomeSliceAdapter extends BaseRecyclerViewAdapter {
     private HomeVideoEntity.DataBean videoInfo;
     private Context context;
 
+    private boolean firstEnter = true;
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -44,11 +47,11 @@ public class HomeSliceAdapter extends BaseRecyclerViewAdapter {
         if (viewType == 0) {
             View itemView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.item_home_slice, parent, false);
-            return new ViewHolder(itemView, this);
+            return new ViewHolder(itemView);
         } else {
             View itemView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.layout_video_detail, parent, false);
-            return new HeaderHolder(itemView, this);
+            return new HeaderHolder(itemView);
         }
     }
 
@@ -60,19 +63,26 @@ public class HomeSliceAdapter extends BaseRecyclerViewAdapter {
             ((HeaderHolder) holder).tvThumbsCount.setText(String.valueOf(videoInfo.getLikeSum()));
             ((HeaderHolder) holder).tvVideoPlayCount.setText(String.valueOf(videoInfo.getWatchSum()));
             ((HeaderHolder) holder).tvThumbsCount.setChecked(videoInfo.getIsLike() == 1);
-            PicassoUtils.loadImageByurl(context,videoInfo.getImg(),((HeaderHolder) holder).videoView.thumbImageView);
+            PicassoUtils.loadImageByurlCenter(context, videoInfo.getImg(), ((HeaderHolder) holder).videoView.thumbImageView);
+            if (firstEnter) {
+                JZVideoPlayerStandard.startFullscreen(context, JZVideoPlayerStandard.class, videoInfo.getPath());
+                ((HeaderHolder) holder).videoView.startVideo();
+                firstEnter = false;
+            }
             if (isPause) {
                 ((HeaderHolder) holder).videoView.release();
             }
-        } else if(holder instanceof ViewHolder){
+
+        } else if (holder instanceof ViewHolder) {
             HomeVideoEntity.DataBean video = list.get(position);
             ((ViewHolder) holder).tvSliceName.setText(video.getTitle());
             ((ViewHolder) holder).tvSliceTime.setText(DateConvertUtils.secToTime(video.getDuration()));
-            PicassoUtils.loadImageByurl(context,videoInfo.getImg(),((ViewHolder) holder).ivSliceCover);
+            PicassoUtils.loadImageByurl(context, video.getImg(), ((ViewHolder) holder).ivSliceCover);
         }
     }
 
     private boolean isPause;
+
     public void pauseVideo() {
         isPause = true;
         notifyDataSetChanged();
@@ -110,8 +120,7 @@ public class HomeSliceAdapter extends BaseRecyclerViewAdapter {
     }
 
 
-
-     class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.iv_slice_cover)
         ImageView ivSliceCover;
@@ -120,16 +129,11 @@ public class HomeSliceAdapter extends BaseRecyclerViewAdapter {
         @BindView(R.id.tv_slice_name)
         TextView tvSliceName;
 
-        ViewHolder(View itemView, HomeSliceAdapter messageAdapter) {
+        ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
 //             itemView.setOnClickListener(v -> messageAdapter.onItemHolderClick(this));
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onItemHolderClick(2, getLayoutPosition(), false);
-                }
-            });
+            itemView.setOnClickListener(v -> onItemHolderClick(2, getLayoutPosition(), false));
         }
     }
 
@@ -142,7 +146,7 @@ public class HomeSliceAdapter extends BaseRecyclerViewAdapter {
         }
     }
 
-     class HeaderHolder extends RecyclerView.ViewHolder {
+    class HeaderHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.video_view)
         JZVideoPlayerStandard videoView;
@@ -151,21 +155,15 @@ public class HomeSliceAdapter extends BaseRecyclerViewAdapter {
         @BindView(R.id.tv_comment_count)
         TextView tvCommentCount;
         @BindView(R.id.tv_thumbs_count)
-        AppCompatCheckBox tvThumbsCount;
+        ClickNotToggleCheckBox tvThumbsCount;
 
-        HeaderHolder(View itemView, HomeSliceAdapter messageAdapter) {
+        HeaderHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            tvCommentCount.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onItemHolderClick(0,getLayoutPosition(),false);
-                }
-            });
-            tvThumbsCount.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onItemHolderClick(1, getLayoutPosition(),tvThumbsCount.isChecked());
+            tvCommentCount.setOnClickListener(v -> onItemHolderClick(0, getLayoutPosition(), false));
+            tvThumbsCount.setOnClickListener(v -> {
+                if (CommonUtil.isFastClick()) {
+                    onItemHolderClick(1, getLayoutPosition(), !tvThumbsCount.isChecked());
                 }
             });
         }

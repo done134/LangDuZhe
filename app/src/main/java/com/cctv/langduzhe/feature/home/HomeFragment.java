@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.TextView;
 
 import com.cctv.langduzhe.R;
 import com.cctv.langduzhe.base.BaseFragment;
@@ -39,6 +40,8 @@ public class HomeFragment extends BaseFragment implements
         PullLoadMoreRecyclerView.PullLoadMoreListener, BaseRecyclerViewAdapter.OnItemClickListener, HomeView, LikeView {
     @BindView(R.id.rv_home_list)
     PullLoadMoreRecyclerView rvHomeList;
+    @BindView(R.id.tv_no_data)
+    TextView tvNoData;
     Unbinder unbinder;
 
     private int pageNum;
@@ -86,7 +89,7 @@ public class HomeFragment extends BaseFragment implements
     public void onEvent(CollectEvent collectEvent) {
         if (collectEvent.type.equals("home")) {
             homeVideoAdapter.getList().set(optPostion, collectEvent.collected);
-            homeVideoAdapter.notifyDataSetChanged();
+            homeVideoAdapter.notifyItemChanged(optPostion);
         }
     }
 
@@ -137,17 +140,26 @@ public class HomeFragment extends BaseFragment implements
     @Override
     public void setHomeMedias(List<HomeVideoEntity.DataBean> list) {
         if (list != null && list.size() > 0) {
+            showNodata(false);
             if (pageNum == 0) {
                 homeVideoAdapter.setData(list);
             } else {
                 homeVideoAdapter.addData(list);
             }
         } else {
-            ToastUtils.showLong(getActivity(), "数据已全部加载");
+            if (pageNum == 0) {
+                showNodata(true);
+                ToastUtils.showLong(getActivity(), "没有数据");
+            }else {
+                ToastUtils.showLong(getActivity(), "数据已全部加载");
+            }
         }
         rvHomeList.setPullLoadMoreCompleted();
     }
-
+    private void showNodata(boolean noData) {
+        tvNoData.setVisibility(noData?View.VISIBLE:View.GONE);
+        rvHomeList.setVisibility(noData?View.GONE:View.VISIBLE);
+    }
     @Override
     public void likeResult(boolean isLike) {
         int lilkeSum = homeVideoAdapter.getItemInPosition(optPostion).getLikeSum();
@@ -157,7 +169,7 @@ public class HomeFragment extends BaseFragment implements
             homeVideoAdapter.getItemInPosition(optPostion).setLikeSum(lilkeSum-1);
         }
         homeVideoAdapter.getItemInPosition(optPostion).setIsLike(isLike ? 1 : 0);
-        homeVideoAdapter.notifyDataSetChanged();
+        homeVideoAdapter.notifyItemChanged(optPostion);
     }
 
 }

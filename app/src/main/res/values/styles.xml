@@ -38,6 +38,12 @@
     </style>
 
 
+    <!--透明activity的style-->
+    <style name="transparent_activity">
+        <item name="android:windowBackground">@color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
 
     <!--半透明背景-->
     <style name="translucent" parent="AppTheme">
@@ -61,7 +67,13 @@
     <style name="NoTitleDialogTheme" parent="Theme.AppCompat.Light.Dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowNoTitle">true</item>
-        <item name="android:windowCloseOnTouchOutside">false</item>
+        <!--是否浮现在activity之上-->
+        <item name="android:windowIsFloating">true</item>
+        <!--是否模糊-->
+        <item name="android:backgroundDimEnabled">true</item>
+        <!--是否去除边框-->
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
         <item name="android:windowAnimationStyle">@style/view_component_bottom_animation</item>
     </style>
 
@@ -72,6 +84,14 @@
         <item name="android:activityCloseExitAnimation">@anim/bottom_push_out</item>
     </style>
 
+    <!--友盟启动页-->
+    <style name="Theme_Umeng_Push_Splash" parent="android:Theme.NoTitleBar.Fullscreen">
+        <item name="android:windowBackground">@mipmap/umeng_push_default_splash_bg</item>
+    </style>
 
-
+    <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorAccent">@color/ff2b2b</item>
+        <item name="android:textColorPrimary">@color/c_191919</item>
+        <item name="android:background">@color/white</item>
+    </style>
 </resources>

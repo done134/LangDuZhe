@@ -3,7 +3,6 @@ package com.cjt2325.cameralibrary;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -28,11 +27,11 @@ public class FoucsView extends View {
         this(context, null);
     }
 
-    public FoucsView(Context context, @Nullable AttributeSet attrs) {
+    public FoucsView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public FoucsView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public FoucsView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         this.size = ScreenUtils.getScreenWidth(context) / 3;
         mPaint = new Paint();

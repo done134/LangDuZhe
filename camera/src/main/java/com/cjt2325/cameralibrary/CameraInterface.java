@@ -318,7 +318,7 @@ public class CameraInterface implements Camera.PreviewCallback {
             }
         }
 
-        if (Build.VERSION.SDK_INT > 17 && this.mCamera != null) {
+        if (this.mCamera != null) {
             try {
                 this.mCamera.enableShutterSound(false);
             } catch (Exception e) {
@@ -337,8 +337,7 @@ public class CameraInterface implements Camera.PreviewCallback {
         doDestroyCamera();
         LogUtil.i("open start");
         openCamera(SELECTED_CAMERA);
-//        mCamera = Camera.open();
-        if (Build.VERSION.SDK_INT > 17 && this.mCamera != null) {
+        if (this.mCamera != null) {
             try {
                 this.mCamera.enableShutterSound(false);
             } catch (Exception e) {
@@ -348,6 +347,7 @@ public class CameraInterface implements Camera.PreviewCallback {
         LogUtil.i("open end");
         doStartPreview(holder, screenProp);
     }
+
 
     /**
      * doStartPreview
@@ -492,69 +492,70 @@ public class CameraInterface implements Camera.PreviewCallback {
 
     //启动录像
     public void startRecord(Surface surface, float screenProp, ErrorCallback callback) {
-        mCamera.setPreviewCallback(null);
-        final int nowAngle = (angle + 90) % 360;
-        //获取第一帧图片
-        Camera.Parameters parameters = mCamera.getParameters();
-        int width = parameters.getPreviewSize().width;
-        int height = parameters.getPreviewSize().height;
-        YuvImage yuv = new YuvImage(firstFrame_data, parameters.getPreviewFormat(), width, height, null);
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        yuv.compressToJpeg(new Rect(0, 0, width, height), 50, out);
-        byte[] bytes = out.toByteArray();
-        videoFirstFrame = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-        Matrix matrix = new Matrix();
-        if (SELECTED_CAMERA == CAMERA_POST_POSITION) {
-            matrix.setRotate(nowAngle);
-        } else if (SELECTED_CAMERA == CAMERA_FRONT_POSITION) {
-            matrix.setRotate(270);
-        }
-        videoFirstFrame = createBitmap(videoFirstFrame, 0, 0, videoFirstFrame.getWidth(), videoFirstFrame
-                .getHeight(), matrix, true);
+        if (mCamera != null) {
+            mCamera.setPreviewCallback(null);
+            final int nowAngle = (angle + 90) % 360;
+            //获取第一帧图片
+            Camera.Parameters parameters = mCamera.getParameters();
+            int width = parameters.getPreviewSize().width;
+            int height = parameters.getPreviewSize().height;
+            YuvImage yuv = new YuvImage(firstFrame_data, parameters.getPreviewFormat(), width, height, null);
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            yuv.compressToJpeg(new Rect(0, 0, width, height), 50, out);
+            byte[] bytes = out.toByteArray();
+            videoFirstFrame = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            Matrix matrix = new Matrix();
+            if (SELECTED_CAMERA == CAMERA_POST_POSITION) {
+                matrix.setRotate(nowAngle);
+            } else if (SELECTED_CAMERA == CAMERA_FRONT_POSITION) {
+                matrix.setRotate(270);
+            }
+            videoFirstFrame = createBitmap(videoFirstFrame, 0, 0, videoFirstFrame.getWidth(), videoFirstFrame
+                    .getHeight(), matrix, true);
 
-        if (isRecorder) {
-            return;
-        }
-        if (mCamera == null) {
-            openCamera(SELECTED_CAMERA);
-        }
-        if (mediaRecorder == null) {
-            mediaRecorder = new MediaRecorder();
-        }
-        if (mParams == null) {
-            mParams = mCamera.getParameters();
-        }
-        List<String> focusModes = mParams.getSupportedFocusModes();
-        if (focusModes.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO)) {
-            mParams.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
-        }
-        mCamera.setParameters(mParams);
-        mCamera.unlock();
-        mediaRecorder.reset();
-        mediaRecorder.setCamera(mCamera);
-        mediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
+            if (isRecorder) {
+                return;
+            }
+            if (mCamera == null) {
+                openCamera(SELECTED_CAMERA);
+            }
+            if (mediaRecorder == null) {
+                mediaRecorder = new MediaRecorder();
+            }
+            if (mParams == null) {
+                mParams = mCamera.getParameters();
+            }
+            List<String> focusModes = mParams.getSupportedFocusModes();
+            if (focusModes.contains(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO)) {
+                mParams.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
+            }
+            mCamera.setParameters(mParams);
+            mCamera.unlock();
+            mediaRecorder.reset();
+            mediaRecorder.setCamera(mCamera);
+            mediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
 
-        mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+            mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
 
-        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-        mediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
-        mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+            mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+            mediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
+            mediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
 
 
-        Camera.Size videoSize;
-        if (mParams.getSupportedVideoSizes() == null) {
-            videoSize = CameraParamUtil.getInstance().getPreviewSize(mParams.getSupportedPreviewSizes(), 600,
-                    screenProp);
-        } else {
-            videoSize = CameraParamUtil.getInstance().getPreviewSize(mParams.getSupportedVideoSizes(), 600,
-                    screenProp);
-        }
-        Log.i(TAG, "setVideoSize    width = " + videoSize.width + "height = " + videoSize.height);
-        if (videoSize.width == videoSize.height) {
-            mediaRecorder.setVideoSize(preview_width, preview_height);
-        } else {
-            mediaRecorder.setVideoSize(videoSize.width, videoSize.height);
-        }
+            Camera.Size videoSize;
+            if (mParams.getSupportedVideoSizes() == null) {
+                videoSize = CameraParamUtil.getInstance().getPreviewSize(mParams.getSupportedPreviewSizes(), 600,
+                        screenProp);
+            } else {
+                videoSize = CameraParamUtil.getInstance().getPreviewSize(mParams.getSupportedVideoSizes(), 600,
+                        screenProp);
+            }
+            Log.i(TAG, "setVideoSize    width = " + videoSize.width + "height = " + videoSize.height);
+            if (videoSize.width == videoSize.height) {
+                mediaRecorder.setVideoSize(preview_width, preview_height);
+            } else {
+                mediaRecorder.setVideoSize(videoSize.width, videoSize.height);
+            }
 //        if (SELECTED_CAMERA == CAMERA_FRONT_POSITION) {
 //            mediaRecorder.setOrientationHint(270);
 //        } else {
@@ -562,62 +563,63 @@ public class CameraInterface implements Camera.PreviewCallback {
 ////            mediaRecorder.setOrientationHint(90);
 //        }
 
-        if (SELECTED_CAMERA == CAMERA_FRONT_POSITION) {
-            //手机预览倒立的处理
-            if (cameraAngle == 270) {
-                //横屏
-                if (nowAngle == 0) {
-                    mediaRecorder.setOrientationHint(180);
-                } else if (nowAngle == 270) {
-                    mediaRecorder.setOrientationHint(270);
+            if (SELECTED_CAMERA == CAMERA_FRONT_POSITION) {
+                //手机预览倒立的处理
+                if (cameraAngle == 270) {
+                    //横屏
+                    if (nowAngle == 0) {
+                        mediaRecorder.setOrientationHint(180);
+                    } else if (nowAngle == 270) {
+                        mediaRecorder.setOrientationHint(270);
+                    } else {
+                        mediaRecorder.setOrientationHint(90);
+                    }
                 } else {
-                    mediaRecorder.setOrientationHint(90);
+                    if (nowAngle == 90) {
+                        mediaRecorder.setOrientationHint(270);
+                    } else if (nowAngle == 270) {
+                        mediaRecorder.setOrientationHint(90);
+                    } else {
+                        mediaRecorder.setOrientationHint(nowAngle);
+                    }
                 }
             } else {
-                if (nowAngle == 90) {
-                    mediaRecorder.setOrientationHint(270);
-                } else if (nowAngle == 270) {
-                    mediaRecorder.setOrientationHint(90);
-                } else {
-                    mediaRecorder.setOrientationHint(nowAngle);
+                mediaRecorder.setOrientationHint(nowAngle);
+            }
+
+
+            if (DeviceUtil.isHuaWeiRongyao()) {
+                mediaRecorder.setVideoEncodingBitRate(4 * 100000);
+            } else {
+                mediaRecorder.setVideoEncodingBitRate(mediaQuality);
+            }
+            mediaRecorder.setPreviewDisplay(surface);
+
+            videoFileName = "video_" + System.currentTimeMillis() + ".mp4";
+            if (saveVideoPath.equals("")) {
+                saveVideoPath = Environment.getExternalStorageDirectory().getPath();
+            }
+            videoFileAbsPath = saveVideoPath + File.separator + videoFileName;
+            mediaRecorder.setOutputFile(videoFileAbsPath);
+            try {
+                mediaRecorder.prepare();
+                mediaRecorder.start();
+                isRecorder = true;
+            } catch (IllegalStateException e) {
+                e.printStackTrace();
+                Log.i("CJT", "startRecord IllegalStateException");
+                if (this.errorLisenter != null) {
+                    this.errorLisenter.onError();
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.i("CJT", "startRecord IOException");
+                if (this.errorLisenter != null) {
+                    this.errorLisenter.onError();
+                }
+            } catch (RuntimeException e) {
+                Log.i("CJT", "startRecord RuntimeException");
             }
-        } else {
-            mediaRecorder.setOrientationHint(nowAngle);
-        }
-
-
-        if (DeviceUtil.isHuaWeiRongyao()) {
-            mediaRecorder.setVideoEncodingBitRate(4 * 100000);
-        } else {
-            mediaRecorder.setVideoEncodingBitRate(mediaQuality);
-        }
-        mediaRecorder.setPreviewDisplay(surface);
-
-        videoFileName = "video_" + System.currentTimeMillis() + ".mp4";
-        if (saveVideoPath.equals("")) {
-            saveVideoPath = Environment.getExternalStorageDirectory().getPath();
-        }
-        videoFileAbsPath = saveVideoPath + File.separator + videoFileName;
-        mediaRecorder.setOutputFile(videoFileAbsPath);
-        try {
-            mediaRecorder.prepare();
-            mediaRecorder.start();
-            isRecorder = true;
-        } catch (IllegalStateException e) {
-            e.printStackTrace();
-            Log.i("CJT", "startRecord IllegalStateException");
-            if (this.errorLisenter != null) {
-                this.errorLisenter.onError();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.i("CJT", "startRecord IOException");
-            if (this.errorLisenter != null) {
-                this.errorLisenter.onError();
-            }
-        } catch (RuntimeException e) {
-            Log.i("CJT", "startRecord RuntimeException");
         }
     }
 

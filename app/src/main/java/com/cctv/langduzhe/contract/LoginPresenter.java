@@ -129,6 +129,7 @@ public class LoginPresenter implements BasePresenter {
             SPUtils.put(context, PreferenceContents.USER_NAME, userName);
             SPUtils.put(context, PreferenceContents.TOKEN, token);
             loadReadInfo();
+            ((LoginActivity) context).finish();
         } else {
             loginView.showToast(jsonObject.getString("message"));
         }
@@ -149,16 +150,8 @@ public class LoginPresenter implements BasePresenter {
         LogUtil.i(userInfo);
         JSONObject jsonObject = JSONObject.parseObject(userInfo);
         JSONObject dataObj = jsonObject.getJSONObject("data");
-        if (!TextUtils.isEmpty(dataObj.getString("img"))) {
-
-            Intent intent = new Intent(context, MainActivity.class);
-            intent.putExtra("new_login", true);
-            context.startActivity(intent);
-        } else {
-            Intent intent = new Intent(context, EditUserInfoActivity.class);
-            intent.putExtra("new_user", true);
-            context.startActivity(intent);
-        }
+        SPUtils.put(context, PreferenceContents.USER_NAME, dataObj.getString("name"));
+        SPUtils.put(context, PreferenceContents.USER_IMG, dataObj.getString("img"));
         ((LoginActivity) context).finish();
         unSubscribe();
     }

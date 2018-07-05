@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.cctv.langduzhe.R;
 import com.cctv.langduzhe.base.BaseActivity;
 import com.cctv.langduzhe.base.BaseFragment;
-import com.cctv.langduzhe.feature.readPavilion.ReadPavilionListFragment;
 import com.cctv.langduzhe.adapter.ContentPagerAdapter;
 
 import java.util.ArrayList;
@@ -57,7 +56,7 @@ public class MineReadActivity extends BaseActivity {
     }
 
     private void initView() {
-        ReadPavilionListFragment postedFragment = new ReadPavilionListFragment();
+        MineReadFragment postedFragment = new MineReadFragment();
         Bundle postedBundle = new Bundle();
         postedBundle.putInt("data_type",2);
         postedFragment.setArguments(postedBundle);
@@ -86,12 +85,7 @@ public class MineReadActivity extends BaseActivity {
 
             }
         });
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        btnBack.setOnClickListener(v -> onBackPressed());
         rgMyRead.setOnCheckedChangeListener((group, checkedId) -> {
             if (checkedId == R.id.rb_not_publish) {
                 vpMyRead.setCurrentItem(1,true);

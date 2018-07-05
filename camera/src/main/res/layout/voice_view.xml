@@ -1,34 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#000000"
+    android:background="#fff"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="70dp"
+        android:layout_above="@+id/capture_layout"
+        android:gravity="bottom"
         android:orientation="vertical">
         <TextView
             android:id="@+id/tv_article_content"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="match_parent"
             android:textSize="17sp"
-            android:layout_margin="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:lineSpacingExtra="20dp"
             android:scrollbars = "vertical"
-            android:textColor="@android:color/white"/>
+            android:textColor="@android:color/black"/>
 
         <SeekBar
             android:id="@+id/seekbar_voice"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_height="5dp"
             android:indeterminateOnly="false"
             android:thumb="@null"
-            android:maxHeight="4dp"
+            android:paddingStart="0dp"
+            android:paddingEnd="0dp"
             android:progressDrawable="@drawable/seekbar_drawable" />
     </LinearLayout>
 
@@ -37,13 +41,12 @@
         android:id="@+id/tv_record_time"
         android:layout_width="100dp"
         android:layout_height="40dp"
-        android:layout_gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
         android:gravity="center"
         android:textColor="@android:color/white"
         android:format="%s"
         android:textSize="18sp"
-        android:visibility="gone"
         android:background="@drawable/shape_round_rectangle_bg_19"/>
 
 
@@ -52,7 +55,9 @@
         android:id="@+id/capture_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:background="#191919"
         app:captureType="1"
-        android:layout_gravity="bottom"/>
+        android:layout_alignParentBottom="true"/>
 
-</FrameLayout>
+</RelativeLayout>

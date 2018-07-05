@@ -16,6 +16,8 @@ public class NotPostEntity {
     public static final String READ_TYPE = "type";
     public static final String READ_FILE_PATH = "path";
     public static final String COVER_PATH = "cover_path";
+    public static final String DISPLAY = "display";
+    public static final String MEDIA_LENGTH = "media_length";
 
     @DatabaseField(columnName = ID_FIELD_NAME, generatedId = true)
     public int id;
@@ -34,6 +36,10 @@ public class NotPostEntity {
 
     @DatabaseField(columnName = COVER_PATH)
     public String coverPath;
+    @DatabaseField(columnName = DISPLAY)
+    public boolean display;
+    @DatabaseField(columnName = MEDIA_LENGTH)
+    public String mediaLength;
     public NotPostEntity(int type) {
         this.type = type;
     }

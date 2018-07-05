@@ -184,5 +184,12 @@ public class AudioPlayer implements MediaPlayer.OnBufferingUpdateListener, Media
             return 0;
     }
 
+    public long getCurPosition() {
+        return mMediaPlayer.getCurrentPosition();
+    }
+
+    public boolean isPlaying() {
+        return mMediaPlayer.isPlaying();
+    }
 }
 

@@ -17,7 +17,10 @@ import com.cctv.langduzhe.base.BaseRecyclerViewAdapter;
 import com.cctv.langduzhe.data.entites.HomeVideoEntity;
 import com.cctv.langduzhe.feature.home.HomeVideoDetailActivity;
 import com.cctv.langduzhe.util.DateConvertUtils;
+import com.cctv.langduzhe.util.imageTransform.RoundTransform;
 import com.cctv.langduzhe.util.picasco.PicassoUtils;
+import com.cctv.langduzhe.view.widget.ClickNotToggleCheckBox;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,13 +43,14 @@ public class HomeVideoAdapter extends BaseRecyclerViewAdapter<HomeVideoAdapter.V
         context = parent.getContext();
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_home, parent, false);
-        return new ViewHolder(itemView, this);
+        return new ViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         HomeVideoEntity.DataBean videoEntity = list.get(position);
-        PicassoUtils.loadImageByurl(context,videoEntity.getImg(),holder.ivHomeVideoCover);
+
+        Picasso.with(context).load(videoEntity.getImg()).transform(new RoundTransform(20)).into(holder.ivHomeVideoCover);
         holder.tvHomeVideoTag.setText("第"+videoEntity.getSeasonNum()+"季");
         holder.tvCommentCount.setText(String.valueOf(videoEntity.getCommentSum()));
         holder.tvThumbsCount.setText(String.valueOf(videoEntity.getLikeSum()));
@@ -94,34 +98,18 @@ public class HomeVideoAdapter extends BaseRecyclerViewAdapter<HomeVideoAdapter.V
         @BindView(R.id.tv_comment_count)
         TextView tvCommentCount;
         @BindView(R.id.tv_thumbs_count)
-        AppCompatCheckBox tvThumbsCount;
+        ClickNotToggleCheckBox tvThumbsCount;
 
         @BindView(R.id.tv_video_title)
         TextView tvVideoTitle;
         @BindView(R.id.tv_video_length)
         TextView tvVideoLength;
 
-        ViewHolder(View itemView, HomeVideoAdapter messageAdapter) {
+        ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onItemHolderClick(2, getLayoutPosition(), false);
-                }
-            });
-            tvCommentCount.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onItemHolderClick(0,getLayoutPosition(),false);
-                }
-            });
-            tvThumbsCount.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onItemHolderClick(1, getLayoutPosition(),tvThumbsCount.isChecked());
-                }
-            });
+            itemView.setOnClickListener(v -> onItemHolderClick(2, getLayoutPosition(), false));
+
         }
     }
 }

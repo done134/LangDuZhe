@@ -84,9 +84,8 @@ public class HomeDetailPresenter implements BasePresenter {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("pageNum", pageNum);
         jsonObject.put("pageSize", 10);
-        jsonObject.put("seasonId", videoEntity.getSeasonId());
-        jsonObject.put("termId", videoEntity.getTermId());
-        jsonObject.put("title", videoEntity.getTitle());
+        jsonObject.put("readerType", "system");
+        jsonObject.put("parentId", videoEntity.getId());
         return jsonObject.toJSONString();
     }
 

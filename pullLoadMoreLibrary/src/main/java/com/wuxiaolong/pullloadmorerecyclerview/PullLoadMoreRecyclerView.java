@@ -106,6 +106,15 @@ public class PullLoadMoreRecyclerView extends LinearLayout {
         mRecyclerView.setLayoutManager(gridLayoutManager);
     }
 
+    /**
+    * @author 尹振东
+    * create at 2018/4/17 上午2:06
+    * 方法说明：添加滚动监听
+    */
+    public void addOnScrollListener(RecyclerView.OnScrollListener onScrollChangeListener) {
+        mRecyclerView.addOnScrollListener(onScrollChangeListener);
+    }
+
 
     /**
      * StaggeredGridLayoutManager

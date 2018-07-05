@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:background="@color/black"
+    android:background="@color/white"
     android:layout_height="match_parent">
 
     <include layout="@layout/layout_common_title"/>
@@ -10,9 +10,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:textStyle="bold"
+        android:textColor="@color/black"
         android:text="标题："
+        android:fontFamily="@font/songti"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="20dp"
         android:layout_marginBottom="5dp"
@@ -25,10 +25,11 @@
         android:textSize="14sp"
         android:maxLength="500"
         android:padding="10dp"
+        android:fontFamily="@font/songti"
         android:hint="请输入标题"
         android:gravity="top"
-        android:textColor="@color/white"
-        android:background="@drawable/shape_round_rectangle_c19"
+        android:textColor="@color/black"
+        android:background="@drawable/shape_round_rectangle_eb"
         android:layout_marginRight="15dp"
         android:layout_marginLeft="15dp"/>
 
@@ -36,12 +37,12 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:textStyle="bold"
+        android:textColor="@color/black"
         android:text="内容："
         android:layout_marginTop="25dp"
         android:layout_marginLeft="20dp"
         android:layout_marginBottom="5dp"
+        android:fontFamily="@font/songti"
         android:textSize="14sp"/>
     <EditText
         android:id="@+id/et_contribute_content"
@@ -51,10 +52,11 @@
         android:textSize="14sp"
         android:maxLength="500"
         android:padding="10dp"
+        android:fontFamily="@font/gothic"
         android:hint="请输入内容"
         android:gravity="top"
-        android:textColor="@color/white"
-        android:background="@drawable/shape_round_rectangle_c19"
+        android:textColor="@color/black"
+        android:background="@drawable/shape_round_rectangle_eb"
         android:layout_marginRight="15dp"
         android:layout_marginLeft="15dp"/>
 
@@ -71,6 +73,7 @@
             android:layout_gravity="center"
             android:textColor="@color/ff2b2b"
             android:text="放弃"
+            android:fontFamily="@font/songti"
             android:gravity="center"
             android:textSize="15sp"
             android:background="@drawable/shape_red_border_round_corner"
@@ -80,6 +83,7 @@
             android:layout_width="90dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
+            android:fontFamily="@font/songti"
             android:layout_marginLeft="60dp"
             android:textColor="@color/white"
             android:text="提交"

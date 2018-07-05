@@ -1,8 +1,9 @@
 package com.cctv.langduzhe.feature.mine;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,22 +17,22 @@ import com.cctv.langduzhe.contract.PostView;
 import com.cctv.langduzhe.contract.mine.NotPostPresenter;
 import com.cctv.langduzhe.contract.mine.NotPostView;
 import com.cctv.langduzhe.data.entites.NotPostEntity;
-import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import cn.jzvd.JZVideoPlayer;
 
 /**
  * Created by gentleyin
  * on 2018/2/4.
  * 说明：我的阅读未发布列表页
  */
-public class NotPostFragment extends BaseFragment implements NotPostAdapter.OnButtonClickListener, NotPostView,PostView {
+public class NotPostFragment extends BaseFragment implements NotPostAdapter.OnButtonClickListener, NotPostView, PostView {
     @BindView(R.id.pull_refresh_list)
-    PullLoadMoreRecyclerView pullRefreshList;
+    RecyclerView pullRefreshList;
     @BindView(R.id.tv_no_data)
     TextView tvNoData;
     Unbinder unbinder;
@@ -42,6 +43,7 @@ public class NotPostFragment extends BaseFragment implements NotPostAdapter.OnBu
     private NotPostEntity postEntity;
     private PostPresenter postPresenter;
 
+    private LinearLayoutManager mLayoutManager;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -51,6 +53,39 @@ public class NotPostFragment extends BaseFragment implements NotPostAdapter.OnBu
         }
 
         unbinder = ButterKnife.bind(this, mView);
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        pullRefreshList.setLayoutManager(mLayoutManager);
+        notPostAdapter = new NotPostAdapter(this);
+        pullRefreshList.setAdapter(notPostAdapter);
+//        notPostAdapter.setOnItemClickListener(this::onItemClick);
+        pullRefreshList.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            int firstVisibleItem, lastVisibleItem;
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                firstVisibleItem = mLayoutManager.findFirstVisibleItemPosition();
+                lastVisibleItem = mLayoutManager.findLastVisibleItemPosition();
+                //大于0说明有播放
+                if (notPostAdapter.getPlayPosition() >= 0) {
+                    //当前播放的位置
+                    int position = notPostAdapter.getPlayPosition();
+                    //对应的播放列表TAG
+                    if (position < firstVisibleItem || position > lastVisibleItem) {
+                        //如果滑出去了上面和下面就是否
+                        notPostAdapter.pauseVoice();
+                        JZVideoPlayer.releaseAllVideos();
+                    }
+                }
+            }
+        });
+
         return mView;
     }
 
@@ -60,31 +95,26 @@ public class NotPostFragment extends BaseFragment implements NotPostAdapter.OnBu
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        pullRefreshList.setLinearLayout();
-        pullRefreshList.setPullRefreshEnable(false);
-        pullRefreshList.setPushRefreshEnable(false);
-        notPostAdapter = new NotPostAdapter(this);
-        pullRefreshList.setAdapter(notPostAdapter);
-//        notPostAdapter.setOnItemClickListener(this::onItemClick);
-    }
-
-    @Override
     public void onDeleteClick(NotPostEntity postEntity) {
         presenter.delete(postEntity);
     }
 
     @Override
     public void onPostClick(NotPostEntity postEntity) {
-        postPresenter.postFile(postEntity.type==0?PostPresenter.VOICE_TYPE : PostPresenter.VIDEO_TYPE,postEntity.readFilepath, isPortrait);
+        if (postEntity.type == 0) {
+            postPresenter.postFile(PostPresenter.VOICE_TYPE, postEntity.readFilepath);
+        }else {
+            postPresenter.postFile(PostPresenter.VIDEO_TYPE, postEntity.readFilepath, postEntity.display);
+        }
+        JZVideoPlayer.releaseAllVideos();
+        notPostAdapter.pauseVoice();
         this.postEntity = postEntity;
         showProgress();
     }
 
     @Override
     public void setPresenter() {
-        presenter = new NotPostPresenter(getActivity(),this);
+        presenter = new NotPostPresenter(getActivity(), this);
         postPresenter = new PostPresenter(getActivity(), this);
     }
 
@@ -93,7 +123,7 @@ public class NotPostFragment extends BaseFragment implements NotPostAdapter.OnBu
         if (list == null || list.size() == 0) {
             tvNoData.setVisibility(View.VISIBLE);
             pullRefreshList.setVisibility(View.GONE);
-        }else {
+        } else {
             notPostAdapter.setList(list);
             tvNoData.setVisibility(View.GONE);
             pullRefreshList.setVisibility(View.VISIBLE);
@@ -109,7 +139,16 @@ public class NotPostFragment extends BaseFragment implements NotPostAdapter.OnBu
 
     @Override
     public void postSucceed(String fileName, int duration, long fileSize) {
-        presenter.post(fileName, postEntity,duration,fileSize);
+        presenter.post(fileName, postEntity, duration, fileSize);
         dismissProgress();
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (hidden) {
+            notPostAdapter.pauseVoice();
+            JZVideoPlayer.releaseAllVideos();
+        }
     }
 }

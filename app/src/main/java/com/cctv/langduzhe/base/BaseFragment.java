@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.cctv.langduzhe.data.preference.PreferenceContents;
+import com.cctv.langduzhe.data.preference.SPUtils;
 import com.cctv.langduzhe.feature.LoginActivity;
 import com.cctv.langduzhe.util.ToastUtils;
 import com.cctv.langduzhe.view.widget.LoadingProgressDialog;
@@ -156,5 +158,21 @@ public abstract class BaseFragment extends Fragment implements BaseView{
     @Override
     public void toLogin() {
         toActivity(LoginActivity.class);
+    }
+
+    /**
+     * @author 尹振东
+     * create at 2018/4/14 下午4:40
+     * 方法说明：在某些需要用户登录才能操作的地方用到
+     * 已登录则返回true，否则跳转到登录页面
+     */
+    protected boolean hasLogin() {
+        String hasLogin = (String) SPUtils.get(getActivity(), PreferenceContents.TOKEN, "");
+        if (!TextUtils.isEmpty(hasLogin)) {
+            return true;
+        } else {
+            toActivity(LoginActivity.class);
+            return false;
+        }
     }
 }

@@ -4,23 +4,5 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="ff2b2b">#ff2b2b</color>
-
-    <color name="c_df2424">#df2424</color>
-    <color name="white">#fff</color>
-    <color name="black">#000</color>
-    <color name="transparent">#0000</color>
-    <color name="c_191919">#191919</color>
-    <color name="c_8c8c8c">#8c8c8c</color>
-
-    <color name="c_eaeaea">#eaeaea</color>
-    <color name="c_4c4c4c">#4c4c4c</color>
-    <color name="head_border_color">#10ffffff</color>
-
-    <color name="light_blue">#3FA1FF</color>
-
-    <color name="half_transparent_20">#20000000</color>
-    <color name="half_transparent_70">#a0000000</color>
-    <color name="c_98191919">#fe191919</color>
-
+    <color name="c_ae">#aeaeae</color>
 </resources>

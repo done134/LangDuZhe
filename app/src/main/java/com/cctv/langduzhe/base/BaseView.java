@@ -10,6 +10,8 @@ public interface BaseView {
 
     void dismissProgress();
 
+    void showProgress();
+
     void showToast(String message);
 
     void toLogin();

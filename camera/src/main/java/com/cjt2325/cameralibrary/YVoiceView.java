@@ -2,16 +2,11 @@ package com.cjt2325.cameralibrary;
 
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.os.Handler;
-import android.os.Message;
 import android.os.SystemClock;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.text.method.ScrollingMovementMethod;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Chronometer;
@@ -26,13 +21,10 @@ import com.cjt2325.cameralibrary.listener.RecordTimeListener;
 import com.cjt2325.cameralibrary.listener.RecordVoiceListener;
 import com.cjt2325.cameralibrary.listener.TypeListener;
 import com.cjt2325.cameralibrary.state.VoiceMachine;
-import com.cjt2325.cameralibrary.util.FileUtil;
 import com.cjt2325.cameralibrary.util.LogUtil;
-import com.cjt2325.cameralibrary.util.ScreenUtils;
 import com.cjt2325.cameralibrary.view.VoiceView;
 import com.czt.mp3recorder.MP3Recorder;
 import com.shuyu.waveview.AudioPlayer;
-import com.shuyu.waveview.AudioWaveView;
 import com.shuyu.waveview.FileUtils;
 
 import java.io.File;
@@ -45,7 +37,7 @@ import static com.cjt2325.cameralibrary.AppConstants.AUDIO_PATH;
  * on 2018/2/12.
  * 说明：录音页面
  */
-public class YVoiceView extends FrameLayout implements VoiceView{
+public class YVoiceView extends FrameLayout implements VoiceView {
 
     //录音状态的类型
     public static final int TYPE_VIDEO = 0x002;
@@ -79,20 +71,20 @@ public class YVoiceView extends FrameLayout implements VoiceView{
 
 
     private String filePath;
-    
+
     boolean mIsPlay = false;
 
     private int curPosition;
 
-    public YVoiceView(@NonNull Context context) {
-        this(context,null);
+    public YVoiceView(Context context) {
+        this(context, null);
     }
 
-    public YVoiceView(@NonNull Context context, @Nullable AttributeSet attrs) {
-        this(context, attrs,0);
+    public YVoiceView(Context context, AttributeSet attrs) {
+        this(context, attrs, 0);
     }
 
-    public YVoiceView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public YVoiceView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         mContext = context;
         //get AttributeSet
@@ -115,7 +107,7 @@ public class YVoiceView extends FrameLayout implements VoiceView{
                 return;
             }
         }
-        voiceMachine = new VoiceMachine(getContext(),this);
+        voiceMachine = new VoiceMachine(getContext(), this);
 
         filePath = FileUtils.getAppPath() + UUID.randomUUID().toString() + ".mp3";
         mRecorder = new MP3Recorder(new File(filePath));
@@ -154,7 +146,9 @@ public class YVoiceView extends FrameLayout implements VoiceView{
             public void recordStart() {
                 flagRecord = true;
                 try {
-                    voiceMachine.start(mRecorder);
+                    if (voiceMachine != null) {
+                        voiceMachine.start(mRecorder);
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                     Toast.makeText(getContext(), "录音出现异常", Toast.LENGTH_SHORT).show();
@@ -171,7 +165,7 @@ public class YVoiceView extends FrameLayout implements VoiceView{
                 postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        voiceMachine.stopRecord(true,time, filePath);
+                        voiceMachine.stopRecord(true, time, filePath);
                     }
                 }, 1500 - time);
             }
@@ -183,7 +177,7 @@ public class YVoiceView extends FrameLayout implements VoiceView{
                     mRecorder.setPause(false);
                     mRecorder.stop();
                 }
-                voiceMachine.stopRecord(false, time,filePath);
+                voiceMachine.stopRecord(false, time, filePath);
                 tvRecordTime.stop();
             }
 

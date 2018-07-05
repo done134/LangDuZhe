@@ -9,9 +9,7 @@ import android.graphics.Bitmap;
 import android.hardware.Camera;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
-import android.os.Build;
 import android.os.SystemClock;
-import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
@@ -521,7 +519,6 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
         videoUrl = url;
         JCameraView.this.firstFrame = firstFrame;
         new Thread(new Runnable() {
-            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void run() {
                 try {

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -16,9 +17,11 @@ import com.cctv.langduzhe.R;
 import com.cctv.langduzhe.base.BaseRecyclerViewAdapter;
 import com.cctv.langduzhe.data.entites.CommandEntity;
 import com.cctv.langduzhe.data.entites.HomeVideoEntity;
+import com.cctv.langduzhe.util.CommonUtil;
 import com.cctv.langduzhe.util.DateConvertUtils;
 import com.cctv.langduzhe.util.picasco.PicassoUtils;
 import com.cctv.langduzhe.view.widget.CircleImageView;
+import com.cctv.langduzhe.view.widget.ClickNotToggleCheckBox;
 import com.piterwilson.audio.MP3RadioStreamDelegate;
 import com.piterwilson.audio.MP3RadioStreamPlayer;
 import com.shuyu.waveview.AudioWaveView;
@@ -53,13 +56,21 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
      */
     private final int VIDEO_TYPE = 1;
 
+    private boolean isHomeVideo;
 
     private List<CommandEntity.DataBean> list;
 
     private Context context;
+    private boolean firstEnter = true;
 
     private CommandTypeEnum adapterType;
     private HomeVideoEntity.DataBean videoInfoEntity;
+
+    public CommandAdapter(boolean isHomeSliceVideo) {
+        super();
+        this.isHomeVideo = isHomeSliceVideo;
+
+    }
 
 
     @Override
@@ -70,16 +81,16 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
         if (viewType == VOICE_TYPE) {
             View itemView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.layout_voice_detail, parent, false);
-            return new VoiceHolder(itemView, this);
+            return new VoiceHolder(itemView);
 
         } else if (viewType == VIDEO_TYPE) {
             View itemView = LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.layout_video_detail, parent, false);
-            return new VideoHolder(itemView, this);
+            return new VideoHolder(itemView);
         } else {
             View itemView = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.item_command, parent, false);
-            return new CommandHolder(itemView, this);
+                    .inflate(R.layout.item_dialog_command, parent, false);
+            return new CommandHolder(itemView);
         }
     }
 
@@ -95,18 +106,8 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
             ((VoiceHolder) holder).tvThumbsCount.setChecked(videoInfoEntity.getIsLike() == 1);
             PicassoUtils.loadImageByurl(context,videoInfoEntity.getReaderImg(),((VoiceHolder) holder).ivCommandHead);
             playVoice(videoInfoEntity.getPath(),((VoiceHolder) holder).audioWave);
-            if (isPause) {
-                ((VoiceHolder) holder).audioWave.stopView();
-                player.stop();
-            }
 //            ((VoiceHolder) holder).setText(videoInfoEntity.getTitle());
         } else if (holder instanceof VideoHolder){
-            //普通视频类型展示上传者信息，首页节目片段视频隐藏这块儿布局
-            if (getAdapterType() == CommandTypeEnum.VIDEO_COMMAND) {
-                ((VideoHolder) holder).llUploaderInfo.setVisibility(View.VISIBLE);
-            } else {
-                ((VideoHolder) holder).llUploaderInfo.setVisibility(View.GONE);
-            }
             //视频
             PicassoUtils.loadImageByurl(context,videoInfoEntity.getReaderImg(),((VideoHolder) holder).ivCommandHead);
             ((VideoHolder) holder).tvCommentCount.setText(String.valueOf(videoInfoEntity.getCommentSum()));
@@ -115,17 +116,19 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
             ((VideoHolder) holder).tvVideoPlayCount.setText(String.valueOf(videoInfoEntity.getWatchSum()));
             ((VideoHolder) holder).tvCommandName.setText(videoInfoEntity.getReaderName());
             ((VideoHolder) holder).tvCommandTime.setText(videoInfoEntity.getCreateDate());
-            PicassoUtils.loadImageByurl(context,videoInfoEntity.getImg(),((VideoHolder) holder).videoView.thumbImageView);
+            PicassoUtils.loadImageByurlCenter(context,videoInfoEntity.getImg(),((VideoHolder) holder).videoView.thumbImageView);
             ((VideoHolder) holder).videoView.setUp(videoInfoEntity.getPath(), JZVideoPlayerStandard.SCREEN_WINDOW_LIST, "");
-            if (isPause) {
-                ((VideoHolder) holder).videoView.release();
+            if (firstEnter) {
+//                JZVideoPlayerStandard.startFullscreen(context, JZVideoPlayerStandard.class, videoInfoEntity.getPath());
+                ((VideoHolder) holder).videoView.startVideo();
+                firstEnter = false;
             }
 //            ((VideoHolder) holder).tv.setText(videoInfoEntity.getTitle());
         } else if (holder instanceof CommandHolder) {
             CommandEntity.DataBean dataBean = list.get(position);
             ((CommandHolder) holder).tvCommandContent.setText(dataBean.getContent());
             ((CommandHolder) holder).tvCommandName.setText(dataBean.getReaderName());
-//            ((CommandHolder) holder).tvCommandTime.setText(dataBean.get);
+            ((CommandHolder) holder).tvCommandTime.setText(dataBean.getCreateDate());
             PicassoUtils.loadImageByurl(context,dataBean.getReaderImg(),((CommandHolder) holder).ivCommandHead);
         }
     }
@@ -137,8 +140,10 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
     }
 
     public void setReadInfo(HomeVideoEntity.DataBean videoInfoEntity) {
-        this.list = new ArrayList<>();
-        list.add(0, null);
+        if (this.list == null) {
+            this.list = new ArrayList<>();
+            list.add(0, null);
+        }
         this.videoInfoEntity = videoInfoEntity;
     }
     public void addData(List<CommandEntity.DataBean> list) {
@@ -149,11 +154,17 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
         notifyDataSetChanged();
     }
 
+    public void addNewData(CommandEntity.DataBean newComment) {
+        if (this.list == null) {
+            this.list = new ArrayList<>();
+        }
+        this.list.add(1,newComment);
+        notifyDataSetChanged();
+    }
 
 
     private MP3RadioStreamPlayer player;
 
-    private Timer timer;
 
     private void playVoice(String voiceUrl,AudioWaveView audioWaveView) {
         if (player != null) {
@@ -207,7 +218,7 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
 
     private boolean playEnd;
 
-    private boolean seekBarTouch;
+
 
     /**
      * 音频类头布局
@@ -229,7 +240,7 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
         @BindView(R.id.tv_comment_count)
         TextView tvCommentCount;
         @BindView(R.id.tv_thumbs_count)
-        AppCompatCheckBox tvThumbsCount;
+        ClickNotToggleCheckBox tvThumbsCount;
         @BindView(R.id.tv_current_progress)
         TextView tvCurrentProgress;
         @BindView(R.id.seekbar_voice)
@@ -239,50 +250,22 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
         @BindView(R.id.cb_play_pause)
         CheckBox cbPlayPause;
 
-        VoiceHolder(View itemView, CommandAdapter messageAdapter) {
+        VoiceHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            tvThumbsCount.setOnClickListener(v -> onItemHolderClick(1, getLayoutPosition(),tvThumbsCount.isChecked()));
-            seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-                @Override
-                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                    tvCurrentProgress.setText(DateConvertUtils.secToTime(player.getCurPosition()));
-                }
-
-                @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {
-                    seekBarTouch = true;
-                }
-
-                @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {
-                    seekBarTouch = false;
-                    if (!playEnd) {
-                        player.seekTo(seekBar.getProgress());
-                    }
+            if (isHomeVideo) {
+                llUploaderInfo.setVisibility(View.GONE);
+            } else {
+                llUploaderInfo.setVisibility(View.VISIBLE);
+            }
+            tvThumbsCount.setOnClickListener(v -> {
+                if (CommonUtil.isFastClick()) {
+                    onItemHolderClick(1, getLayoutPosition(), !tvThumbsCount.isChecked());
                 }
             });
-            timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    if (playEnd || player == null || !seekBar.isEnabled()) {
-                        return;
-                    }
-                    long position = player.getCurPosition();
-                    if (position > 0 && !seekBarTouch) {
-                        seekBar.setProgress((int) position);
-                    }
-                }
-            }, 1000, 1000);
         }
     }
 
-    boolean isPause;
-    public void pauseVideo() {
-        isPause = true;
-        notifyDataSetChanged();
-    }
 
     /**
      * 视频类头布局
@@ -304,18 +287,23 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
         @BindView(R.id.tv_comment_count)
         TextView tvCommentCount;
         @BindView(R.id.tv_thumbs_count)
-        AppCompatCheckBox tvThumbsCount;
+        ClickNotToggleCheckBox tvThumbsCount;
 
 
-        VideoHolder(View itemView, CommandAdapter messageAdapter) {
+        VideoHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            tvThumbsCount.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onItemHolderClick(1, getLayoutPosition(),tvThumbsCount.isChecked());
+            if (isHomeVideo) {
+                llUploaderInfo.setVisibility(View.GONE);
+            } else {
+                llUploaderInfo.setVisibility(View.VISIBLE);
+            }
+            tvThumbsCount.setOnClickListener(v -> {
+                if (CommonUtil.isFastClick()) {
+                    onItemHolderClick(1, getLayoutPosition(), !tvThumbsCount.isChecked());
                 }
             });
+            tvCommentCount.setOnClickListener(v -> onItemClickListener.onItemClick(2,getLayoutPosition(),false));
         }
     }
 
@@ -334,7 +322,7 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
         TextView tvCommandContent;
 
 
-        CommandHolder(View itemView, CommandAdapter messageAdapter) {
+        CommandHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
 //            itemView.setOnClickListener(v -> messageAdapter.onItemHolderClick(,this));

@@ -42,7 +42,6 @@ import android.util.Log;
 import android.view.WindowManager;
 
 import com.cctv.langduzhe.R;
-import com.cctv.langduzhe.feature.read.RecordVoiceActivity;
 
 
 /**
@@ -501,4 +500,24 @@ public class CommonUtil {
         }
         return null;
     }
+
+    // 两次点击按钮之间的点击间隔不能少于1000毫秒
+    private static final int MIN_CLICK_DELAY_TIME = 1000;
+    private static long lastClickTime;
+
+    /**
+    * @author 尹振东
+    * create at 2018/4/17 下午4:54
+    * 方法说明：防止过快点击
+    */
+    public static boolean isFastClick() {
+        boolean flag = false;
+        long curClickTime = System.currentTimeMillis();
+        if ((curClickTime - lastClickTime) >= MIN_CLICK_DELAY_TIME) {
+            flag = true;
+        }
+        lastClickTime = curClickTime;
+        return flag;
+    }
+
 }

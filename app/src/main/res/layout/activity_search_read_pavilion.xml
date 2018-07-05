@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/fl_search"
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="50dp"
+            android:layout_gravity="center_vertical"
+            android:drawablePadding="20dp"
+            android:paddingLeft="40dp"
+            android:imeOptions="actionSearch"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:singleLine="true"
+            android:background="@drawable/shape_round_rectangle_eb20"/>
+
+        <ImageView
+            android:id="@+id/btn_search"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@mipmap/search_icon"
+            android:scaleType="center"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dp"/>
+
+        <ImageView
+            android:id="@+id/btn_clear"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginRight="60dp"
+            android:src="@mipmap/clear_edit_icon"
+            android:layout_gravity="center_vertical|end"/>
+
+
+        <TextView
+            android:id="@+id/btn_cancel"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:text="取消"
+            android:textSize="15sp"
+            android:layout_gravity="center_vertical|end"
+            android:gravity="center"
+            android:textColor="@color/c_191919"/>
+
+    </FrameLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/c_ecebeb"/>
+    <com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView
+        android:id="@+id/pull_refresh_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"/>
+
+</LinearLayout>

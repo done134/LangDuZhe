@@ -69,9 +69,9 @@ public class ArticlesAdapter extends BaseRecyclerViewAdapter<ArticlesAdapter.Vie
         ArticlesEntity.DataBean article = list.get(position);
         holder.tvArticleContent.setText(article.getShortContent());
         holder.tvArticleTitle.setText(article.getTitle());
-        holder.ivArticleCover.setVisibility(View.GONE);
-//        if(TextUtils.isEmpty())
-//        PicassoUtils.loadImageByurl(context,article.getContent(),holder.ivArticleCover);
+//        holder.ivArticleCover.setVisibility(View.GONE);
+        if(!TextUtils.isEmpty(article.getImg()))
+        PicassoUtils.loadImageByurlCenter(context,article.getImg(),holder.ivArticleCover);
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

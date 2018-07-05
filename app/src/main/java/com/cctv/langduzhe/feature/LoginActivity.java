@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -67,7 +66,7 @@ public class LoginActivity extends BaseActivity implements LoginView{
         authCode.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = phone.getText().toString();
+        String phoneStr = phone.getText().toString();
         String password = authCode.getText().toString();
 
         boolean cancel = false;
@@ -81,11 +80,11 @@ public class LoginActivity extends BaseActivity implements LoginView{
         }
 
         // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
+        if (TextUtils.isEmpty(phoneStr)) {
             phone.setError(getString(R.string.error_field_required));
             focusView = phone;
             cancel = true;
-        } else if (!CommonUtil.isMobileNumber(email)) {
+        } else if (!CommonUtil.isMobileNumber(phoneStr)) {
             phone.setError(getString(R.string.error_invalid_phone));
             focusView = phone;
             cancel = true;
@@ -98,7 +97,7 @@ public class LoginActivity extends BaseActivity implements LoginView{
         } else {
             // Show a progress spinner, and kick off a background task to
             showProgress();
-            loginPresenter.login(email,password);
+            loginPresenter.login(phoneStr,password);
         }
     }
 

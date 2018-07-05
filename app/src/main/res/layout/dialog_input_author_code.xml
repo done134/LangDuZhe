@@ -13,9 +13,13 @@
         android:textColorHint="@color/c_8c8c8c"
         android:hint="请输入六位授权码"
         android:gravity="center"
+        android:fontFamily="@font/songti"
         android:layout_marginTop="30dp"
-        android:textColor="@color/black"
+        android:maxLength="6"
+        android:textColor="@color/c_191919"
         android:layout_marginLeft="50dp"
+        android:inputType="number"
+        android:digits="0123456789"
         android:layout_marginRight="50dp"
         android:textSize="15sp"
         android:background="@drawable/shape_comment_edit_bg"/>
@@ -24,13 +28,14 @@
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_marginTop="30dp"
-        android:background="@color/c_eaeaea" />
+        android:background="@color/c_e6e6e6" />
 
     <TextView
         android:id="@+id/btn_confirm_author_code"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:textColor="@color/ff2b2b"
+        android:fontFamily="@font/songti"
         android:text="确定"
         android:gravity="center"
         android:textSize="17sp"/>

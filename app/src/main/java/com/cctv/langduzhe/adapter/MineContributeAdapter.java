@@ -36,7 +36,7 @@ public class MineContributeAdapter extends BaseRecyclerViewAdapter<MineContribut
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         ContributeEntity.DataBean contribute = list.get(position);
-        holder.tvMessageContent.setText(contribute.getContent());
+        holder.tvMessageContent.setText(contribute.getShortContent());
         holder.tvMessageTime.setText(contribute.getCreateDate());
         holder.tvMessageTitle.setText(contribute.getTitle());
     }

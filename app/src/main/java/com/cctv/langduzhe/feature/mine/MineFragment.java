@@ -13,7 +13,10 @@ import com.cctv.langduzhe.R;
 import com.cctv.langduzhe.base.BaseFragment;
 import com.cctv.langduzhe.contract.mine.MinePresenter;
 import com.cctv.langduzhe.contract.mine.MineView;
+import com.cctv.langduzhe.data.preference.PreferenceContents;
+import com.cctv.langduzhe.data.preference.SPUtils;
 import com.cctv.langduzhe.eventMsg.UpdateUserInfoEvent;
+import com.cctv.langduzhe.feature.MainActivity;
 import com.cctv.langduzhe.util.picasco.PicassoUtils;
 import com.cctv.langduzhe.view.widget.CircleImageView;
 
@@ -78,7 +81,7 @@ public class MineFragment extends BaseFragment implements MineView{
         presenter.subscribe();
     }
 
-    @OnClick({R.id.iv_user_picture, R.id.tv_user_name, R.id.btn_my_collection, R.id.btn_my_read, R.id.btn_mine_contribute, R.id.btn_app_set})
+    @OnClick({R.id.iv_user_picture, R.id.tv_user_name, R.id.btn_my_collection, R.id.btn_my_read, R.id.btn_mine_contribute, R.id.btn_app_set, R.id.btn_menu})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_user_picture:
@@ -101,6 +104,9 @@ public class MineFragment extends BaseFragment implements MineView{
                 //设置
                 toActivity(SettingsActivity.class);
                 break;
+            case R.id.btn_menu:
+                ((MainActivity) getActivity()).showMenu();
+                break;
         }
     }
 
@@ -117,6 +123,8 @@ public class MineFragment extends BaseFragment implements MineView{
             PicassoUtils.loadImageByurl(getActivity(),userImgUrl,ivUserPicture);
         }
         tvUserName.setText(name);
+        SPUtils.put(context, PreferenceContents.USER_NAME, name);
+        SPUtils.put(context, PreferenceContents.USER_IMG, userImgUrl);
 
     }
 }

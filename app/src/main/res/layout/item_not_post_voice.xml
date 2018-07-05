@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@color/black">
+    android:background="@color/white">
 
 
 
@@ -11,39 +11,62 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:gravity="center_vertical"
             android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp"
             android:layout_marginTop="15dp"
-            android:background="@drawable/shape_round_rectangle_c19">
+            android:background="@drawable/shape_round_rectangle_eb">
+
+
+            <CheckBox
+                android:id="@+id/cb_voice_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textSize="14sp"
+                android:textColor="@color/c_191919"
+                android:gravity="center_vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="10dp"
+                android:button="@null"
+                android:checked="true"
+                android:drawableLeft="@drawable/selector_play_pause_red"/>
+
             <TextView
                 android:id="@+id/tv_voice_title"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:textSize="14sp"
-                android:textColor="@color/white"
-                android:gravity="center_horizontal"
-                android:layout_marginLeft="20dp"
-                android:textStyle="bold"
-                android:paddingTop="3dp"
-                android:drawablePadding="5dp"
-                android:drawableLeft="@mipmap/btn_play"
-                android:text="摘自《牧羊少年奇幻之旅》"/>
+                android:textColor="@color/c_191919"
+                android:layout_toRightOf="@id/cb_voice_title"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:fontFamily="@font/songti"/>
 
             <TextView
-                android:id="@+id/tv_voice_length"
+                android:id="@+id/tv_voice_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
-                android:textColor="@color/c_4c4c4c"
-                android:gravity="center_horizontal"
+                android:textColor="@color/c_8c8c8c"
+                android:gravity="center"
+                android:layout_toLeftOf="@+id/cb_voice_time"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="5dp"
+                android:fontFamily="@font/songti"
+                android:text="03:04"/>
+            <CheckBox
+                android:id="@+id/cb_voice_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginRight="10dp"
                 android:textStyle="bold"
                 android:drawablePadding="5dp"
-                android:paddingTop="3dp"
-                android:drawableRight="@mipmap/voice_icon_3"
-                android:layout_alignParentRight="true"
-                android:text="03:04"/>
+                android:layout_centerVertical="true"
+                android:button="@null"
+                android:clickable="false"
+                android:enabled="false"
+                android:drawableRight="@drawable/selector_voice_playing"
+                android:layout_alignParentRight="true"/>
+
 
         </RelativeLayout>
 
@@ -81,7 +104,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/c_191919"/>
+            android:background="@color/c_e6e6e6"/>
 
 
 </LinearLayout>

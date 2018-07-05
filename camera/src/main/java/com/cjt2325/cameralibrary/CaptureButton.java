@@ -2,6 +2,7 @@ package com.cjt2325.cameralibrary;
 
 import android.content.Context;
 import android.os.CountDownTimer;
+import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
 import com.cjt2325.cameralibrary.listener.CaptureListener;
@@ -25,7 +26,7 @@ import static com.cjt2325.cameralibrary.JCameraView.BUTTON_STATE_BOTH;
  * create at 2018/1/22 下午11:35
  * 方法说明：修改为CheckBox，之前为长按录制，松手停止，现在为点击开始录制，再点击停止
  */
-public class CaptureButton extends android.support.v7.widget.AppCompatCheckBox {
+public class CaptureButton extends CheckBox {
 
     public final static int VOICE = 1;
     public final static int VIDEO = 2;

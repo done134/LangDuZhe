@@ -22,7 +22,11 @@ public class SPUtils
      * @param object 
      */  
     public static void put(Context context, String key, Object object)  
-    {  
+    {
+
+        if (object == null) {
+            object = "";
+        }
   
         SharedPreferences sp = context.getSharedPreferences(FILE_NAME,  
                 Context.MODE_PRIVATE);  

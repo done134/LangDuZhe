@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <include layout="@layout/layout_common_title" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@mipmap/ic_launcher"/>
+
+            <TextView
+                android:id="@+id/tv_app_name_version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/c_191919"
+                android:textSize="15sp"
+                android:fontFamily="@font/gothic"
+                android:text="CCTV朗读者(1.0.0)"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textSize="14sp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:textColor="@color/c_8c8c8c"
+                android:lineSpacingExtra="5dp"
+                android:text="        央视创造传媒有限公司成立于2013年10月，公司为隶属于中国国际电视总公司的全资公司。
+公司目前以央视综合频道播出平台为依托，汇集了一批极富竞争力和创新能力的制作团队，他们有着丰富的电视节目研发创新经验，和国内一流的电视节目制作水平及宣传推广能力。公司担负着CCTV1重点项目《挑战不可能》、即兴喜剧节目《喜乐街》、《谢天谢地你来啦》、《博乐先生微逗秀》，《吉尼斯中国之夜》、《世界大力士中国争霸赛》、《他们创造奇迹》、《客从何处来》、法制栏目剧、纪实真人秀等节目的制作和播出，这些节目均取得了良好的收视效果和广泛的社会影响。"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="80dp"
+                android:textColor="@color/c_8c8c8c"
+                android:textSize="12sp"
+                android:fontFamily="@font/gothic"
+                android:gravity="center_horizontal"
+                android:layout_marginBottom="30dp"
+                android:text="Copyright© 2018\n央视创造传媒有限公司"/>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

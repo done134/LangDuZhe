@@ -7,11 +7,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cctv.langduzhe.R;
-import com.cctv.langduzhe.adapter.ContentPagerAdapter;
 import com.cctv.langduzhe.adapter.MineContributeAdapter;
 import com.cctv.langduzhe.base.BaseActivity;
 import com.cctv.langduzhe.base.BasePresenter;
-import com.cctv.langduzhe.base.BaseRecyclerViewAdapter;
 import com.cctv.langduzhe.contract.mine.MineContributePresenter;
 import com.cctv.langduzhe.contract.mine.MineContributeView;
 import com.cctv.langduzhe.data.entites.ContributeEntity;
@@ -65,6 +63,7 @@ public class MineContributeActivity extends BaseActivity implements MineContribu
     private void initView() {
         tvTitle.setText("我的投稿");
         btnImageRight.setVisibility(View.VISIBLE);
+        btnImageRight.setImageResource(R.mipmap.add_icon);
         rvContributeList.setLinearLayout();
         rvContributeList.setOnPullLoadMoreListener(this);
         contentPagerAdapter = new MineContributeAdapter();
@@ -113,6 +112,8 @@ public class MineContributeActivity extends BaseActivity implements MineContribu
     @Override
     public void setContributeList(ContributeEntity contributeEntity) {
         if (contributeEntity != null) {
+            tvNoData.setVisibility(View.GONE);
+            rvContributeList.setVisibility(View.VISIBLE);
             if (BasePresenter.RESULT_OK.equals(contributeEntity.getCode())) {
                 if (pageNum == 0) {
                     if (contributeEntity.getData() == null || contributeEntity.getData().size() == 0) {
@@ -132,7 +133,9 @@ public class MineContributeActivity extends BaseActivity implements MineContribu
                 showNodata();
             }
         } else {
-            showNodata();
+            if (pageNum == 0) {
+                showNodata();
+            }
         }
         rvContributeList.setPullLoadMoreCompleted();
     }

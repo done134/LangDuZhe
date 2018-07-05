@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black">
+    android:background="@color/white">
 
     <include layout="@layout/layout_common_title" />
 
@@ -17,8 +17,9 @@
         android:padding="10dp"
         android:hint="请输入反馈内容"
         android:gravity="top"
-        android:textColor="@color/white"
-        android:background="@drawable/shape_round_rectangle_c19"
+        android:fontFamily="@font/gothic"
+        android:textColor="@color/c_191919"
+        android:background="@drawable/shape_round_rectangle_eb"
         android:layout_margin="15dp"/>
 
 </LinearLayout>

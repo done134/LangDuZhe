@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="19dp"
             android:layout_marginLeft="60dp"
-            android:textColor="@color/c_4c4c4c"
+            android:textColor="@color/c_8c8c8c"
             android:textSize="14sp"
             android:textStyle="bold"
             android:text="系统消息"/>
@@ -53,8 +53,9 @@
             android:textSize="12sp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
+            android:visibility="gone"
             android:text="1分钟前"
             android:layout_marginTop="19dp"
-            android:textColor="@color/c_4c4c4c"/>
+            android:textColor="@color/c_c8c8c8"/>
     </RelativeLayout>
 </LinearLayout>

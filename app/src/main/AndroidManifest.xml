@@ -28,16 +28,15 @@
 
     <application
         android:name=".LangDuZheApplication"
-        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
             android:name=".feature.WelcomeActivity"
             android:exported="true"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme_Umeng_Push_Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -120,16 +119,14 @@
         <!-- 录制音频完成页面-->
         <activity
             android:name=".feature.read.RecordVoiceOverActivity"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait" />
 
 
         <!-- 输入评论页面-->
         <activity
             android:name=".feature.CommentActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation"
-            android:screenOrientation="portrait"
-            android:theme="@style/NoTitleDialogTheme"
-            android:windowSoftInputMode="stateAlwaysVisible|adjustPan" />
+            android:theme="@style/transparent_activity" />
 
         <!-- 意见反馈页面-->
         <activity
@@ -152,9 +149,32 @@
             android:name=".feature.articles.ArticleDetailActivity"
             android:screenOrientation="portrait" />
         <!--朗读文字页面-->
-        <activity android:name=".feature.read.ReadArticleActivity"
-            android:screenOrientation="portrait"  />
+        <activity
+            android:name=".feature.read.ReadArticleActivity"
+            android:screenOrientation="portrait" />
 
+        <!--搜索朗读亭页面-->
+        <activity
+            android:name=".feature.readPavilion.SearchReadActivity"
+            android:screenOrientation="portrait" />
+
+        <!--关于我们页面-->
+        <activity android:name=".feature.mine.AboutUsActivity"
+            android:screenOrientation="portrait" />
+
+        <!--微信登录分享页面-->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <!-- 必选-->
+        <meta-data
+            android:name="PGYER_APPID"
+            android:value="6755c6a5d8f3a4d91e2eeed175f3bbf2" />
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="com.cctv.langduzhe.fileprovider"
@@ -167,12 +187,12 @@
 
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="5aa783c8f29d9817a800013a">
-        </meta-data>
+            android:value="5aa783c8f29d9817a800013a"></meta-data>
         <meta-data
             android:name="UMENG_MESSAGE_SECRET"
-            android:value="53a9cdc82870b2cb70eccbe51899183a">
-        </meta-data>
+            android:value="53a9cdc82870b2cb70eccbe51899183a"></meta-data>
+
+        <service android:name=".umeng.PushIntentService" />
     </application>
 
 </manifest>

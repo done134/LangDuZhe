@@ -1,41 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:background="@color/black"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent">
 
     <include layout="@layout/layout_common_title" />
 
-    <ImageView
-        android:id="@+id/iv_article_cover"
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:id="@+id/tv_article_content"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textColor="@color/c_eaeaea"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"/>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_media_list"
+        android:layout_height="match_parent"
+        android:layout_marginTop="68dp"
+        android:layout_marginBottom="50dp">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="50dp"/>
-        <TextView
-            android:id="@+id/btn_add_read"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@color/c_191919"
-            android:textColor="@color/white"
-            android:textSize="17sp"
-            android:text="我要朗读"
-            android:gravity="center"
-            android:layout_alignParentBottom="true"/>
-    </RelativeLayout>
-</LinearLayout>
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/iv_article_cover"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"
+                android:layout_gravity="center"/>
+
+            <TextView
+                android:id="@+id/tv_article_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/songti"
+                android:textSize="16sp"
+                android:textColor="@color/c_8c8c8c"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"/>
+            <TextView
+                android:id="@+id/tv_article_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="@color/c_191919"
+                android:fontFamily="@font/gothic"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp"
+                android:lineSpacingExtra="8dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"/>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_media_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+    <TextView
+        android:id="@+id/btn_add_read"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/c_191919"
+        android:textColor="@color/white"
+        android:textSize="17sp"
+        android:text="我要朗读"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"/>
+
+</RelativeLayout>

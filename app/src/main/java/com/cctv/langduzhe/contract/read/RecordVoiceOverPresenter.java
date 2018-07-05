@@ -12,6 +12,8 @@ import com.cctv.langduzhe.data.http.ApiClient;
 import com.cctv.langduzhe.data.http.RxSchedulerUtils;
 import com.cctv.langduzhe.feature.MainActivity;
 
+import java.util.HashMap;
+
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import rx.Observable;
@@ -37,15 +39,16 @@ public class RecordVoiceOverPresenter implements BasePresenter {
     }
 
     /**
-    * @author 尹振东
-    * create at 2018/2/27 上午10:13
-    * 方法说明：保存到数据库
-    */
-    public void saveToSDCard(String path,String name) {
+     * @author 尹振东
+     * create at 2018/2/27 上午10:13
+     * 方法说明：保存到数据库
+     */
+    public void saveToSDCard(String path, String name, String mediaLength) {
         NotPostEntity notPostEntity = new NotPostEntity();
         notPostEntity.type = 0;
         notPostEntity.readFilepath = path;
         notPostEntity.readName = name;
+        notPostEntity.mediaLength = mediaLength;
         postDao.add(notPostEntity);
     }
 
@@ -60,8 +63,8 @@ public class RecordVoiceOverPresenter implements BasePresenter {
 
     }
 
-    public void saveVoice(String fileName,String title,int duration,long fileSize) {
-        String requestJson = handleRequestParams(fileName, title, duration, fileSize);
+    public void saveVoice(String fileName, String title, int duration, long fileSize, String articleId) {
+        String requestJson = handleRequestParams(fileName, title, duration, fileSize, articleId);
         RequestBody requestBody =
                 RequestBody.create(MediaType.parse("application/json; charset=utf-8"),
                         requestJson);
@@ -72,12 +75,13 @@ public class RecordVoiceOverPresenter implements BasePresenter {
         subscriptions.add(subscription);
     }
 
-    private String handleRequestParams(String fileName, String title,int duration,long fileSize) {
+    private String handleRequestParams(String fileName, String title, int duration, long fileSize, String articleId) {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("path",fileName);
-        jsonObject.put("title",title);
+        jsonObject.put("path", fileName);
+        jsonObject.put("articleId", articleId);
+        jsonObject.put("title", title);
         jsonObject.put("type", "audio");
-        jsonObject.put("duration",duration);
+        jsonObject.put("duration", duration);
         jsonObject.put("fileSize", fileSize);
         return jsonObject.toJSONString();
     }
@@ -85,9 +89,9 @@ public class RecordVoiceOverPresenter implements BasePresenter {
     private void handleUpResult(String s) {
         JSONObject result = JSONObject.parseObject(s);
         if (result.getString("code").equals(RESULT_OK)) {
-            ((BaseActivity)context).toActivity(MainActivity.class);
+            ((BaseActivity) context).toActivity(MainActivity.class);
             mineView.showToast("保存成功");
-        }else {
+        } else {
             mineView.showToast(result.getString("message"));
         }
     }

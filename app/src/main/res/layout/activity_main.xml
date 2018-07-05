@@ -4,77 +4,128 @@
     android:layout_height="match_parent"
     android:id="@+id/main_layout">
 
+    <RelativeLayout
+        android:id="@+id/main_title"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:paddingTop="20dp"
+        android:background="@color/c_191919">
 
+        <ImageButton
+            android:id="@+id/btn_menu"
+            android:layout_width="@dimen/title_bar_height"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:src="@mipmap/menu_icon" />
 
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="首页"
+            android:background="@color/c_191919"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:fontFamily="@font/songti"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/white"/>
+
+        <ImageButton
+            android:id="@+id/btn_search"
+            android:layout_width="@dimen/title_bar_height"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:layout_toLeftOf="@+id/btn_add_read"
+            android:src="@mipmap/title_search_icon" />
+
+        <ImageButton
+            android:id="@+id/btn_add_read"
+            android:layout_width="@dimen/title_bar_height"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/add_icon" />
+    </RelativeLayout>
     <FrameLayout
         android:id="@+id/frame_main_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/black"/>
-
-    <RadioGroup
-        android:id="@+id/rg_main_bottom"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingBottom="5dp"
-        android:paddingTop="7dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/c_98191919"
-        android:orientation="horizontal">
-
-
-        <android.support.v7.widget.AppCompatRadioButton
-            android:id="@+id/rb_home"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:button="@null"
-            android:drawableTop="@drawable/selector_main_tab_home"
-            android:checked="true"
-            android:textColor="@drawable/selector_main_tab_text"
-            android:gravity="center_horizontal"
-            android:text="首页"
-            android:drawablePadding="4dp"
-            android:layout_weight="1"/>
-        <android.support.v7.widget.AppCompatRadioButton
-            android:id="@+id/rb_read_pavilion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:button="@null"
-            android:textColor="@drawable/selector_main_tab_text"
-            android:gravity="center_horizontal"
-            android:drawableTop="@drawable/selector_main_tab_read_pavilion"
-            android:text="朗读亭"
-            android:drawablePadding="4dp"
-            android:layout_weight="1"/>
-
-        <android.support.v7.widget.AppCompatRadioButton
-            android:id="@+id/rb_message"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:button="@null"
-            android:drawableTop="@drawable/selector_main_tab_message"
-            android:text="文字"
-            android:drawablePadding="4dp"
-            android:textColor="@drawable/selector_main_tab_text"
-            android:gravity="center_horizontal"
-            android:layout_weight="1"/>
-        <android.support.v7.widget.AppCompatRadioButton
-            android:id="@+id/rb_mine"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:button="@null"
-            android:text="我的"
-            android:drawablePadding="4dp"
-            android:textColor="@drawable/selector_main_tab_text"
-            android:gravity="center_horizontal"
-            android:drawableTop="@drawable/selector_main_tab_mine"
-            android:layout_weight="1"/>
-    </RadioGroup>
-
+        android:background="@color/white"
+        android:layout_below="@+id/main_title"/>
 
 
     <FrameLayout
         android:id="@+id/fl_gaosi_bg"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
+
+    <LinearLayout
+        android:id="@+id/ll_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/half_transparent_90"
+        android:gravity="center_horizontal"
+        android:visibility="gone"
+        android:orientation="vertical">
+
+
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/main_menu_title_icon"
+            android:layout_marginTop="70dp"/>
+
+
+        <TextView
+            android:id="@+id/btn_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="35sp"
+            android:layout_marginTop="60dp"
+            android:fontFamily="@font/songti"
+            android:text="首&#8195;页"/>
+
+        <TextView
+            android:id="@+id/btn_read_pavilion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:fontFamily="@font/songti"
+            android:textSize="35sp"
+            android:layout_marginTop="30dp"
+            android:text="朗读亭"/>
+
+        <TextView
+            android:id="@+id/btn_theme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="35sp"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/songti"
+            android:text="文&#8195;字"/>
+
+        <TextView
+            android:id="@+id/btn_mine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textSize="35sp"
+            android:layout_marginTop="30dp"
+            android:fontFamily="@font/songti"
+            android:text="我&#8195;的"/>
+
+
+        <ImageView
+            android:id="@+id/btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:src="@mipmap/cancel_white_icon"/>
+
+
+    </LinearLayout>
 </RelativeLayout>

@@ -31,13 +31,14 @@ public class ArticleListPresenter implements BasePresenter {
         this.context = context;
         this.subscriptions = new CompositeSubscription();
     }
+
     /**
      * @author 尹振东
      * create at 2018/2/11 下午3:17
      * 方法说明：获取首页视频列表
      */
-    public void getArticles(int pageNum,String themeId) {
-        Observable<String> observable = ApiClient.apiService.getArticleList(pageNum,themeId);
+    public void getArticles(int pageNum, String themeId) {
+        Observable<String> observable = ApiClient.apiService.getArticleList(pageNum, themeId);
         Subscription subscription = observable
                 .compose(RxSchedulerUtils.normalSchedulersTransformer())
                 .subscribe(this::handleCode, throwable -> {
@@ -52,11 +53,11 @@ public class ArticleListPresenter implements BasePresenter {
      * create at 2018/2/11 下午2:48
      * 方法说明：处理请求验证码返回结果
      */
-    private void handleCode(String result){
+    private void handleCode(String result) {
         ArticlesEntity homeVideoEntity = JSON.parseObject(result, ArticlesEntity.class);
         if (homeVideoEntity != null && RESULT_OK.equals(homeVideoEntity.getCode())) {
             view.setArticleList(homeVideoEntity.getData());
-        }else {
+        } else {
             view.showToast("没有数据");
         }
     }

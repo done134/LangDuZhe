@@ -72,6 +72,8 @@ public class RecordVoiceOverActivity extends BaseActivity implements RecordVoice
 
     private boolean playEnd;
 
+    private String mediaLength;
+    private String articleId;
     private boolean seekBarTouch;
     private String voiceUrl;
     private RecordVoiceOverPresenter presenter;
@@ -86,6 +88,7 @@ public class RecordVoiceOverActivity extends BaseActivity implements RecordVoice
         //获取视频路径
         Bundle videoBundle = getIntent().getExtras();
         voiceUrl = videoBundle.getString("voice_url", "");
+        articleId = videoBundle.getString("articleId", "");
         initStatus();
     }
 
@@ -144,7 +147,7 @@ public class RecordVoiceOverActivity extends BaseActivity implements RecordVoice
                     showToast("请输入作品名称！");
                     return;
                 }
-                presenter.saveToSDCard(voiceUrl, name);
+                presenter.saveToSDCard(voiceUrl, name,mediaLength);
                 toActivity(MainActivity.class);
                 showToast("已保存在本地");
                 break;
@@ -154,8 +157,13 @@ public class RecordVoiceOverActivity extends BaseActivity implements RecordVoice
                     showToast("请输入作品名称！");
                     return;
                 }
-                postPresenter.postFile(PostPresenter.VOICE_TYPE, voiceUrl, isPortrait);
-                showProgress();
+                if (hasLogin()) {
+                    if (player != null && !player.isPause()) {
+                        player.setPause(true);
+                    }
+                    postPresenter.postFile(PostPresenter.VOICE_TYPE, voiceUrl, false);
+                    showProgress("发布中...");
+                }
                 break;
             case R.id.cb_play_pause:
                 playOrPause();
@@ -176,10 +184,10 @@ public class RecordVoiceOverActivity extends BaseActivity implements RecordVoice
 
         if (player.isPause()) {
             player.setPause(false);
-            seekBar.setEnabled(false);
+            seekBar.setEnabled(true);
         } else {
             player.setPause(true);
-            seekBar.setEnabled(true);
+            seekBar.setEnabled(false);
         }
     }
 
@@ -226,7 +234,8 @@ public class RecordVoiceOverActivity extends BaseActivity implements RecordVoice
             playEnd = false;
             seekBar.setMax((int) player.getDuration());
             seekBar.setEnabled(true);
-            tvTotalProgress.setText(DateConvertUtils.secToTime(player.getDuration()));
+            mediaLength = DateConvertUtils.secToTime(player.getDuration());
+            tvTotalProgress.setText(mediaLength);
         });
     }
 
@@ -276,6 +285,6 @@ public class RecordVoiceOverActivity extends BaseActivity implements RecordVoice
     @Override
     public void postSucceed(String fileName, int duration, long fileSize) {
         dismissProgress();
-        presenter.saveVoice(fileName, etVideoName.getText().toString().trim(), duration, fileSize);
+        presenter.saveVoice(fileName, etVideoName.getText().toString().trim(), duration, fileSize,articleId);
     }
 }

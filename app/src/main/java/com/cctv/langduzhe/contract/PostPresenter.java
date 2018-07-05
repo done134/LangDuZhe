@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.cctv.langduzhe.AppConstants;
 import com.cctv.langduzhe.base.BasePresenter;
 import com.cctv.langduzhe.data.http.ApiClient;
+import com.cctv.langduzhe.data.http.ApiConstants;
 import com.cctv.langduzhe.data.http.RxSchedulerUtils;
 import com.cctv.langduzhe.util.Log;
 import com.qiniu.android.common.FixedZone;
@@ -21,7 +22,7 @@ import rx.subscriptions.CompositeSubscription;
 /**
  * Created by gentleyin
  * on 2018/2/28.
- * 说明：
+ * 说明：上传到七牛Presenter
  */
 public class PostPresenter implements BasePresenter {
 
@@ -68,6 +69,29 @@ public class PostPresenter implements BasePresenter {
         subscriptions.add(subscription);
     }
 
+    /**
+     * @author 尹振东
+     * create at 2018/2/11 下午3:17
+     * 方法说明：获取验证码
+     */
+    public void postFile(String bucket, String filePath) {
+        if (uploadManager == null) {
+            initUpLoadManager();
+        }
+        this.filePath = filePath;
+        this.bucket = bucket;
+        if (TextUtils.isEmpty(filePath)) {
+            collectView.showToast("文件路径为空");
+            return;
+        }
+        fileName = filePath.substring(filePath.lastIndexOf("/") + 1, filePath.length());
+        Observable<String> observable = ApiClient.apiService.getQiNiuToken(bucket,fileName);
+        Subscription subscription = observable
+                .compose(RxSchedulerUtils.normalSchedulersTransformer())
+                .subscribe(this::handleResult, throwable -> Toast.makeText(context, throwable.getMessage(), Toast.LENGTH_LONG).show());
+        subscriptions.add(subscription);
+    }
+
     private void initUpLoadManager() {
         Configuration config = new Configuration.Builder()
                 .chunkSize(512 * 1024)        // 分片上传时，每片的大小。 默认256K
@@ -98,7 +122,7 @@ public class PostPresenter implements BasePresenter {
                     if(info.isOK()) {
                         Log.i("qiniu", "Upload Success");
                         if (bucket.equals(IMAGE_TYPE)) {
-                            collectView.postSucceed(AppConstants.QI_NIU_IMAGE_DOMAIN+fileName,0,0);
+                            collectView.postSucceed(ApiConstants.QI_NIU_IMAGE_DOMAIN+fileName,0,0);
                         }else {
                             org.json.JSONObject avinfoObj = response.optJSONObject("avinfo");
                             org.json.JSONObject formatObj = avinfoObj.optJSONObject("format");

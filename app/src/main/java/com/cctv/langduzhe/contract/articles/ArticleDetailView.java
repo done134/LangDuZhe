@@ -12,7 +12,6 @@ import java.util.List;
  * 说明：
  */
 public interface ArticleDetailView extends BaseView {
-    void setCommentList(List<CommandEntity.DataBean> data);
 
     void setMediaData(List<HomeVideoEntity.DataBean> data);
 

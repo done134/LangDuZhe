@@ -29,6 +29,7 @@ public class DialogCommandAdapter extends BaseRecyclerViewAdapter<DialogCommandA
 
     private List<CommandEntity.DataBean> list;
     private Context context;
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (context == null) {
@@ -44,7 +45,8 @@ public class DialogCommandAdapter extends BaseRecyclerViewAdapter<DialogCommandA
         CommandEntity.DataBean dataBean = list.get(position);
         holder.tvCommandContent.setText(dataBean.getContent());
         holder.tvCommandName.setText(dataBean.getReaderName());
-        PicassoUtils.loadImageByurl(context,dataBean.getReaderImg(),holder.ivCommandHead);
+        holder.tvCommandTime.setText(dataBean.getCreateDate());
+        PicassoUtils.loadImageByurl(context, dataBean.getReaderImg(), holder.ivCommandHead);
     }
 
     @Override
@@ -63,6 +65,13 @@ public class DialogCommandAdapter extends BaseRecyclerViewAdapter<DialogCommandA
             this.list = new ArrayList<>();
         }
         this.list.addAll(list);
+        notifyDataSetChanged();
+    }
+    public void addNewData(CommandEntity.DataBean newComment) {
+        if (this.list == null) {
+            this.list = new ArrayList<>();
+        }
+        this.list.add(0,newComment);
         notifyDataSetChanged();
     }
 

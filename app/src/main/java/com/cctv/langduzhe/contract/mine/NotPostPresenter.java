@@ -11,10 +11,13 @@ import com.cctv.langduzhe.data.db.NotPostDao;
 import com.cctv.langduzhe.data.entites.NotPostEntity;
 import com.cctv.langduzhe.data.http.ApiClient;
 import com.cctv.langduzhe.data.http.RxSchedulerUtils;
+import com.cctv.langduzhe.eventMsg.NewPosteventMsg;
 import com.cctv.langduzhe.util.ToastUtils;
 import com.cjt2325.cameralibrary.util.FileUtil;
 import com.qiniu.android.utils.AsyncRun;
 
+
+import org.greenrobot.eventbus.EventBus;
 
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
@@ -70,11 +73,13 @@ public class NotPostPresenter implements BasePresenter {
     public void delete(NotPostEntity postEntity) {
         postDao.deleteById(postEntity.id);
         FileUtil.deleteFile(postEntity.readFilepath);
+        EventBus.getDefault().post(new NewPosteventMsg());
         loadReads();
     }
 
     //上传
     public void post(String fileName, NotPostEntity entity, int duration, long fileSize) {
+        postedEntity = entity;
         String requestJson = handleRequestParams(fileName, entity,duration,fileSize);
         RequestBody requestBody =
                 RequestBody.create(MediaType.parse("application/json; charset=utf-8"),

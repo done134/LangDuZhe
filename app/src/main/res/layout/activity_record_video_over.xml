@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black">
+    android:background="@color/white">
     
     <include layout="@layout/layout_common_title"/>
     
@@ -20,28 +20,30 @@
         android:gravity="center_vertical"
         android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
-        android:background="@drawable/shape_round_rectangle_c19">
+        android:background="@drawable/shape_round_rectangle_eb">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:textSize="14sp"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             android:gravity="center"
             android:layout_marginLeft="10dp"
+            android:fontFamily="@font/songti"
             android:paddingTop="2dp"
-            android:textStyle="bold"
             android:text="摘自："/>
 
         <EditText
             android:id="@+id/et_video_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textColorHint="@color/c_4c4c4c"
-            android:hint="请输入标题"
+            android:textColorHint="@color/c_c8c8c8"
+            android:hint="请输入标题（30字以内）"
             android:paddingLeft="10dp"
+            android:fontFamily="@font/songti"
             android:background="@color/transparent"
-            android:textStyle="bold"
-            android:textColor="@color/white"/>
+            android:maxLength="30"
+            android:textSize="16sp"
+            android:textColor="@color/c_191919"/>
 
     </LinearLayout>
 
@@ -61,7 +63,9 @@
             android:background="@drawable/shape_red_border_round_corner"
             android:text="@string/save_the_local"
             android:textColor="@color/c_df2424"
+            android:fontFamily="@font/songti"
             android:textSize="15sp"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_marginRight="40dp"
             android:textStyle="bold" />
 
@@ -72,6 +76,8 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="100dp"
             android:background="@drawable/shape_round_tangle_ff2b2b"
+            android:fontFamily="@font/songti"
+            style="?android:attr/borderlessButtonStyle"
             android:text="@string/post"
             android:textColor="@color/white"
             android:textSize="15sp"

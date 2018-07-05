@@ -212,14 +212,14 @@ public class EditUserInfoActivity extends BaseActivity implements View.OnClickLi
         if (resultCode == RESULT_OK) {
             if (requestCode == REQUEST_CODE_CHOOSE) {
                 List<Uri> photoUri = Matisse.obtainResult(data);
-                postPresenter.postFile(PostPresenter.IMAGE_TYPE, FileUtil.getRealPathFromUri(this, photoUri.get(0)), isPortrait);
+                postPresenter.postFile(PostPresenter.IMAGE_TYPE, FileUtil.getRealPathFromUri(this, photoUri.get(0)));
 
             } else if (requestCode == REQUEST_CODE_CAPTURE) {
                 String photoPath = mMediaStoreCompat.getCurrentPhotoPath();
-                postPresenter.postFile(PostPresenter.IMAGE_TYPE, photoPath, isPortrait);
+                postPresenter.postFile(PostPresenter.IMAGE_TYPE, photoPath);
 
             }
-            showProgress();
+            showProgress("正在上传头像");
         }
     }
 

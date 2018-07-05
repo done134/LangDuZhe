@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">朗读者</string>
+    <string name="app_name">央视朗读者</string>
     <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->
@@ -91,4 +91,5 @@
     <string name="record_video_tip">可录5分钟，建议手机横着录像</string>
     <string name="record_voice_tip">可录5分钟</string>
     <string name="tip_load_tip">正在加载数据...</string>
+
 </resources>

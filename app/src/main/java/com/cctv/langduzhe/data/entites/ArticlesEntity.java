@@ -37,6 +37,7 @@ public class ArticlesEntity {
         private String id;
         private String shortContent;
         private String title;
+        private String img;
 
         public String getContent() {
             return content;
@@ -76,6 +77,14 @@ public class ArticlesEntity {
 
         public void setTitle(String title) {
             this.title = title;
+        }
+
+        public String getImg() {
+            return img;
+        }
+
+        public void setImg(String img) {
+            this.img = img;
         }
     }
 }

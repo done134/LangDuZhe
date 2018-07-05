@@ -93,8 +93,11 @@ public class ReadOverActivity extends BaseActivity implements RecordVideoOverVie
                     showToast("请输入作品名称！");
                     return;
                 }
-                postPresenter.postFile(PostPresenter.VIDEO_TYPE, videoPath, isPortrait);
-                showProgress();
+                if (hasLogin()) {
+                    postPresenter.postFile(PostPresenter.VIDEO_TYPE, videoPath, isPortrait);
+                    JZVideoPlayer.releaseAllVideos();
+                    showProgress("发布中...");
+                }
                 break;
         }
     }

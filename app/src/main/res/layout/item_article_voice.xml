@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="end|center_vertical"
+    android:orientation="horizontal"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+
+            <com.cctv.langduzhe.view.widget.CircleImageView
+                android:id="@+id/iv_service_people_icon"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginBottom="10dp"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/message_service_head_icon"
+                android:layout_marginLeft="10dp"/>
+
+
+            <TextView
+                android:id="@+id/tv_uploader_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="45dp"
+                android:fontFamily="@font/songti"
+                android:textColor="@color/c_4c4c4c"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_centerVertical="true"
+                android:text="心弦"/>
+
+            <TextView
+                android:id="@+id/tv_upload_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dp"
+                android:fontFamily="@font/songti"
+                android:layout_centerVertical="true"
+                android:text="1分钟前"
+                android:textColor="@color/c_c8c8c8"/>
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/shape_round_rectangle_eb">
+            <CheckBox
+                android:id="@+id/tv_voice_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_centerVertical="true"
+                android:paddingLeft="20dp"
+                android:fontFamily="@font/songti"
+                android:paddingRight="10dp"
+                android:textStyle="bold"
+                android:button="@null"
+                android:drawablePadding="5dp"
+                android:checked="true"
+                android:drawableLeft="@drawable/selector_play_pause_red"/>
+
+
+            <TextView
+                android:id="@+id/tv_voice_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="@color/c_8c8c8c"
+                android:layout_marginLeft="5dp"
+                android:gravity="center"
+                android:layout_toLeftOf="@+id/cb_voice_time"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/songti"
+                android:text="03:04"/>
+            <CheckBox
+                android:id="@+id/cb_voice_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:textStyle="bold"
+                android:layout_marginLeft="5dp"
+                android:drawablePadding="5dp"
+                android:layout_centerVertical="true"
+                android:button="@null"
+                android:clickable="false"
+                android:enabled="false"
+                android:drawableRight="@drawable/selector_voice_playing"
+                android:layout_alignParentRight="true"/>
+
+            <SeekBar
+                android:id="@+id/seekbar_voice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:indeterminateOnly="false"
+                android:thumb="@mipmap/progress_point_icon"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/tv_voice_title"
+                android:layout_toLeftOf="@+id/tv_voice_time"
+                android:maxHeight="4dp"
+                android:paddingStart="3dp"
+                android:paddingEnd="5dp"
+                android:progressDrawable="@drawable/seekbar_c_ae" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+            <TextView
+                android:id="@+id/tv_video_play_count"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:text="286"
+                android:textSize="12sp"
+                android:drawablePadding="4dp"
+                android:fontFamily="@font/songti"
+                android:textColor="@color/c_c8c8c8"
+                android:includeFontPadding="false"
+                android:maxLines="1"
+                android:gravity="center"
+                android:drawableLeft="@mipmap/play_count_icon_gray"/>
+
+
+            <com.cctv.langduzhe.view.widget.ClickNotToggleCheckBox
+                android:id="@+id/tv_thumbs_count"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="20dp"
+                android:text="286"
+                android:textSize="12sp"
+                android:includeFontPadding="false"
+                android:drawablePadding="4dp"
+                app:textColor="@color/c_191919"
+                android:layout_alignParentRight="true"
+                android:fontFamily="@font/songti"
+                android:button="@null"
+                app:drawable="@drawable/selector_thumb"/>
+        </RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/c_ecebeb"/>
+    </LinearLayout>
+
+    <android.support.v7.widget.AppCompatCheckBox
+        android:id="@+id/cb_select_this_read"
+        android:layout_width="30dp"
+        android:checked="true"
+        android:paddingTop="25dp"
+        android:layout_marginLeft="5dp"
+        android:button="@drawable/selector_cb_edit_collection"
+        android:visibility="gone"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

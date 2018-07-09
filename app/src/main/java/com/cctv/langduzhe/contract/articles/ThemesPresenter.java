@@ -35,8 +35,8 @@ public class ThemesPresenter implements BasePresenter {
      * create at 2018/2/11 下午3:17
      * 方法说明：获取首页视频列表
      */
-    public void getArticles(int pageNum) {
-        Observable<String> observable = ApiClient.apiService.getThemeList(pageNum);
+    public void getArticles(int pageNum, int sortNum) {
+        Observable<String> observable = ApiClient.apiService.getThemeList(pageNum,sortNum);
         Subscription subscription = observable
                 .compose(RxSchedulerUtils.normalSchedulersTransformer())
                 .subscribe(this::handleCode, throwable -> {
@@ -62,8 +62,7 @@ public class ThemesPresenter implements BasePresenter {
     }
 
     @Override
-    public void subscribe() {
-        getArticles(0);
+    public void subscribe(){
     }
 
     @Override

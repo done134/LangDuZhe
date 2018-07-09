@@ -17,12 +17,8 @@ import com.cctv.langduzhe.base.BaseRecyclerViewAdapter;
 import com.cctv.langduzhe.contract.articles.ThemesPresenter;
 import com.cctv.langduzhe.contract.articles.ThemesView;
 import com.cctv.langduzhe.data.entites.ThemeEntity;
-import com.cctv.langduzhe.eventMsg.CollectEvent;
 import com.cctv.langduzhe.util.ToastUtils;
 import com.wuxiaolong.pullloadmorerecyclerview.PullLoadMoreRecyclerView;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
 
 import java.util.List;
 
@@ -44,10 +40,22 @@ public class ThemesFragment extends BaseFragment implements PullLoadMoreRecycler
 
     private int pageNum;
     private View mView;
+    private int sortNum;
     private ThemesPresenter presenter;
 
     private ThemesAdapter articlesAdapter;
 
+
+    @Override
+    public void setArguments(@Nullable Bundle args) {
+        super.setArguments(args);
+        if (args == null) {
+            sortNum = 1;
+        } else {
+            sortNum = args.getInt("sortNum");
+        }
+
+    }
 
     @Nullable
     @Override
@@ -106,19 +114,19 @@ public class ThemesFragment extends BaseFragment implements PullLoadMoreRecycler
 
     @Override
     public void requestData() {
-        presenter.subscribe();
+        onRefresh();
     }
 
     @Override
     public void onRefresh() {
         pageNum = 0;
-        presenter.getArticles(pageNum);
+        presenter.getArticles(pageNum, sortNum);
     }
 
     @Override
     public void onLoadMore() {
         pageNum = pageNum + 1;
-        presenter.getArticles(pageNum);
+        presenter.getArticles(pageNum, sortNum);
     }
 
     @Override

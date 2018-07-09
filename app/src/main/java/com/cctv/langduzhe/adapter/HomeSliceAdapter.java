@@ -16,11 +16,14 @@ import com.cctv.langduzhe.data.entites.HomeVideoEntity;
 import com.cctv.langduzhe.data.entites.VideoInfoEntity;
 import com.cctv.langduzhe.util.CommonUtil;
 import com.cctv.langduzhe.util.DateConvertUtils;
+import com.cctv.langduzhe.util.IntenetUtil;
 import com.cctv.langduzhe.util.picasco.PicassoUtils;
 import com.cctv.langduzhe.view.widget.ClickNotToggleCheckBox;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import butterknife.BindView;
@@ -38,8 +41,8 @@ public class HomeSliceAdapter extends BaseRecyclerViewAdapter {
     private List<HomeVideoEntity.DataBean> list;
     private HomeVideoEntity.DataBean videoInfo;
     private Context context;
-
     private boolean firstEnter = true;
+
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -58,21 +61,35 @@ public class HomeSliceAdapter extends BaseRecyclerViewAdapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof HeaderHolder) {
-            ((HeaderHolder) holder).videoView.setUp(videoInfo.getPath(), JZVideoPlayerStandard.SCREEN_WINDOW_LIST, "");
-            ((HeaderHolder) holder).tvCommentCount.setText(String.valueOf(videoInfo.getCommentSum()));
-            ((HeaderHolder) holder).tvThumbsCount.setText(String.valueOf(videoInfo.getLikeSum()));
-            ((HeaderHolder) holder).tvVideoPlayCount.setText(String.valueOf(videoInfo.getWatchSum()));
-            ((HeaderHolder) holder).tvThumbsCount.setChecked(videoInfo.getIsLike() == 1);
-            PicassoUtils.loadImageByurlCenter(context, videoInfo.getImg(), ((HeaderHolder) holder).videoView.thumbImageView);
+
             if (firstEnter) {
-                JZVideoPlayerStandard.startFullscreen(context, JZVideoPlayerStandard.class, videoInfo.getPath());
-                ((HeaderHolder) holder).videoView.startVideo();
+
+                ((HeaderHolder) holder).tvCommentCount.setText(String.valueOf(videoInfo.getCommentSum()));
+                ((HeaderHolder) holder).tvThumbsCount.setText(String.valueOf(videoInfo.getLikeSum()));
+                ((HeaderHolder) holder).tvVideoPlayCount.setText(String.valueOf(videoInfo.getWatchSum()));
+                ((HeaderHolder) holder).tvThumbsCount.setChecked(videoInfo.getIsLike() == 1);
+
+                PicassoUtils.loadImageByurlCenter(context, videoInfo.getImg(), ((HeaderHolder) holder).videoView.thumbImageView);
+                LinkedHashMap map = new LinkedHashMap();
+                map.put("高清", videoInfo.getPath() + "?avvod/m3u8/s/1920x1080/vb/8500k/autosave/1");
+                map.put("标清", videoInfo.getPath() + "?avvod/m3u8/s/1280x720/vb/3500k/autosave/1");
+                Object[] objects = new Object[3];
+                objects[0] = map;
+                objects[1] = false;//looping
+                objects[2] = new HashMap<>();
+                ((HashMap) objects[2]).put("key", "value");//header
+                if (IntenetUtil.getNetworkState(context) == IntenetUtil.NETWORN_WIFI) {
+                    ((HeaderHolder) holder).videoView.setUp(objects, 0, JZVideoPlayerStandard.SCREEN_WINDOW_LIST, videoInfo.getTitle());
+                    ((HeaderHolder) holder).videoView.startFullscreen(context, JZVideoPlayerStandard.class, objects, 0, "");
+                } else {
+                    ((HeaderHolder) holder).videoView.setUp(objects, 1, JZVideoPlayerStandard.SCREEN_WINDOW_LIST, videoInfo.getTitle());
+                    ((HeaderHolder) holder).videoView.startFullscreen(context, JZVideoPlayerStandard.class, objects, 1, "");
+                }
+                if (isPause) {
+                    ((HeaderHolder) holder).videoView.release();
+                }
                 firstEnter = false;
             }
-            if (isPause) {
-                ((HeaderHolder) holder).videoView.release();
-            }
-
         } else if (holder instanceof ViewHolder) {
             HomeVideoEntity.DataBean video = list.get(position);
             ((ViewHolder) holder).tvSliceName.setText(video.getTitle());

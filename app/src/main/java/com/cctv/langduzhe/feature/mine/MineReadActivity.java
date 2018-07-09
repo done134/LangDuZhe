@@ -1,6 +1,9 @@
 package com.cctv.langduzhe.feature.mine;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageButton;
@@ -64,7 +67,7 @@ public class MineReadActivity extends BaseActivity {
         fragmentList = new ArrayList<>();
         fragmentList.add(postedFragment);
         fragmentList.add(notPostFragment);
-        vpMyRead.setAdapter(new ContentPagerAdapter(getSupportFragmentManager(),fragmentList));
+        vpMyRead.setAdapter(new PageAdapter(getSupportFragmentManager()));
         vpMyRead.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -98,5 +101,23 @@ public class MineReadActivity extends BaseActivity {
     @Override
     public void setPresenter() {
 
+    }
+
+    class PageAdapter extends FragmentPagerAdapter {
+
+        public PageAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+
+            return fragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return fragmentList.size();
+        }
     }
 }

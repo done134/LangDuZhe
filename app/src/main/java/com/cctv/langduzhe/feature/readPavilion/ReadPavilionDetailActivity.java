@@ -1,6 +1,7 @@
 package com.cctv.langduzhe.feature.readPavilion;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -99,6 +100,8 @@ public class ReadPavilionDetailActivity extends BaseActivity implements PullLoad
         }
         tvTitle.setText(videoEntity.getTitle());
         cbCollection.setChecked(videoEntity.getIsCollect()==1);
+        JZVideoPlayer.FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+        JZVideoPlayer.NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
         initData();
         cbCollection.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (hasLogin()) {

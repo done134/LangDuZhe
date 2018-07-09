@@ -1,6 +1,7 @@
 package com.cctv.langduzhe.feature.home;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -87,6 +88,8 @@ public class HomeVideoDetailActivity extends BaseActivity implements HomeDetailV
         setContentView(R.layout.activity_home_detail);
         ButterKnife.bind(this);
         getIntentData();
+        JZVideoPlayer.FULLSCREEN_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE;
+        JZVideoPlayer.NORMAL_ORIENTATION = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT;
         initData();
         setListener();
         presenter.addWatchSum(videoEntity.getId());

@@ -9,10 +9,7 @@ import com.cctv.langduzhe.data.entites.HomeVideoEntity;
 import com.cctv.langduzhe.data.http.ApiClient;
 import com.cctv.langduzhe.data.http.RxSchedulerUtils;
 import com.cctv.langduzhe.util.JSON;
-import com.cjt2325.cameralibrary.util.LogUtil;
-
-import java.util.HashMap;
-import java.util.Map;
+import com.cctv.langduzhe.util.Log;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -37,15 +34,16 @@ public class HomePresenter implements BasePresenter {
         this.context = context;
         this.subscriptions = new CompositeSubscription();
     }
+
     /**
      * @author 尹振东
      * create at 2018/2/11 下午3:17
      * 方法说明：获取首页视频列表
      */
-    public void getMediaList(int pageNum) {
+    public void getMediaList(int pageNum, String season) {
         RequestBody requestBody =
                 RequestBody.create(MediaType.parse("application/json; charset=utf-8"),
-                        handleRequestParams(pageNum));
+                        handleRequestParams(pageNum, season));
         Observable<String> observable = ApiClient.apiService.getMediaList(requestBody);
         Subscription subscription = observable
                 .compose(RxSchedulerUtils.normalSchedulersTransformer())
@@ -59,27 +57,28 @@ public class HomePresenter implements BasePresenter {
     /**
      * @author 尹振东
      * create at 2018/2/11 下午2:48
-     * 方法说明：处理请求验证码返回结果
+     * 方法说明：处理返回结果
      */
-    private void handleCode(String result){
+    private void handleCode(String result) {
         HomeVideoEntity homeVideoEntity = JSON.parseObject(result, HomeVideoEntity.class);
         if (homeVideoEntity != null && RESULT_OK.equals(homeVideoEntity.getCode())) {
             homeView.setHomeMedias(homeVideoEntity.getData());
-        }else {
+        } else {
             homeView.showToast("没有数据");
         }
     }
 
-    private String handleRequestParams(int pageNum) {
+    private String handleRequestParams(int pageNum, String seasonId) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("pageNum", pageNum);
         jsonObject.put("pageSize", 10);
-        jsonObject.put("readerType", "system");
+        jsonObject.put("seasonId", seasonId);
         return jsonObject.toJSONString();
     }
+
+
     @Override
     public void subscribe() {
-        getMediaList(0);
     }
 
     @Override

@@ -161,7 +161,7 @@ public interface ApiService {
      * 方法说明：查询媒体包列表
      */
     @GET("api/optTok/package")
-    Observable<String> getMediaPackageList(@QueryMap Map<String, Object> options);
+    Observable<String> getMediaPackageList(@Query("type") String type,@Query("pageNum") int pageNum, @Query("pageSize") int pageSize);
 
     /**
      * @author 尹振东
@@ -240,7 +240,7 @@ public interface ApiService {
      * 方法说明：获取文字主题列表
      */
     @GET("api/free/themes")
-    Observable<String> getThemeList(@Query("pageNum") int pageNum);
+    Observable<String> getThemeList(@Query("pageNum") int pageNum, @Query("seasonNum")  int seasonId);
 
 
     /**

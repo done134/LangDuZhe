@@ -28,8 +28,8 @@ import com.cctv.langduzhe.base.BaseFragment;
 import com.cctv.langduzhe.contract.MainPresenter;
 import com.cctv.langduzhe.contract.MainView;
 import com.cctv.langduzhe.eventMsg.QuitEvent;
-import com.cctv.langduzhe.feature.articles.ThemesFragment;
-import com.cctv.langduzhe.feature.home.HomeFragment;
+import com.cctv.langduzhe.feature.articles.ArticleFrame;
+import com.cctv.langduzhe.feature.home.HomeFrame;
 import com.cctv.langduzhe.feature.mine.MineFragment;
 import com.cctv.langduzhe.feature.readPavilion.ReadPavilionListFragment;
 import com.cctv.langduzhe.util.AnimationUtil;
@@ -239,11 +239,11 @@ public class MainActivity extends BaseActivity implements MainView {
         BaseFragment fragment = (BaseFragment) mFragmentManager.findFragmentByTag(fragTAG);
         if (fragment == null) {
             if (FRAG_HOME.equals(fragTAG)) {
-                fragment = new HomeFragment();
+                fragment = new HomeFrame();
             } else if (FRAG_READ_PAVILION.equals(fragTAG)) {
                 fragment = new ReadPavilionListFragment();
             } else if (FRAG_MESSAGE.equals(fragTAG)) {
-                fragment = new ThemesFragment();
+                fragment = new ArticleFrame();
             } else if (FRAG_MINE.equals(fragTAG)) {
                 fragment = new MineFragment();
             }

@@ -36,7 +36,7 @@ import butterknife.Unbinder;
  * on 2018/1/15.
  * 说明：首页fragment
  */
-public class HomeFragment extends BaseFragment implements
+public class HomeListFragment extends BaseFragment implements
         PullLoadMoreRecyclerView.PullLoadMoreListener, BaseRecyclerViewAdapter.OnItemClickListener, HomeView, LikeView {
     @BindView(R.id.rv_home_list)
     PullLoadMoreRecyclerView rvHomeList;
@@ -45,6 +45,7 @@ public class HomeFragment extends BaseFragment implements
     Unbinder unbinder;
 
     private int pageNum;
+    private String season;
     private View mView;
     private HomePresenter presenter;
     private LikePresenter likePresenter;
@@ -52,6 +53,17 @@ public class HomeFragment extends BaseFragment implements
     private HomeVideoAdapter homeVideoAdapter;
     private int optPostion;
 
+
+    @Override
+    public void setArguments(@Nullable Bundle args) {
+        super.setArguments(args);
+        if (args == null) {
+            season = null;
+        } else {
+            season = args.getString("season_id");
+        }
+
+    }
 
     @Nullable
     @Override
@@ -95,19 +107,19 @@ public class HomeFragment extends BaseFragment implements
 
     @Override
     public void requestData() {
-        presenter.subscribe();
+        onRefresh();
     }
 
     @Override
     public void onRefresh() {
         pageNum = 0;
-        presenter.getMediaList(pageNum);
+        presenter.getMediaList(pageNum,season);
     }
 
     @Override
     public void onLoadMore() {
         pageNum = pageNum + 1;
-        presenter.getMediaList(pageNum);
+        presenter.getMediaList(pageNum,season);
     }
 
     @Override
@@ -150,23 +162,25 @@ public class HomeFragment extends BaseFragment implements
             if (pageNum == 0) {
                 showNodata(true);
                 ToastUtils.showLong(getActivity(), "没有数据");
-            }else {
+            } else {
                 ToastUtils.showLong(getActivity(), "数据已全部加载");
             }
         }
         rvHomeList.setPullLoadMoreCompleted();
     }
+
     private void showNodata(boolean noData) {
-        tvNoData.setVisibility(noData?View.VISIBLE:View.GONE);
-        rvHomeList.setVisibility(noData?View.GONE:View.VISIBLE);
+        tvNoData.setVisibility(noData ? View.VISIBLE : View.GONE);
+        rvHomeList.setVisibility(noData ? View.GONE : View.VISIBLE);
     }
+
     @Override
     public void likeResult(boolean isLike) {
         int lilkeSum = homeVideoAdapter.getItemInPosition(optPostion).getLikeSum();
         if (isLike) {
-            homeVideoAdapter.getItemInPosition(optPostion).setLikeSum(lilkeSum+1);
+            homeVideoAdapter.getItemInPosition(optPostion).setLikeSum(lilkeSum + 1);
         } else {
-            homeVideoAdapter.getItemInPosition(optPostion).setLikeSum(lilkeSum-1);
+            homeVideoAdapter.getItemInPosition(optPostion).setLikeSum(lilkeSum - 1);
         }
         homeVideoAdapter.getItemInPosition(optPostion).setIsLike(isLike ? 1 : 0);
         homeVideoAdapter.notifyItemChanged(optPostion);

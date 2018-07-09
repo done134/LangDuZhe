@@ -1,48 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent">
 
 
-
-    <RadioGroup
-        android:id="@+id/rg_read_pavilion_type"
+    <LinearLayout
+        android:id="@+id/ll_content"
         android:layout_width="match_parent"
-        android:layout_height="68dp"
-        android:background="@color/c_191919"
-        android:paddingTop="20dp"
-        android:orientation="horizontal"
-        android:gravity="center">
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:orientation="vertical">
 
-        <RadioButton
-            android:id="@+id/rb_read_pavilion_newest"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textSize="17sp"
-            android:text="最新"
-            android:textStyle="bold"
-            android:checked="true"
-            android:paddingRight="20dp"
-            android:paddingLeft="20dp"
-            android:textColor="@drawable/selector_main_tab_text"
-            android:button="@null"/>
-        <RadioButton
-            android:id="@+id/rb_read_pavilion_hottest"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingRight="20dp"
-            android:paddingLeft="20dp"
-            android:textSize="17sp"
-            android:text="最热"
-            android:textStyle="bold"
-            android:textColor="@drawable/selector_main_tab_text"
-            android:button="@null"/>
-    </RadioGroup>
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tablayout_home_season"
+            android:layout_width="match_parent"
+            app:tabIndicatorColor="@color/transparent"
+            app:tabMode="fixed"
+            android:background="?android:attr/selectableItemBackground"
+            app:tabGravity="fill"
+            app:tabMaxWidth="0dp"
+            app:tabIndicatorHeight="0dp"
+            app:tabPaddingBottom="-1dp"
+            app:tabPaddingEnd="-1dp"
+            app:tabPaddingStart="-1dp"
+            app:tabPaddingTop="-1dp"
+            android:layout_height="50dp">
+
+        </android.support.design.widget.TabLayout>
 
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/vp_read_pavilion"
+        <android.support.v4.view.ViewPager
+            android:id="@+id/vp_home_video"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+
+
+    <ProgressBar
+        android:id="@+id/pre_progress"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:indeterminateTint="@color/c_df2424"
+        android:layout_centerInParent="true"/>
+    <TextView
+        android:id="@+id/tv_no_data"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="400dp"
+        android:gravity="center"
+        android:text="暂无数据!\n点击重试"
+        android:textColor="@color/c_c8c8c8"
+        android:textSize="15sp"
+        android:visibility="gone" />
 
-</LinearLayout>
+
+</RelativeLayout>

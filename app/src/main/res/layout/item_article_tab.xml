@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.AppCompatRadioButton xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rb_home_season_1"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:height="50dp"
+    android:button="@null"
+    android:paddingLeft="0dp"
+    android:background="@color/c_191919"
+    android:drawableBottom="@drawable/selector_home_cursor"
+    android:fontFamily="@font/songti"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:clickable="false"
+    android:text="第一季"
+    android:textColor="@drawable/selector_main_tab_text"
+    android:textSize="15sp" />

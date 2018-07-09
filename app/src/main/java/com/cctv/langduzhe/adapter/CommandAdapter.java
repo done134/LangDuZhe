@@ -19,6 +19,7 @@ import com.cctv.langduzhe.data.entites.CommandEntity;
 import com.cctv.langduzhe.data.entites.HomeVideoEntity;
 import com.cctv.langduzhe.util.CommonUtil;
 import com.cctv.langduzhe.util.DateConvertUtils;
+import com.cctv.langduzhe.util.IntenetUtil;
 import com.cctv.langduzhe.util.picasco.PicassoUtils;
 import com.cctv.langduzhe.view.widget.CircleImageView;
 import com.cctv.langduzhe.view.widget.ClickNotToggleCheckBox;
@@ -28,6 +29,8 @@ import com.shuyu.waveview.AudioWaveView;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -98,29 +101,45 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof VoiceHolder) {
 
-            ((VoiceHolder) holder).tvCommentCount.setText(String.valueOf(videoInfoEntity.getCommentSum()));
-            ((VoiceHolder) holder).tvThumbsCount.setText(String.valueOf(videoInfoEntity.getCollectSum()));
-            ((VoiceHolder) holder).tvVideoPlayCount.setText(String.valueOf(videoInfoEntity.getWatchSum()));
-            ((VoiceHolder) holder).tvCommandName.setText(videoInfoEntity.getReaderName());
-            ((VoiceHolder) holder).tvCommandTime.setText(videoInfoEntity.getCreateDate());
-            ((VoiceHolder) holder).tvThumbsCount.setChecked(videoInfoEntity.getIsLike() == 1);
-            PicassoUtils.loadImageByurl(context,videoInfoEntity.getReaderImg(),((VoiceHolder) holder).ivCommandHead);
-            playVoice(videoInfoEntity.getPath(),((VoiceHolder) holder).audioWave);
-//            ((VoiceHolder) holder).setText(videoInfoEntity.getTitle());
-        } else if (holder instanceof VideoHolder){
-            //视频
-            PicassoUtils.loadImageByurl(context,videoInfoEntity.getReaderImg(),((VideoHolder) holder).ivCommandHead);
-            ((VideoHolder) holder).tvCommentCount.setText(String.valueOf(videoInfoEntity.getCommentSum()));
-            ((VideoHolder) holder).tvThumbsCount.setText(String.valueOf(videoInfoEntity.getLikeSum()));
-            ((VideoHolder) holder).tvThumbsCount.setChecked(videoInfoEntity.getIsLike()==1);
-            ((VideoHolder) holder).tvVideoPlayCount.setText(String.valueOf(videoInfoEntity.getWatchSum()));
-            ((VideoHolder) holder).tvCommandName.setText(videoInfoEntity.getReaderName());
-            ((VideoHolder) holder).tvCommandTime.setText(videoInfoEntity.getCreateDate());
-            PicassoUtils.loadImageByurlCenter(context,videoInfoEntity.getImg(),((VideoHolder) holder).videoView.thumbImageView);
-            ((VideoHolder) holder).videoView.setUp(videoInfoEntity.getPath(), JZVideoPlayerStandard.SCREEN_WINDOW_LIST, "");
             if (firstEnter) {
-//                JZVideoPlayerStandard.startFullscreen(context, JZVideoPlayerStandard.class, videoInfoEntity.getPath());
-                ((VideoHolder) holder).videoView.startVideo();
+
+                ((VoiceHolder) holder).tvCommentCount.setText(String.valueOf(videoInfoEntity.getCommentSum()));
+                ((VoiceHolder) holder).tvThumbsCount.setText(String.valueOf(videoInfoEntity.getCollectSum()));
+                ((VoiceHolder) holder).tvVideoPlayCount.setText(String.valueOf(videoInfoEntity.getWatchSum()));
+                ((VoiceHolder) holder).tvCommandName.setText(videoInfoEntity.getReaderName());
+                ((VoiceHolder) holder).tvCommandTime.setText(videoInfoEntity.getCreateDate());
+                ((VoiceHolder) holder).tvThumbsCount.setChecked(videoInfoEntity.getIsLike() == 1);
+                PicassoUtils.loadImageByurl(context, videoInfoEntity.getReaderImg(), ((VoiceHolder) holder).ivCommandHead);
+                playVoice(videoInfoEntity.getPath(), ((VoiceHolder) holder).audioWave);
+                firstEnter = false;
+            }
+//            ((VoiceHolder) holder).setText(videoInfoEntity.getTitle());
+        } else if (holder instanceof VideoHolder) {
+            //视频
+            if (firstEnter) {
+                PicassoUtils.loadImageByurl(context, videoInfoEntity.getReaderImg(), ((VideoHolder) holder).ivCommandHead);
+                ((VideoHolder) holder).tvCommentCount.setText(String.valueOf(videoInfoEntity.getCommentSum()));
+                ((VideoHolder) holder).tvThumbsCount.setText(String.valueOf(videoInfoEntity.getLikeSum()));
+                ((VideoHolder) holder).tvThumbsCount.setChecked(videoInfoEntity.getIsLike() == 1);
+                ((VideoHolder) holder).tvVideoPlayCount.setText(String.valueOf(videoInfoEntity.getWatchSum()));
+                ((VideoHolder) holder).tvCommandName.setText(videoInfoEntity.getReaderName());
+                ((VideoHolder) holder).tvCommandTime.setText(videoInfoEntity.getCreateDate());
+                PicassoUtils.loadImageByurlCenter(context, videoInfoEntity.getImg(), ((VideoHolder) holder).videoView.thumbImageView);
+                LinkedHashMap map = new LinkedHashMap();
+                map.put("高清", videoInfoEntity.getPath() + "?avvod/m3u8/s/1920x1080/vb/8500k/autosave/1");
+                map.put("标清", videoInfoEntity.getPath() + "?avvod/m3u8/s/1280x720/vb/3500k/autosave/1");
+                Object[] objects = new Object[3];
+                objects[0] = map;
+                objects[1] = false;//looping
+                objects[2] = new HashMap<>();
+                ((HashMap) objects[2]).put("key", "value");//header
+                if (IntenetUtil.getNetworkState(context) == IntenetUtil.NETWORN_WIFI) {
+                    ((VideoHolder) holder).videoView.setUp(objects, 0, JZVideoPlayerStandard.SCREEN_WINDOW_LIST, "");
+                    ((VideoHolder) holder).videoView.startFullscreen(context, JZVideoPlayerStandard.class, objects, 0, "");
+                } else {
+                    ((VideoHolder) holder).videoView.setUp(objects, 1, JZVideoPlayerStandard.SCREEN_WINDOW_LIST, "");
+                    ((VideoHolder) holder).videoView.startFullscreen(context, JZVideoPlayerStandard.class, objects, 1, "");
+                }
                 firstEnter = false;
             }
 //            ((VideoHolder) holder).tv.setText(videoInfoEntity.getTitle());
@@ -129,7 +148,7 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
             ((CommandHolder) holder).tvCommandContent.setText(dataBean.getContent());
             ((CommandHolder) holder).tvCommandName.setText(dataBean.getReaderName());
             ((CommandHolder) holder).tvCommandTime.setText(dataBean.getCreateDate());
-            PicassoUtils.loadImageByurl(context,dataBean.getReaderImg(),((CommandHolder) holder).ivCommandHead);
+            PicassoUtils.loadImageByurl(context, dataBean.getReaderImg(), ((CommandHolder) holder).ivCommandHead);
         }
     }
 
@@ -146,6 +165,7 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
         }
         this.videoInfoEntity = videoInfoEntity;
     }
+
     public void addData(List<CommandEntity.DataBean> list) {
         if (this.list == null) {
             this.list = new ArrayList<>();
@@ -158,7 +178,7 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
         if (this.list == null) {
             this.list = new ArrayList<>();
         }
-        this.list.add(1,newComment);
+        this.list.add(1, newComment);
         notifyDataSetChanged();
     }
 
@@ -166,7 +186,7 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
     private MP3RadioStreamPlayer player;
 
 
-    private void playVoice(String voiceUrl,AudioWaveView audioWaveView) {
+    private void playVoice(String voiceUrl, AudioWaveView audioWaveView) {
         if (player != null) {
             player.stop();
             player.release();
@@ -186,6 +206,7 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
             e.printStackTrace();
         }
     }
+
     @Override
     public int getItemViewType(int position) {
         if (position == 0) {
@@ -201,7 +222,7 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
 
     @Override
     public int getItemCount() {
-        return list == null?0:list.size();
+        return list == null ? 0 : list.size();
     }
 
     public CommandTypeEnum getAdapterType() {
@@ -219,11 +240,10 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
     private boolean playEnd;
 
 
-
     /**
      * 音频类头布局
      */
-     class VoiceHolder extends RecyclerView.ViewHolder {
+    class VoiceHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.iv_command_head)
         CircleImageView ivCommandHead;
@@ -270,7 +290,7 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
     /**
      * 视频类头布局
      */
-     class VideoHolder extends RecyclerView.ViewHolder {
+    class VideoHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.iv_command_head)
         CircleImageView ivCommandHead;
@@ -303,7 +323,7 @@ public class CommandAdapter extends BaseRecyclerViewAdapter {
                     onItemHolderClick(1, getLayoutPosition(), !tvThumbsCount.isChecked());
                 }
             });
-            tvCommentCount.setOnClickListener(v -> onItemClickListener.onItemClick(2,getLayoutPosition(),false));
+            tvCommentCount.setOnClickListener(v -> onItemClickListener.onItemClick(2, getLayoutPosition(), false));
         }
     }
 
